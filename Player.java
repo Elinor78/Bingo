@@ -4,7 +4,7 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
+//package bingo;
 
 import java.util.*;
 

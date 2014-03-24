@@ -4,7 +4,7 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
+//package bingo;
 
 public class Computer {
     
