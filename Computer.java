@@ -6,7 +6,7 @@
 
 package bingo;
 
-public class Computer {
+public class Computer extends Player {
     
     /*Instance variables*/
     private double responseTime;
