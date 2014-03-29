@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
-
 import java.util.*;
 
 public class Bingo {
@@ -13,7 +11,7 @@ public class Bingo {
     /*Instance variables*/
     private ArrayList<Computer> computerPlayers;
     private int numberOfBingos;
-    private boolean calledNumbers[];
+    private boolean calledNumbers[] = new boolean[75];
     
     /*Default constructor.*/
     public Bingo() {
@@ -32,7 +30,6 @@ public class Bingo {
     
     /*Gets number of Bingos.*/
     public int getNumberOfBingos() {
-
         return numberOfBingos;
     }
     
@@ -48,8 +45,7 @@ public class Bingo {
     
     /*Checks if a number has been called or not.*/
     public boolean isNumberCalled(int numberCalled) {
-        
-        return ;
+        return calledNumbers[numberCalled -1];
     }
     
     /*Updates the position of the recently called numbers.*/

@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
-
 import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

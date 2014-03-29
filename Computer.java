@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
-
 public class Computer extends Player {
     
     /*Instance variables*/
@@ -33,7 +31,6 @@ public class Computer extends Player {
     
     /*Returns the response time.*/
     public double getResponseTime() {
-        
         return responseTime;
     } 
 }

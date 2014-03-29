@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
-
 import java.util.*;
 
 public abstract class Player {
@@ -13,6 +11,6 @@ public abstract class Player {
     /*Public variables*/
     public static int totalPlayers;
     /*Instance variables*/
-    private ArrayList<Card> playerCards;
+    public ArrayList<Card> playerCards;
     
 }

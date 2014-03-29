@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
-
 public class Card {
     
     /*Public variables*/
@@ -27,7 +25,6 @@ public class Card {
     
     /*Returns the value of isbingo.*/
     public boolean getIsBingo() {
-        
         return isBingo;
     }
     
@@ -44,7 +41,7 @@ public class Card {
     /*Scans cardLayout & tokenPlacement for valid Bingo and sets isBingo.*/
     public boolean checkForBingo() {
         
-        return ;
+        return getIsBingo();
     }
     
     /*Dims card & disables input for 5 seconds.*/
