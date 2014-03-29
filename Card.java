@@ -1,3 +1,6 @@
+
+import java.util.Random;
+
 /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
@@ -10,17 +13,17 @@ public class Card {
     public static int totalCards;
     /*Instance variables*/
     private boolean isBingo;
-    private int cardLayout[][];
-    private boolean tokenPlacement[][];
+    private int cardLayout[][] = new int[5][5];
+    private boolean tokenPlacement[][] = new boolean[5][5];
     
     /*Empty constructor calls generateCardLayout().*/
     public Card(){
-        
+        generateCardLayout();
     }
     
     /*Sets isBingo to the value of win.*/
     public void setIsBingo(boolean win) {
-        
+        this.isBingo = win;
     }
     
     /*Returns the value of isbingo.*/
@@ -35,7 +38,7 @@ public class Card {
     
     /*Change matching tokenPlacement bool value.*/
     public void toggleToken(int tokenCollumn, int tokenRow) {
-        
+        this.tokenPlacement[tokenCollumn][tokenRow] = !this.tokenPlacement[tokenCollumn][tokenRow];
     }
     
     /*Scans cardLayout & tokenPlacement for valid Bingo and sets isBingo.*/
