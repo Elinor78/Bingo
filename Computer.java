@@ -1,3 +1,6 @@
+
+import java.util.Random;
+
 /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
@@ -18,7 +21,9 @@ public class Computer extends Player {
     
     /*Randomly generates # of cards between 1 and 4.*/
     public final void generateNumberOfCards() {
-        int numberOfCards = (int)((Math.random() * (4 - 1)) + 1);
+        /*Generate random number between 1 and 4*/
+        int numberOfCards = new Random().nextInt(4) + 1;
+        /*Add the number of cards generated to the playerCards array.*/
         for (int i = 0; i < numberOfCards; i++) {
             playerCards.add(new Card());
         }
