@@ -64,6 +64,7 @@ public class PlayerCard extends Card {
 	public void mousePressed(MouseEvent e) {
 	    ((Cell)e.getSource()).toggleToken();
 	}
+
     }
     
     /*Sets isBingo to the value of win.*/

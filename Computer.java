@@ -15,7 +15,7 @@ public class Computer extends Player {
     public Computer() {
         generateResponseTime();
         generateNumberOfCards();
-        PlayerCard.totalCards++;
+		totalPlayers++; //EAH
     }
     
     /*Randomly generates # of cards between 1 and 4.*/
