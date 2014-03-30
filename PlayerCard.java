@@ -18,6 +18,7 @@ public class PlayerCard extends Card {
     /*Empty constructor calls generateCardLayout().*/
     public PlayerCard(){
         generateCardLayout();
+		totalCards++;
     }
     
     /*Sets isBingo to the value of win.*/

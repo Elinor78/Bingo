@@ -34,7 +34,6 @@ public class Bingo {
 		
 		for(int i = 0; i < randomInt; i++){
 			computerPlayers.add(new Computer());
-			Player.totalPlayers++;
 		}
     }
     
