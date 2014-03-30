@@ -11,6 +11,6 @@ public abstract class Player {
     /*Public variables*/
     public static int totalPlayers;
     /*Instance variables*/
-    public ArrayList<Card> playerCards;
+    public ArrayList<PlayerCard> playerCards;
     
 }

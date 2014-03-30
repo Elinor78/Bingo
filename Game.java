@@ -1,11 +1,10 @@
-
-import java.util.Random;
-
 /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
+
+import java.util.Random;
 
 public class Game {
 

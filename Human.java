@@ -1,11 +1,10 @@
-
-import javax.swing.JOptionPane;
-
 /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
+
+import javax.swing.JOptionPane;
 
 public class Human extends Player{
     
@@ -15,9 +14,9 @@ public class Human extends Player{
     /*Default constructor w/ 1 card, increments totalCards & totalPlayers.*/
     public Human() {
         totalPlayers++;
-        /*Addes a new Card object to the playerCards ArrayList.*/
-        playerCards.add(new Card());
-        Card.totalCards++;
+        /*Addes a new PlayerCard object to the playerCards ArrayList.*/
+        playerCards.add(new PlayerCard());
+        PlayerCard.totalCards++;
     }
     
     /*Constructor to start human player with tickets.*/
@@ -40,7 +39,7 @@ public class Human extends Player{
     public void purchaseCards(int amountOfCards) {
         if (amountOfCards < ticketBank) {
             for (int i = 0; i < amountOfCards; i++) {
-                playerCards.add(new Card());
+                playerCards.add(new PlayerCard());
                 ticketBank--;
             }
         }

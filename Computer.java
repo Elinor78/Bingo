@@ -1,11 +1,10 @@
-
-import java.util.Random;
-
 /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
+
+import java.util.Random;
 
 public class Computer extends Player {
     
@@ -16,7 +15,7 @@ public class Computer extends Player {
     public Computer() {
         generateResponseTime();
         generateNumberOfCards();
-        Card.totalCards++;
+        PlayerCard.totalCards++;
     }
     
     /*Randomly generates # of cards between 1 and 4.*/
@@ -25,7 +24,7 @@ public class Computer extends Player {
         int numberOfCards = new Random().nextInt(4) + 1;
         /*Add the number of cards generated to the playerCards array.*/
         for (int i = 0; i < numberOfCards; i++) {
-            playerCards.add(new Card());
+            playerCards.add(new PlayerCard());
         }
     }
     

@@ -16,31 +16,33 @@ public class BingoGUI extends JFrame {
     private static Font gameFont;
     private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BingoGUI/Bingo_GUI_Background.jpg"));
     private final JLabel backgroundJL = new JLabel(background);
-    private final JPanel masterCardPanel = new JPanel();
+    private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
     private final JPanel statusPanel = new JPanel();
     
-    public BingoGUI() {
+    public BingoGUI() {	
 	backgroundJL.setLayout(new GridBagLayout());
 	GridBagConstraints c = new GridBagConstraints();
 	
 	// Place JPanel to hold master card
 	masterCardPanel.setPreferredSize(new Dimension(162, 364));
-	masterCardPanel.setBackground(new Color(255,0,0,90)); // DELETE THIS LINE WHEN NO LONGER NEEDED
 	c.insets = new Insets(-23, -16, 0, 25);
 	c.gridx = 0;
 	backgroundJL.add(masterCardPanel, c);
 	
+	// Place master card in masterCardPanel
+	masterCardPanel.add(new MasterCard());
+	
 	// Place JPanel to hold player card(s)
 	cardPanel.setPreferredSize(new Dimension(434, 515));
-	cardPanel.setBackground(new Color(0,255,0,90)); // DELETE THIS LINE WHEN NO LONGER NEEDED
+	cardPanel.setBackground(new Color(0,0,0,90)); // Delete this line when no longer needed
 	c.insets = new Insets(25, 0, 0, 37);
 	c.gridx = 1;
 	backgroundJL.add(cardPanel, c);
 	
 	// Place JPanel to hold number ticker & bingo status window
 	statusPanel.setPreferredSize(new Dimension(268, 295));
-	statusPanel.setBackground(new Color(0,0,255,90)); // DELETE THIS LINE WHEN NO LONGER NEEDED
+	statusPanel.setBackground(new Color(0,0,0,90)); // Delete this line when no longer needed
 	c.insets = new Insets(61, 0, 0, 0);
 	c.gridx = 2;
 	backgroundJL.add(statusPanel, c);
@@ -52,7 +54,7 @@ public class BingoGUI extends JFrame {
 	// Set some default properties
 	this.setLocationRelativeTo(null);
 	this.setResizable(false);
-	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     public static Font getGameFont() {
