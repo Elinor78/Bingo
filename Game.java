@@ -4,12 +4,16 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package bingo;
+import java.util.Random;
 
 public class Game {
 
     public static void main(String[] args) {
         Bingo newGame = new Bingo();
+	
+	// Testing BingoGUI. Feel free to remove this as needed.
+	BingoGUI playScreen = new BingoGUI();
+	playScreen.setVisible(true);
+
     }
-    
 }
