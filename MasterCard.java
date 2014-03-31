@@ -4,6 +4,7 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 
 public class MasterCard extends Card {
@@ -16,8 +17,7 @@ public class MasterCard extends Card {
 	
 	generateCardLayout();
 	
-	// Example of marked space on master card
-	cardLayout[0][0].toggleToken();
+	this.setPreferredSize(new Dimension(160, 359));
     }
     
     @Override
