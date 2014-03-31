@@ -19,6 +19,7 @@ public class BingoGUI extends JFrame {
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
     private final JPanel statusPanel = new JPanel();
+    private final MasterCard mc = new MasterCard();
     
     public BingoGUI() {	
 	backgroundJL.setLayout(new GridBagLayout());
@@ -31,7 +32,7 @@ public class BingoGUI extends JFrame {
 	backgroundJL.add(masterCardPanel, c);
 	
 	// Place master card in masterCardPanel
-	masterCardPanel.add(new MasterCard());
+	masterCardPanel.add(mc);
 	
 	// Place JPanel to hold player card(s)
 	cardPanel.setPreferredSize(new Dimension(434, 515));
