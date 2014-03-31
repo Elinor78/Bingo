@@ -40,7 +40,7 @@ public class PlayerCard extends Card {
 		   numberAlreadyExists = false;
 		    // Check all cells above cell being created
 		    for (int rowCheck = 0; rowCheck < row; rowCheck++) {
-			if (numberCandidate == Integer.parseInt(cardLayout[rowCheck][column].getText())) {
+			if (numberCandidate == cardLayout[rowCheck][column].getNumber()) {
 			    numberAlreadyExists = true;
 			}
 		    } 
