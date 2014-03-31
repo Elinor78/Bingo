@@ -34,6 +34,7 @@ public class PlayerCard extends Card {
 		int numberCandidate;
 		boolean numberAlreadyExists;
 		
+		// Attempt to place a unique number
 		do {
 		   numberCandidate = numberGenerator.nextInt(14) + columnLowerBound;
 		   numberAlreadyExists = false;
@@ -67,9 +68,9 @@ public class PlayerCard extends Card {
 
     }
     
-    /*Sets isBingo to the value of win.*/
-    public void setIsBingo(boolean win) {
-        this.isBingo = win;
+    /*Sets isBingo to true. No point in allowing a card to be set from true to false.*/
+    public void setIsBingo() {
+        this.isBingo = true;
     }
     
     /*Returns the value of isbingo.*/
@@ -77,10 +78,14 @@ public class PlayerCard extends Card {
         return isBingo;
     }
     
-    /*Scans cardLayout & tokenPlacement for valid Bingo and sets isBingo.*/
-    public boolean checkForBingo() {
-        
-        return getIsBingo();
+    /*Scans cardLayout for valid Bingo and sets isBingo to true if valid.*/
+    public boolean isValidBingo() {
+        if (/*the claim is*/ true) {
+	    return true;
+	}
+	else {
+	 return false;   
+	}
     }
     
     /*Dims card & disables input for 5 seconds.*/
