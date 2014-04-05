@@ -1,0 +1,190 @@
+import java.awt.Component;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
+import java.awt.RenderingHints;
+
+public class Ball extends Object implements Runnable{
+    
+    private double mX;
+    private double mY;
+    private double mDx;
+    private double mDy;
+    
+    private double mXCollision;
+    private double mYCollision;
+    
+    private int mDiameter;
+    private Color mColor;
+    private boolean mCollided;
+    
+    private Component mC;
+    private int mWidth;
+    private int mHeight;
+//============================================================================//
+    
+    public Ball(Component c){
+        
+        this(0, 0, 1.5, 2.0, c);
+    }
+//============================================================================//
+    
+    public Ball(double x, double y, Component c){
+        
+        this(x, y, 1.5, 2.0, c);
+    }
+//============================================================================//
+    
+    public Ball(double x, double y, double dx, double dy, Component c){
+
+        this.mX = x;
+        this.mY = y;
+        this.mDx = dx;
+        this.mDy = dy;
+        this.mDiameter = 30;
+        
+        this.mXCollision = 0;
+        this.mYCollision = 0;
+        
+        int red = this.getRandomNumber(0, 255);
+        int green = this.getRandomNumber(0, 255);
+        int blue = this.getRandomNumber(0, 255);
+        
+        this.mColor = new Color(red, green, blue);
+        this.mCollided = false;
+        
+        this.mC = c;
+        this.mWidth = this.mC.getWidth();
+        this.mHeight = this.mC.getHeight();
+    }
+//============================================================================//
+    
+    public int getDiameter(){
+        
+        return this.mDiameter;
+    }
+//============================================================================//
+    
+    public double getCenterX(){
+        
+        return (this.mX + (this.mDiameter / 2));
+    }
+//============================================================================//
+    
+    public double getCenterY(){
+        
+        return (this.mY + (this.mDiameter / 2));
+    }
+//============================================================================//
+    
+    public void move(){
+        
+        if(this.mCollided == true){
+            
+            double tempX = this.mXCollision - this.getCenterX();
+            double tempY = this.mYCollision - this.getCenterY();
+            
+            if((this.mDx < 0 && tempX < 0)||(this.mDx > 0 && tempX > 0))
+                this.mDx = -(this.mDx);
+            
+            if((this.mDy < 0 && tempY < 0)||(this.mDy > 0 && tempY > 0))
+                this.mDy = -(this.mDy);
+            
+            this.mCollided = false;
+        }
+        
+        this.mX += this.mDx;
+        this.mY += this.mDy;
+        
+        if((this.mX < 0)||(this.mX > this.mWidth - this.mDiameter)){
+            
+            this.mDx = -(this.mDx);
+            this.mX += this.mDx;
+        }
+        
+        if((this.mY < 0)||(this.mY > this.mHeight - this.mDiameter)){
+            
+            this.mDy = -(this.mDy);
+            this.mY += this.mDy;
+        }        
+    }
+//============================================================================//
+    
+    public void run(){
+        
+        while(true){
+            try{
+                
+                Thread.sleep(10);
+            }catch(InterruptedException e){}
+            
+            this.move();
+            this.mC.repaint();
+        }
+    }
+//============================================================================//
+    
+    public void paint(Graphics g){
+        Graphics2D pen = (Graphics2D)g;
+        
+        pen.setStroke(new BasicStroke(1.0f));
+        pen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        pen.setColor(this.mColor);
+        pen.fillOval((int)this.mX, (int)this.mY, this.mDiameter, this.mDiameter);
+        pen.setColor(Color.BLACK);
+        pen.drawOval((int)this.mX, (int)this.mY, this.mDiameter, this.mDiameter);
+        
+        pen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+    }
+//============================================================================//
+    
+    public void hitBall(Ball b){
+        
+        if(this.mCollided == false){
+            
+            this.mXCollision = b.getCenterX();
+            this.mYCollision = b.getCenterY();
+            
+            this.mCollided = true;
+        }
+    }
+//============================================================================//
+    
+    public static boolean detectCollision(Ball b1, Ball b2){
+        
+        double x = b1.getCenterX() - b2.getCenterX();
+        double y = b1.getCenterY() - b2.getCenterY();
+        double r = Math.sqrt(((x * x) + (y * y)));
+        
+        if(r < b1.getDiameter())
+            return true;
+        else
+            return false;
+    }
+//============================================================================//
+    
+    public static void handleCollision(Ball balls[], int index){
+        
+        for(int i = 0; i < index; i++){
+            for(int j = 0; j < index; j++){
+                
+                if(i != j){
+                    if((Ball.detectCollision(balls[i], balls[j])) == true){
+                        
+                        balls[i].hitBall(balls[j]);
+                        balls[j].hitBall(balls[i]);
+                    }
+                }
+            }
+        }
+    }
+//============================================================================//
+    
+    public static int getRandomNumber(int lower, int upper){
+        
+        return (lower + (int)(Math.random() * upper));
+    }
+//============================================================================//
+}

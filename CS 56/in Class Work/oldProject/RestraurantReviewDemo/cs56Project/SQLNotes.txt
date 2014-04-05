@@ -1,0 +1,31 @@
+Start mysql server in console:
+C:\> "C:\mysql\bin\mysqld" --console
+
+Start mysql server using the command line:
+C:\> "C:\mysql\bin\mysqld"
+
+Stop mysql from the command line:
+C:\> "C:\mysql\bin\mysqladmin" -u root shutdown
+
+Install and remove Windows services:
+C:\> "C:\mysql\bin\mysqld" --install
+C:\> "C:\mysql\bin\mysqld" --remove
+
+Start and stop mysql using Windows services:
+C:\> NET START MySQL
+C:\> NET STOP MySQL
+
+Testing mysql:
+C:\> "C:\mysql\bin\mysqlshow" -u root mysql
+
+Using mysql:
+C:\> "C:\mysql\bin\mysql -u root
+
+Loading batch files into database:
+C:\> mysql < batch-file
+( specifically in my case...)
+C:\>mysql\bin\mysql -u root < C:/.../batch-file
+
+
+Loading batch file restaurant.sql
+C:\>mysql\bin\mysql -u root < C:/MyProjects/myJava/myJavaSpace/cs56Project/restaurant.sql

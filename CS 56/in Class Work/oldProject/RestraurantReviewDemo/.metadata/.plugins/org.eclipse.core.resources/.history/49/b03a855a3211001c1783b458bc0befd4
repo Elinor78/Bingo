@@ -1,0 +1,398 @@
+/*
+ * CS56 Advanced Java
+ * Class: RestDB
+ * Authors(s): Evan Littmann, Heather Ruderian
+ * LAST UPDATE: 5-31-07
+ *
+ * Purpose: Provide a database connection class capable of running the appropriate SQL queries for a restaurant review
+ * program.
+ *
+ * NOTE: This class assumes all data has been checked before being passed to it!
+ * 
+ */
+
+package edu.smc.cs56Project.database;
+
+import java.sql.*;
+
+import javax.swing.table.*;
+
+import edu.smc.cs56Project.gui.TaskPane;
+import edu.smc.cs56Project.patterns.NotifyConstants;
+import edu.smc.cs56Project.patterns.Observer;
+import edu.smc.cs56Project.patterns.Subject;
+
+import java.util.*;
+
+public class RestDB extends AbstractTableModel implements Subject, Observer, NotifyConstants
+{
+    private ArrayList<Observer> observers;
+    
+    static final String DRIVER = "com.mysql.jdbc.Driver"; // May need changing
+    static final String DBURL = "jdbc:mysql://localhost/restaurants"; // May need changing
+    private Connection connection;
+    private Statement statement;
+    private ResultSet resultSet;
+    private ResultSetMetaData metaData;
+    private int numRows = 0;
+
+    // maintains state
+    private boolean connectedToDB = false;
+    private boolean addAnd = false;
+
+    // basic strings for queries
+    private String query = "";
+    private final String selQuery = "SELECT * FROM rests WHERE ";
+    private final String updQuery = "UPDATE rests SET ";
+
+    // values for columns
+    private String name;
+    private String chef;
+    private String address;
+    private String city;
+    private String state;
+    private int zip;
+    private float foodRat;
+    private float serviceRat;
+    private float ambianceRat;
+    private float overallRat;
+    private String cuisine;
+    private String phone;
+    private String fax;
+    private String website;
+    private String email;
+    private String review;
+    private int id;
+    
+    // Constructor
+    public RestDB()
+    {
+        super();
+        
+        observers = new ArrayList<Observer>();
+    }
+
+    /*
+     * Connect to database function should be called before running any queries
+     */
+    public void connectToDB()
+    {
+        try
+        {
+            Class.forName( DRIVER ).newInstance();
+        }
+        catch( ClassNotFoundException cnf )
+        {
+            cnf.printStackTrace();
+        }
+        catch( IllegalAccessException iae )
+        {
+            iae.printStackTrace();
+        }
+        catch( InstantiationException ie )
+        {
+            ie.printStackTrace();
+        }
+
+        try
+        {
+            System.out.println("Connecting to database"); // debug
+            connection = DriverManager.getConnection( DBURL, "root", "" );
+            statement = connection.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE );
+            connectedToDB = true;
+            System.out.println("Connected to database"); // debug
+        }
+        catch( SQLException sql)
+        {
+            sql.printStackTrace();
+        }
+    }
+
+    /*
+     * The following three methods were borrowed from Adam Olsen's code
+     */
+    public int getRowCount() throws IllegalStateException {
+        if (!connectedToDB)
+            throw new IllegalStateException("Connection to database failed.");
+        
+        return numRows;
+    }
+
+    public int getColumnCount() throws IllegalStateException {
+        if (!connectedToDB)
+            throw new IllegalStateException("Connection to database failed.");
+
+        try {
+            return metaData.getColumnCount();
+        } catch(SQLException exSQL){
+            exSQL.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public Object getValueAt(int row, int column) throws IllegalStateException {
+        if (!connectedToDB)
+            throw new IllegalStateException("Connection to database failed.");
+
+        try {
+            resultSet.absolute(row + 1 );
+            return resultSet.getObject(column + 1);
+        }
+
+        catch(SQLException exSQL){
+            exSQL.printStackTrace();
+        }
+
+        return "";
+    }
+
+    /*
+     * Disconnect from database function can be called after one or many queries
+     * are run
+     */
+    public void disconnectFromDB()
+    {
+        try {
+            System.out.println("Closing database connection"); // debug
+            statement.close();
+            connection.close();
+            System.out.println("No longer connected to database"); // debug
+        } 
+        catch( SQLException sql ) {
+            sql.printStackTrace();
+        }
+        finally {
+            connectedToDB = false;
+        }
+    }
+
+    /*
+     * Generic search function should have array of values to search for and
+     * search type passed to it values[] should always be a four element array
+     * in the following order: name, cuisine, city, overallRat
+     */
+    public void find( HashMap map ) throws SQLException, IllegalStateException
+    {
+        
+        if( !connectedToDB )
+            throw new IllegalStateException( "Not connected" );
+
+        
+        String queryBuilder = "";
+        query = selQuery;
+        /*
+        if (map.containsKey("Name"))
+        {
+            queryBuilder += "name like " + map.get("Name") + "%'";
+            addAnd = true;
+        }
+        if (map.containsKey("City"))
+        {
+            if(addAnd)
+                queryBuilder += " AND city like " + map.get("City") + "%'";
+            else
+            {
+                queryBuilder += "city like " + map.get("City") + "%'";
+                addAnd = true;
+            }
+        }
+        if (map.containsKey("Food"))
+        {
+            if(addAnd)
+                queryBuilder += " AND cuisine like " + map.get("Food") + "%'";
+            else
+            {
+                queryBuilder += "cuisine like " + map.get("Food") + "%'";
+                addAnd = true;
+            }
+        }
+        if (map.containsKey("Overall"))
+        {
+            if(addAnd)
+                queryBuilder += " AND overallRat like " + map.get("Overall") + "%'";
+            else
+                queryBuilder += "overallRat like " + map.get("Overall") + "%'";
+        }
+        */
+
+        try
+        { 
+            if (queryBuilder == "") {
+                query += "1=1";
+            }
+            else {
+                query += queryBuilder;
+            }
+            System.out.println("Running query:" + query); // debug
+            resultSet = statement.executeQuery( query );
+            metaData = resultSet.getMetaData();
+            resultSet.last();                   // move resultSet to last row
+            numRows = resultSet.getRow();
+            resultSet.first();
+            System.out.println("Finished running query"); // debug
+        }
+        catch( SQLException sql )
+        {
+            sql.printStackTrace();
+        }
+        
+    }
+
+    /*
+     * Generic record updating function which should have the column names and
+     * new values passed in as arrays of equal length The record number to
+     * change should be passed in via id
+     */
+    public void updateEntry( HashMap<String, String> map ) throws SQLException, IllegalStateException
+    {
+        if( !connectedToDB )
+            throw new IllegalStateException( "Not connected" );
+
+        if (map.containsKey ("Name"))
+            resultSet.updateString(0, map.get("Name"));
+
+        try
+        {
+            System.out.println("Running query:" + query); // debug
+            resultSet = statement.executeQuery( query );
+            metaData = resultSet.getMetaData();
+            numRows = resultSet.getRow();
+            fireTableRowsUpdated(numRows - 1, numRows - 1);
+            System.out.println("Finished running query"); // debug
+        }
+        catch( SQLException sql )
+        {
+            sql.printStackTrace();
+        }
+    }
+
+    /*
+     * New entry function
+     */
+    public void newEntry() throws SQLException, IllegalStateException
+    {
+        if( !connectedToDB )
+            throw new IllegalStateException( "Not connected" );
+        try
+        {
+            System.out.println( "Adding item" );        // debug
+            resultSet.moveToInsertRow();
+            resultSet.updateString(1,"");
+            resultSet.insertRow();
+            metaData = resultSet.getMetaData();
+            resultSet.last();                   // move resultSet to new row
+            numRows = resultSet.getRow();
+            fireTableRowsInserted(numRows - 1, numRows - 1);
+            System.out.println("Finished Adding Item"); // debug
+        }
+        catch( SQLException sql )
+        {
+            sql.printStackTrace();
+        }
+    }
+
+    /*
+     * Delete function: Pass in id # of record to delete
+     */
+    public void delEntry() throws SQLException, IllegalStateException
+    {
+        if( !connectedToDB )
+            throw new IllegalStateException( "Not connected" );
+        try
+        {
+            System.out.println("Deleting Item");            // debug
+            int dRow = resultSet.getRow();
+            resultSet.deleteRow();
+            metaData = resultSet.getMetaData();
+            --numRows;
+            fireTableRowsDeleted(dRow - 1, dRow -1 );
+            System.out.println("Finished deleting item");   // debug
+        }
+        catch( SQLException sql )
+        {
+            sql.printStackTrace();
+        }
+    }
+
+    /*
+     * Get all Data
+     */
+    public void giveMeAll() throws SQLException, IllegalStateException
+    {
+        if( !connectedToDB )
+            throw new IllegalStateException( "Not connected" );
+
+        query = selQuery;
+        query += "1=1";
+
+        try
+        {
+            System.out.println("Running query:" + query); // debug
+            resultSet = statement.executeQuery( query );
+            metaData = resultSet.getMetaData();
+            resultSet.last();
+            numRows = resultSet.getRow();
+            resultSet.first(); // point resultSet back to first row
+            System.out.println("Finished running query"); // debug
+        }
+        catch( SQLException sql )
+        {
+            sql.printStackTrace();
+        }
+    }
+
+    /*
+     * This will be a method that returns all the values you will need to get
+     */
+    public HashMap<String, String> getFields() {
+        HashMap<String,String> valMap = new HashMap<String,String>();
+
+        return valMap;
+    }
+
+    // Satisfy contract for Subject interface
+    public void registerObserver( Observer o )
+    {
+        observers.add(o);
+    }
+    
+    // Satisfy contract for Subject interface
+    public void removeObserver( Observer o )
+    {
+        int i = observers.indexOf(o);
+        if (i >= 0)
+            observers.remove(i);
+    }
+    
+    // Satisfy contract for Subject interface
+    public void notifyObservers()
+    {
+        for (int i = 0; i < observers.size(); i++) {
+            Observer observer = observers.get(i);
+            observer.update( this, DATA_UPDATE);
+        }
+    }
+
+    public void update( Subject s, Object arg )
+    {
+        if (s instanceof TaskPane && arg instanceof Integer) {
+            int notify = (Integer) arg;
+            
+            if (notify == PANEL_UPDATE) { 
+                // use getters and setters to update RestDB
+                try {
+                    fireTableRowsUpdated(resultSet.getRow() - 1, resultSet.getRow() - 1);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println( "RestDB updated by TaskPane." );
+            }
+        }
+    }
+    public ResultSet getResultSet()
+    {
+        return resultSet;
+    }
+    
+}
