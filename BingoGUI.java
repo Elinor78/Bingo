@@ -58,10 +58,18 @@ public class BingoGUI extends JFrame {
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
+    /*
+    Returns a font to use for GUI elements.
+    First tries to get pre-installed Cooper Black font.
+    If not found, loads Cooper Black from .TTF file.
+    If all else fails, uses Impact font.
+    Font is returned at 1-point size.
+    */
     public static Font getGameFont() {
 	boolean foundCooper = false;
 	GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Font[] fonts = g.getAllFonts();
+	
 	for (Font font : fonts) {
 	    if (font.getFontName().equals("Cooper Black")) {
 		gameFont = font;
@@ -69,6 +77,7 @@ public class BingoGUI extends JFrame {
 		break;
 	    }
 	}
+	
 	if (!foundCooper) {
 	    try {
 		InputStream cooperFromFile = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");

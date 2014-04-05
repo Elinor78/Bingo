@@ -24,8 +24,9 @@ public class MasterCard extends Card {
     protected final void generateCardLayout() {
 	cardLayout = new Cell[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 	
-	for (int row = 0, cellNumber = 1; row < NUMBER_OF_ROWS; row++, cellNumber -= 74) {
-	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++, cellNumber += 15) {
+	// Add 75 cells with ascending number values. Cells are added from left to right, row by row.
+	for (int row = 0, cellNumber = 1; row < NUMBER_OF_ROWS; row++, cellNumber -= 74) { // Iterates rows
+	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++, cellNumber += 15) { // Iterates columns
 		cardLayout[row][column] = new Cell(cellNumber);
 		cardLayout[row][column].setFontSize(16);
 		cellPanel.add(cardLayout[row][column]);
@@ -33,6 +34,7 @@ public class MasterCard extends Card {
 	}
     }
     
+    // Given a bingo number, mark the appropriate Cell in MasterCard.
     public void toggleToken(int number) {
 	// Do this:
 	//cardLayout[THE_RIGHT_ROW][THE_RIGHT_COLUMN].toggleToken();

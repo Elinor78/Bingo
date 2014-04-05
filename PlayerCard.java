@@ -29,16 +29,18 @@ public class PlayerCard extends Card {
     protected final void generateCardLayout() {
 	cardLayout = new Cell[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 	
-	for (int row = 0, columnLowerBound = 1; row < NUMBER_OF_ROWS; row++, columnLowerBound = 1) {
-	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++, columnLowerBound += 15) {
+	// Cells are added from left to right, row by row.
+	for (int row = 0, columnLowerBound = 1; row < NUMBER_OF_ROWS; row++, columnLowerBound = 1) { // Iterates rows
+	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++, columnLowerBound += 15) { // Iterates columns
 		int numberCandidate;
 		boolean numberAlreadyExists;
 		
 		// Attempt to place a unique number
 		do {
-		   numberCandidate = numberGenerator.nextInt(14) + columnLowerBound;
-		   numberAlreadyExists = false;
-		    // Check all cells above cell being created
+		   // Get random number with range of 15 and lowest possible number columnLowerBound
+		   numberCandidate = numberGenerator.nextInt(14) + columnLowerBound; 
+		   numberAlreadyExists = false; // Assume that number has not already been picked.
+		    // Check all cells above the cell currently being created
 		    for (int rowCheck = 0; rowCheck < row; rowCheck++) {
 			if (numberCandidate == cardLayout[rowCheck][column].getNumber()) {
 			    numberAlreadyExists = true;
