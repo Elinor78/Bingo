@@ -4,3 +4,6 @@
 *.jar
 *.war
 *.ear
+/CS56/Assignments/School/School/build/
+/CS56/Assignments/School/School/dist/
+/CS56/Assignments/School/School/nbproject/private/

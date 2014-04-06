@@ -1,0 +1,3 @@
+The UI elements look out of place on Windows and I'm not sure why. I use a Mac to do this and it looked perfect at home so I apologize for the misalignment. In the future I will make sure to test it on a PC before turning it in.
+
+Also, this version does not include detection for classes ocurrin at the same time. I got carried away with learning everything else that I lost track of time. I plan on updating it, however, to include that functionality.
