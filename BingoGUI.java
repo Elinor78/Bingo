@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 public class BingoGUI extends JFrame {
     private static Font gameFont;
-    private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BingoGUI/Bingo_GUI_Background.jpg"));
+    private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif"));
     private final JLabel backgroundJL = new JLabel(background);
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
