@@ -4,14 +4,17 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class PlayerCard extends Card {
     private final int NUMBER_OF_ROWS = 5;
-    Random numberGenerator = new Random();
+    private final Random numberGenerator = new Random();
+    private final JLabel callButton = new JLabel(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     
     private boolean isBingo;
 	    
@@ -21,6 +24,8 @@ public class PlayerCard extends Card {
 	cellLayout.setRows(NUMBER_OF_ROWS);
 	
 	generateCardLayout();
+	
+	this.add(callButton, BorderLayout.SOUTH);
 	
 	totalCards++;
     }
@@ -71,7 +76,7 @@ public class PlayerCard extends Card {
     }
     
     /*Sets isBingo to true. No point in allowing a card to be set from true to false.*/
-    public void setIsBingo() {
+    private void setIsBingo() {
         this.isBingo = true;
     }
     
@@ -80,8 +85,9 @@ public class PlayerCard extends Card {
         return isBingo;
     }
     
-    /*Scans cardLayout for valid Bingo and sets isBingo to true if valid.*/
-    public boolean isValidBingo() {
+    /*Scans cardLayout for valid Bingo and sets isBingo to true if valid. 
+    Calls cardFreeze() or cardWin()? */
+    private boolean isValidBingo() {
         if (/*the claim is*/ true) {
 	    return true;
 	}
@@ -91,12 +97,12 @@ public class PlayerCard extends Card {
     }
     
     /*Dims card & disables input for 5 seconds.*/
-    public void cardFreeze() {
+    private void cardFreeze() {
         
     }
     
     /*Congratulates user & disables input on card.*/
-    public void cardWin() {
+    private void cardWin() {
         
     }
 }
