@@ -38,21 +38,26 @@ public class MasterCard extends Card {
     
     // Given a bingo number, mark the appropriate Cell in MasterCard.
     public void toggleToken(int number) {
-	// Do this:
-	//cardLayout[THE_RIGHT_ROW][THE_RIGHT_COLUMN].toggleToken();
-	//
-	// Example coordinates: 1 is [0][0]. 46 is [0][3].
-	//
-	// How to find out the right coordinates?
-	//
-	// if (n >= 1 && n <= 15)
-	//      column is 0
-	// else if (n <= 30)
-	//      column is 1
-	//etc.
-	//
-	// Then find the row.
-	//
-	// Or maybe use an array that holds the coordinates in an (n - 1) index. Faster.
+		int column = 0;
+		int row = 0;
+	
+		if(number >= 1 && number <= 15)
+			column = 0;
+		else if(number >= 16 && number <= 30)
+			column = 1;
+		else if(number >= 31 && number <= 45)
+			column = 2;
+		else if(number >=46 && number <= 60)
+			column = 3;
+		else if(number >= 61 && number <= 75)
+			column = 4;
+		else
+			System.out.println("Something is really wrong");
+		
+		number = number - 1;
+		row = number % 15;
+		
+		//calling Cell's toggleToken method
+		cardLayout[row][column].toggleToken();
     }
 }
