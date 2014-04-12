@@ -16,7 +16,6 @@ public class Human extends Player{
         totalPlayers++;
         /*Addes a new PlayerCard object to the playerCards ArrayList.*/
         playerCards.add(new PlayerCard());
-        PlayerCard.totalCards++;
     }
     
     /*Constructor to start human player with tickets.*/
