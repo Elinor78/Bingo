@@ -36,6 +36,8 @@ public abstract class Card extends JPanel {
 	// Add panel for Cells, undefined number of rows.
 	cellLayout.setColumns(5);
 	this.add(cellPanel);
+	
+	this.setOpaque(false);
     }
     
     // Abstract method for adding the proper number of cells, numbers, cell behavior.

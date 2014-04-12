@@ -5,7 +5,6 @@
  */
 
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
@@ -29,7 +28,6 @@ public class Cell extends JLabel {
     
     private void genericInitializations() {
 	this.setBorder(new LineBorder(Color.black, 1));
-	this.setPreferredSize(new Dimension(marker.getIconWidth(), marker.getIconHeight()));
 	this.setOpaque(true);
 	this.setBackground(Color.white);
 	

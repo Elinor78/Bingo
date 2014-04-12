@@ -18,35 +18,80 @@ public class BingoGUI extends JFrame {
     private final JLabel backgroundJL = new JLabel(background);
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
+    private final GridBagConstraints upperLeft, upperRight, lowerLeft, lowerRight;
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     
     public BingoGUI() {	
 	backgroundJL.setLayout(new GridBagLayout());
-	GridBagConstraints c = new GridBagConstraints();
+	GridBagConstraints mainFrameConstraint = new GridBagConstraints();
 	
 	// Place JPanel to hold master card
 	masterCardPanel.setPreferredSize(new Dimension(162, 364));
-	c.insets = new Insets(-23, -16, 0, 25);
-	c.gridx = 0;
-	backgroundJL.add(masterCardPanel, c);
+	mainFrameConstraint.insets = new Insets(-23, -16, 0, 25);
+	mainFrameConstraint.gridx = 0;
+	backgroundJL.add(masterCardPanel, mainFrameConstraint);
 	
 	// Place master card in masterCardPanel
 	masterCardPanel.add(mc);
 	
 	// Place JPanel to hold player card(s)
 	cardPanel.setPreferredSize(new Dimension(434, 515));
-	cardPanel.setBackground(new Color(0,0,0,90)); // Delete this line when no longer needed
-	c.insets = new Insets(25, 0, 0, 37);
-	c.gridx = 1;
-	backgroundJL.add(cardPanel, c);
+	cardPanel.setOpaque(false);
+	mainFrameConstraint.insets = new Insets(25, 0, 0, 37);
+	mainFrameConstraint.gridx = 1;
+	backgroundJL.add(cardPanel, mainFrameConstraint);
+	
+	// Set layout for cardPanel
+	cardPanel.setLayout(new GridBagLayout());
+	
+	// Test PlayerCards
+	PlayerCard[] cardArray = new PlayerCard[5];
+	
+	
+	cardArray[0] = new PlayerCard();
+	
+	cardArray[1] = new PlayerCard();
+	cardArray[2] = new PlayerCard();
+	cardArray[3] = new PlayerCard();
+	cardArray[4] = new PlayerCard();
+	
+	upperLeft = new GridBagConstraints();
+	upperLeft.gridx = 0;
+	upperLeft.gridy = 0;
+	upperLeft.insets = new Insets(5, 5, 5, 5);
+	
+	upperRight = new GridBagConstraints();
+	upperRight.gridx = 1;
+	upperRight.gridy = 0;
+	upperRight.insets = new Insets(5, 5, 5, 5);
+	
+	lowerLeft = new GridBagConstraints();
+	lowerLeft.gridx = 0;
+	lowerLeft.gridy = 1;
+	lowerLeft.insets = new Insets(5, 5, 5, 5);
+	
+	lowerRight = new GridBagConstraints();
+	lowerRight.gridx = 1;
+	lowerRight.gridy = 1;
+	lowerRight.insets = new Insets(5, 5, 5, 5);
+	
+	if (PlayerCard.totalCards == 1) {
+	    cardPanel.add(cardArray[0]);
+	}
+	else {
+	    cardPanel.add(cardArray[1], upperLeft);
+	    cardPanel.add(cardArray[2], upperRight);
+	    cardPanel.add(cardArray[3], lowerLeft);
+	    cardPanel.add(cardArray[4], lowerRight);
+	}
 	
 	// Place JPanel to hold number ticker & bingo status window
 	statusPanel.setPreferredSize(new Dimension(268, 295));
 	statusPanel.setBackground(new Color(0,0,0,90)); // Delete this line when no longer needed
-	c.insets = new Insets(61, 0, 0, 0);
-	c.gridx = 2;
-	backgroundJL.add(statusPanel, c);
+	mainFrameConstraint.insets = new Insets(61, 0, 0, 0);
+	mainFrameConstraint.gridx = 2;
+	backgroundJL.add(statusPanel, mainFrameConstraint);
 	
 	// Add everything to Jframe and set static size
 	this.add(backgroundJL);
@@ -55,7 +100,7 @@ public class BingoGUI extends JFrame {
 	// Set some default properties
 	this.setLocationRelativeTo(null);
 	this.setResizable(false);
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
     /*
@@ -69,7 +114,6 @@ public class BingoGUI extends JFrame {
 	boolean foundCooper = false;
 	GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Font[] fonts = g.getAllFonts();
-	
 	for (Font font : fonts) {
 	    if (font.getFontName().equals("Cooper Black")) {
 		gameFont = font;
@@ -77,7 +121,6 @@ public class BingoGUI extends JFrame {
 		break;
 	    }
 	}
-	
 	if (!foundCooper) {
 	    try {
 		InputStream cooperFromFile = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");
