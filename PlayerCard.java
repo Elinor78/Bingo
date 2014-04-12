@@ -5,7 +5,6 @@
  */
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,17 +28,9 @@ public class PlayerCard extends Card {
 	
 	if (totalCards > 1) {
 	    // Make small card
-	    this.setPreferredSize(new Dimension(205, 228));
-	    
 	    Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
 	    headerImg = new ImageIcon(scaledImg);  
 	}
-	else {
-	    // Make large card
-	    this.setPreferredSize(new Dimension(375, 418));
-	}
-	
-	int height = this.getPreferredSize().height;
 	
 	header.setIcon(headerImg);
 	cellLayout.setRows(NUMBER_OF_ROWS);
@@ -73,7 +64,7 @@ public class PlayerCard extends Card {
 	
 		cardLayout[row][column] = new Cell(numberCandidate);
 
-		cardLayout[row][column].setFontSize(20);
+		//cardLayout[row][column].setFontSize(20);
 		cardLayout[row][column].addMouseListener(new CellMouseListener());
 		cellPanel.add(cardLayout[row][column]);
 	    }
