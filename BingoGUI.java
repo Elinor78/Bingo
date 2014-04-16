@@ -18,9 +18,10 @@ public class BingoGUI extends JFrame {
     private final JLabel backgroundJL = new JLabel(background);
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
-    private final GridBagConstraints upperLeft, upperRight, lowerLeft, lowerRight;
+    private final GridBagConstraints mcUpperLeft, mcUpperRight, mcLowerLeft, mcLowerRight;
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
+    private final BallTicker bt = new BallTicker();
     
     public BingoGUI() {	
 	backgroundJL.setLayout(new GridBagLayout());
@@ -45,9 +46,28 @@ public class BingoGUI extends JFrame {
 	// Set layout for cardPanel
 	cardPanel.setLayout(new GridBagLayout());
 	
+	mcUpperLeft = new GridBagConstraints();
+	mcUpperLeft.gridx = 0;
+	mcUpperLeft.gridy = 0;
+	mcUpperLeft.insets = new Insets(5, 5, 5, 5);
+	
+	mcUpperRight = new GridBagConstraints();
+	mcUpperRight.gridx = 1;
+	mcUpperRight.gridy = 0;
+	mcUpperRight.insets = new Insets(5, 5, 5, 5);
+	
+	mcLowerLeft = new GridBagConstraints();
+	mcLowerLeft.gridx = 0;
+	mcLowerLeft.gridy = 1;
+	mcLowerLeft.insets = new Insets(5, 5, 5, 5);
+	
+	mcLowerRight = new GridBagConstraints();
+	mcLowerRight.gridx = 1;
+	mcLowerRight.gridy = 1;
+	mcLowerRight.insets = new Insets(5, 5, 5, 5);
+	
 	// Test PlayerCards
 	PlayerCard[] cardArray = new PlayerCard[5];
-	
 	
 	cardArray[0] = new PlayerCard();
 	
@@ -56,34 +76,14 @@ public class BingoGUI extends JFrame {
 	cardArray[3] = new PlayerCard();
 	cardArray[4] = new PlayerCard();
 	
-	upperLeft = new GridBagConstraints();
-	upperLeft.gridx = 0;
-	upperLeft.gridy = 0;
-	upperLeft.insets = new Insets(5, 5, 5, 5);
-	
-	upperRight = new GridBagConstraints();
-	upperRight.gridx = 1;
-	upperRight.gridy = 0;
-	upperRight.insets = new Insets(5, 5, 5, 5);
-	
-	lowerLeft = new GridBagConstraints();
-	lowerLeft.gridx = 0;
-	lowerLeft.gridy = 1;
-	lowerLeft.insets = new Insets(5, 5, 5, 5);
-	
-	lowerRight = new GridBagConstraints();
-	lowerRight.gridx = 1;
-	lowerRight.gridy = 1;
-	lowerRight.insets = new Insets(5, 5, 5, 5);
-	
 	if (PlayerCard.totalCards == 1) {
 	    cardPanel.add(cardArray[0]);
 	}
 	else {
-	    cardPanel.add(cardArray[1], upperLeft);
-	    cardPanel.add(cardArray[2], upperRight);
-	    cardPanel.add(cardArray[3], lowerLeft);
-	    cardPanel.add(cardArray[4], lowerRight);
+	    cardPanel.add(cardArray[1], mcUpperLeft);
+	    cardPanel.add(cardArray[2], mcUpperRight);
+	    cardPanel.add(cardArray[3], mcLowerLeft);
+	    cardPanel.add(cardArray[4], mcLowerRight);
 	}
 	
 	// Place JPanel to hold number ticker & bingo status window
@@ -92,6 +92,19 @@ public class BingoGUI extends JFrame {
 	mainFrameConstraint.insets = new Insets(61, 0, 0, 0);
 	mainFrameConstraint.gridx = 2;
 	backgroundJL.add(statusPanel, mainFrameConstraint);
+	
+	// Set layout for statusPanel
+	statusPanel.setLayout(new GridBagLayout());
+	
+	GridBagConstraints statusTop = new GridBagConstraints();
+	statusTop.gridy = 0;
+	GridBagConstraints statusMiddle = new GridBagConstraints();
+	statusMiddle.gridy = 1;
+	GridBagConstraints statusBottom = new GridBagConstraints();
+	statusBottom.gridy = 2;
+	
+	// Add BallTicker to statusPanel
+	statusPanel.add(bt, statusTop);
 	
 	// Add everything to Jframe and set static size
 	this.add(backgroundJL);

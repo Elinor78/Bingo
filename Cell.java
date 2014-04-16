@@ -42,7 +42,7 @@ public class Cell extends JLabel {
 	this.setOpaque(true);
 	this.setBackground(Color.white);
 	
-	this.setFont(Card.getCellFont().deriveFont(FONT_SIZE));
+	this.setFont(Card.cellFont.deriveFont(FONT_SIZE));
 	this.setHorizontalTextPosition(JLabel.CENTER);
 	this.setHorizontalAlignment(JLabel.CENTER);
 	this.setVerticalTextPosition(JLabel.CENTER);
@@ -51,7 +51,7 @@ public class Cell extends JLabel {
     
     public void setFontSize(int n) {
 	FONT_SIZE = n;
-	this.setFont(Card.getCellFont().deriveFont(FONT_SIZE));
+	this.setFont(Card.cellFont.deriveFont(FONT_SIZE));
     }
 
     public void toggleToken() {

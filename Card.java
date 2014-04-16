@@ -43,11 +43,6 @@ public abstract class Card extends JPanel {
     // Abstract method for adding the proper number of cells, numbers, cell behavior.
     protected abstract void generateCardLayout();
     
-    // Method for Cells to retrieve game font without numerously pinging the operating system.
-    public static Font getCellFont() {
-	return cellFont;
-    }
-    
     public void checkForBingo(){
         
         boolean isBingo = false;
