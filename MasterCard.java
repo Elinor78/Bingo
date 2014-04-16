@@ -4,7 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -39,17 +38,17 @@ public class MasterCard extends Card {
     // Given a bingo number, mark the appropriate Cell in MasterCard.
     public void toggleToken(int number) {
 		int column = 0;
-		int row = 0;
+		int row;
 	
 		if(number >= 1 && number <= 15)
 			column = 0;
-		else if(number >= 16 && number <= 30)
+		else if(number <= 30)
 			column = 1;
-		else if(number >= 31 && number <= 45)
+		else if(number <= 45)
 			column = 2;
-		else if(number >=46 && number <= 60)
+		else if(number <= 60)
 			column = 3;
-		else if(number >= 61 && number <= 75)
+		else if(number <= 75)
 			column = 4;
 		else
 			System.out.println("Something is really wrong");
