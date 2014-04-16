@@ -4,34 +4,43 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.awt.Font;
-import java.awt.Insets;
+import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class BallTicker extends JLabel {
     private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BallTicker/BallHolder.png"));
     static final Font ballFont = BingoGUI.getGameFont();
+    // Test balls. In final code, balls will be instantiated in changeBallPosition().
     private final Ball b1 = new Ball(14), b2 = new Ball(45), b3 = new Ball(46), b4 = new Ball(61);
-    private final int B1_X_POS = 6, B2_X_POS = 65, B3_X_POS = 124, B4_X_POS = 183;
+    // Resting x-coordinates for balls
+    private final int B1_X_POS = -4, B2_X_POS = 57, B3_X_POS = 118, B4_X_POS = 179;
     
     public BallTicker() {
 	this.setIcon(background);
-	//this.setLayout(new GridLayout(0, 4));
-	this.setLayout(null);
+	this.setLayout(new GridBagLayout());
+	GridBagConstraints interiorConstraint = new GridBagConstraints();
 	
-	// Test adding balls
-	this.add(b1);
-	this.add(b2);
-	this.add(b3);
-	this.add(b4);
+	JPanel interiorPanel = new JPanel();
+	interiorPanel.setOpaque(false);
+	interiorPanel.setLayout(null);
+	interiorPanel.setPreferredSize(new Dimension(240, 64));
+	
+	this.add(interiorPanel, interiorConstraint);
+	
+	// Test display of balls
+	interiorPanel.add(b1);
+	interiorPanel.add(b2);
+	interiorPanel.add(b3);
+	interiorPanel.add(b4);
 	
 	// Testing resting coordinates for balls
-	Insets insets = this.getInsets();
-	b1.setBounds(insets.left + B1_X_POS, insets.top + 6, 66, 60);
-	b2.setBounds(insets.left + B2_X_POS, insets.top + 6, 66, 60);
-	b3.setBounds(insets.left + B3_X_POS, insets.top + 6, 66, 60);
-	b4.setBounds(insets.left + B4_X_POS, insets.top + 6, 66, 60);
+	Insets insets = interiorPanel.getInsets();
+	b1.setBounds(insets.left + B1_X_POS, insets.top + 2, 66, 60);
+	b2.setBounds(insets.left + B2_X_POS, insets.top + 2, 66, 60);
+	b3.setBounds(insets.left + B3_X_POS, insets.top + 2, 66, 60);
+	b4.setBounds(insets.left + B4_X_POS, insets.top + 2, 66, 60);
     }
     
     public void changeBallPosition(int n) {
@@ -45,8 +54,6 @@ public class BallTicker extends JLabel {
 	private Ball(int n) {
 	    this.setFont(BallTicker.ballFont.deriveFont(FONT_SIZE));
 	    this.setHorizontalTextPosition(JLabel.CENTER);
-	    this.setVerticalTextPosition(JLabel.CENTER);
-	    this.setVerticalAlignment(JLabel.CENTER);
 	    
 	    if (n >= 1 && n <= 15) {
 		background = new ImageIcon(getClass().getResource("/img/BallTicker/B_Ball.png"));
