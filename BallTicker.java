@@ -23,7 +23,7 @@ public class BallTicker extends JLabel {
     
     private final Random randomGen = new Random();
     
-    private final int LEFTMOST_X_POS = -65, B2_X_POS = 57;
+    private final int LEFTMOST_X_POS = -65;
     
     public BallTicker() {
 	this.setIcon(background);
