@@ -5,6 +5,11 @@
  */
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,39 +17,58 @@ import javax.swing.JPanel;
 public class BallTicker extends JLabel {
     private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BallTicker/BallHolder.png"));
     static final Font ballFont = BingoGUI.getGameFont();
-    // Test balls. In final code, balls will be instantiated in changeBallPosition().
-    private final Ball b1 = new Ball(14), b2 = new Ball(45), b3 = new Ball(46), b4 = new Ball(61);
-    // Resting x-coordinates for balls
-    private final int B1_X_POS = -4, B2_X_POS = 57, B3_X_POS = 118, B4_X_POS = 179;
+    private final JPanel interiorPanel = new JPanel();
+    private final Insets insets;
+    private final Queue<Ball> ballQueue = new LinkedList<>();
+    
+    private final Random randomGen = new Random();
+    
+    private final int LEFTMOST_X_POS = -65, B2_X_POS = 57;
     
     public BallTicker() {
 	this.setIcon(background);
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints interiorConstraint = new GridBagConstraints();
 	
-	JPanel interiorPanel = new JPanel();
 	interiorPanel.setOpaque(false);
 	interiorPanel.setLayout(null);
 	interiorPanel.setPreferredSize(new Dimension(240, 64));
-	
 	this.add(interiorPanel, interiorConstraint);
 	
-	// Test display of balls
-	interiorPanel.add(b1);
-	interiorPanel.add(b2);
-	interiorPanel.add(b3);
-	interiorPanel.add(b4);
+	this.insets = interiorPanel.getInsets();
 	
-	// Testing resting coordinates for balls
-	Insets insets = interiorPanel.getInsets();
-	b1.setBounds(insets.left + B1_X_POS, insets.top + 2, 66, 60);
-	b2.setBounds(insets.left + B2_X_POS, insets.top + 2, 66, 60);
-	b3.setBounds(insets.left + B3_X_POS, insets.top + 2, 66, 60);
-	b4.setBounds(insets.left + B4_X_POS, insets.top + 2, 66, 60);
+	this.addMouseListener(new BallTicker.TestMouseListener()); // Remove when no longer needed
     }
     
-    public void changeBallPosition(int n) {
+    private class TestMouseListener extends MouseAdapter { // Remove when no longer needed
+	@Override
+	public void mousePressed(MouseEvent e) {
+	    addBall(randomGen.nextInt(74) + 1);
+	}
+    }
+    
+    public void addBall(int n) {
+	// Make new ball and add to the queue
+	Ball newBall = new Ball(n);
+	ballQueue.offer(newBall);
 	
+	// Put new ball into position just out of frame
+	newBall.setBounds(insets.left + LEFTMOST_X_POS, insets.top + 2, 66, 60);
+	interiorPanel.add(newBall);
+	
+	// Slide every ball 61 pixels to the right
+	for (Ball b : ballQueue) {
+	    Rectangle bounds = b.getBounds();
+	    int x = bounds.x, y = bounds.y, width = bounds.width, height = bounds.height;
+	    b.setBounds(x + 61, y, width, height);
+	}
+	
+	// If a ball just slid out of frame, remove it from the queue
+	if (ballQueue.size() > 4) {
+	    ballQueue.poll();
+	}
+	
+	interiorPanel.repaint();
     }
     
     private class Ball extends JLabel {
