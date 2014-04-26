@@ -36,7 +36,7 @@ public class BallTicker extends JLabel {
 	    }
 	}
      };
-    private final Timer slideTimer = new Timer(5, timerListener);
+    private final Timer slideTimer = new Timer(1, timerListener);
     
     private final Random randomGen = new Random(); // Remove when no longer needed
     
@@ -80,8 +80,6 @@ public class BallTicker extends JLabel {
 	if (ballQueue.size() > 5) {
 	    ballQueue.poll();
 	}
-	
-	interiorPanel.repaint();
     }
     
     private void slideBalls1px() {

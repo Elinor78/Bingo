@@ -18,7 +18,7 @@ public class BingoGUI extends JFrame {
     private final JLabel backgroundJL = new JLabel(background);
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
-    private final GridBagConstraints mcUpperLeft, mcUpperRight, mcLowerLeft, mcLowerRight;
+    private final GridBagConstraints pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight;
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
@@ -46,25 +46,25 @@ public class BingoGUI extends JFrame {
 	// Set layout for cardPanel
 	cardPanel.setLayout(new GridBagLayout());
 	
-	mcUpperLeft = new GridBagConstraints();
-	mcUpperLeft.gridx = 0;
-	mcUpperLeft.gridy = 0;
-	mcUpperLeft.insets = new Insets(5, 5, 5, 5);
+	pcUpperLeft = new GridBagConstraints();
+	pcUpperLeft.gridx = 0;
+	pcUpperLeft.gridy = 0;
+	pcUpperLeft.insets = new Insets(5, 5, 5, 5);
 	
-	mcUpperRight = new GridBagConstraints();
-	mcUpperRight.gridx = 1;
-	mcUpperRight.gridy = 0;
-	mcUpperRight.insets = new Insets(5, 5, 5, 5);
+	pcUpperRight = new GridBagConstraints();
+	pcUpperRight.gridx = 1;
+	pcUpperRight.gridy = 0;
+	pcUpperRight.insets = new Insets(5, 5, 5, 5);
 	
-	mcLowerLeft = new GridBagConstraints();
-	mcLowerLeft.gridx = 0;
-	mcLowerLeft.gridy = 1;
-	mcLowerLeft.insets = new Insets(5, 5, 5, 5);
+	pcLowerLeft = new GridBagConstraints();
+	pcLowerLeft.gridx = 0;
+	pcLowerLeft.gridy = 1;
+	pcLowerLeft.insets = new Insets(5, 5, 5, 5);
 	
-	mcLowerRight = new GridBagConstraints();
-	mcLowerRight.gridx = 1;
-	mcLowerRight.gridy = 1;
-	mcLowerRight.insets = new Insets(5, 5, 5, 5);
+	pcLowerRight = new GridBagConstraints();
+	pcLowerRight.gridx = 1;
+	pcLowerRight.gridy = 1;
+	pcLowerRight.insets = new Insets(5, 5, 5, 5);
 	
 	// Test PlayerCards
 	PlayerCard[] cardArray = new PlayerCard[5];
@@ -80,10 +80,10 @@ public class BingoGUI extends JFrame {
 	    cardPanel.add(cardArray[0]);
 	}
 	else {
-	    cardPanel.add(cardArray[1], mcUpperLeft);
-	    cardPanel.add(cardArray[2], mcUpperRight);
-	    cardPanel.add(cardArray[3], mcLowerLeft);
-	    cardPanel.add(cardArray[4], mcLowerRight);
+	    cardPanel.add(cardArray[1], pcUpperLeft);
+	    cardPanel.add(cardArray[2], pcUpperRight);
+	    cardPanel.add(cardArray[3], pcLowerLeft);
+	    cardPanel.add(cardArray[4], pcLowerRight);
 	}
 	
 	// Place JPanel to hold number ticker & bingo status window
