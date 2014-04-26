@@ -5,11 +5,14 @@
  */
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import javax.swing.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,10 +23,22 @@ public class BallTicker extends JLabel {
     private final JPanel interiorPanel = new JPanel();
     private final Insets insets;
     private final Queue<Ball> ballQueue = new LinkedList<>();
-    
-    private final Random randomGen = new Random();
-    
+    private int numberOfPixelsSlid;
     private final int LEFTMOST_X_POS = -65;
+    
+    ActionListener timerListener = new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    slideBalls1px();
+	    
+	    if (numberOfPixelsSlid == 61) {
+		slideTimer.stop();
+	    }
+	}
+     };
+    private final Timer slideTimer = new Timer(5, timerListener);
+    
+    private final Random randomGen = new Random(); // Remove when no longer needed
     
     public BallTicker() {
 	this.setIcon(background);
@@ -55,20 +70,29 @@ public class BallTicker extends JLabel {
 	// Put new ball into position just out of frame
 	newBall.setBounds(insets.left + LEFTMOST_X_POS, insets.top + 2, 66, 60);
 	interiorPanel.add(newBall);
+
+	// Reset counter for slideTimer.stop() evaluation.
+	numberOfPixelsSlid = 0;
 	
-	// Slide every ball 61 pixels to the right
-	for (Ball b : ballQueue) {
-	    Rectangle bounds = b.getBounds();
-	    int x = bounds.x, y = bounds.y, width = bounds.width, height = bounds.height;
-	    b.setBounds(x + 61, y, width, height);
-	}
+	slideTimer.start();
 	
 	// If a ball just slid out of frame, remove it from the queue
-	if (ballQueue.size() > 4) {
+	if (ballQueue.size() > 5) {
 	    ballQueue.poll();
 	}
 	
 	interiorPanel.repaint();
+    }
+    
+    private void slideBalls1px() {
+	for (Ball b : ballQueue) {
+	    Rectangle bounds = b.getBounds();
+	    b.setBounds(bounds.x + 1, bounds.y, bounds.width, bounds.height);
+	}
+	
+	interiorPanel.repaint();
+	
+	numberOfPixelsSlid++;
     }
     
     private class Ball extends JLabel {
