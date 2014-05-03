@@ -7,11 +7,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,7 +23,7 @@ public class BallTicker extends JLabel {
     private int numberOfPixelsSlid;
     private final int LEFTMOST_X_POS = -65;
     
-    ActionListener timerListener = new ActionListener() {
+    private final ActionListener timerListener = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 	    slideBalls1px();
@@ -37,8 +34,6 @@ public class BallTicker extends JLabel {
 	}
      };
     private final Timer slideTimer = new Timer(1, timerListener);
-    
-    private final Random randomGen = new Random(); // Remove when no longer needed
     
     public BallTicker() {
 	this.setIcon(background);
@@ -51,46 +46,41 @@ public class BallTicker extends JLabel {
 	this.add(interiorPanel, interiorConstraint);
 	
 	this.insets = interiorPanel.getInsets();
-	
-	this.addMouseListener(new BallTicker.TestMouseListener()); // Remove when no longer needed
-    }
-    
-    private class TestMouseListener extends MouseAdapter { // Remove when no longer needed
-	@Override
-	public void mousePressed(MouseEvent e) {
-	    addBall(randomGen.nextInt(74) + 1);
-	}
     }
     
     public void addBall(int n) {
-	// Make new ball and add to the queue
-	Ball newBall = new Ball(n);
-	ballQueue.offer(newBall);
-	
-	// Put new ball into position just out of frame
-	newBall.setBounds(insets.left + LEFTMOST_X_POS, insets.top + 2, 66, 60);
-	interiorPanel.add(newBall);
+	synchronized (this) {
+	    // Make new ball and add to the queue
+	    Ball newBall = new Ball(n);
+	    ballQueue.offer(newBall);
 
-	// Reset counter for slideTimer.stop() evaluation.
-	numberOfPixelsSlid = 0;
-	
-	slideTimer.start();
-	
-	// If a ball just slid out of frame, remove it from the queue
-	if (ballQueue.size() > 5) {
-	    ballQueue.poll();
+	    // Put new ball into position just out of frame
+	    newBall.setBounds(insets.left + LEFTMOST_X_POS, insets.top + 2, 66, 60);
+	    interiorPanel.add(newBall);
+
+	    // Reset counter for slideTimer.stop() evaluation.
+	    numberOfPixelsSlid = 0;
+
+	    slideTimer.start();
+
+	    // If a ball just slid out of frame, remove it from the queue
+	    if (ballQueue.size() > 5) {
+		ballQueue.poll();
+	    }
 	}
     }
     
     private void slideBalls1px() {
-	for (Ball b : ballQueue) {
-	    Rectangle bounds = b.getBounds();
-	    b.setBounds(bounds.x + 1, bounds.y, bounds.width, bounds.height);
+	synchronized (this) {
+	    for (Ball b : ballQueue) {
+		Rectangle bounds = b.getBounds();
+		b.setBounds(bounds.x + 1, bounds.y, bounds.width, bounds.height);
+	    }
+
+	    interiorPanel.repaint();
+
+	    numberOfPixelsSlid++;
 	}
-	
-	interiorPanel.repaint();
-	
-	numberOfPixelsSlid++;
     }
     
     private class Ball extends JLabel {

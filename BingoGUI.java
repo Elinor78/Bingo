@@ -7,10 +7,9 @@
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javax.swing.*;
 
 public class BingoGUI extends JFrame {
     private static Font gameFont;
@@ -22,6 +21,7 @@ public class BingoGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
+    private final ExecutorService executor = Executors.newCachedThreadPool();
     
     public BingoGUI() {	
 	backgroundJL.setLayout(new GridBagLayout());
@@ -66,7 +66,7 @@ public class BingoGUI extends JFrame {
 	pcLowerRight.gridy = 1;
 	pcLowerRight.insets = new Insets(5, 5, 5, 5);
 	
-	// Test PlayerCards
+	// Test PlayerCards -- remove when no longer needed
 	PlayerCard[] cardArray = new PlayerCard[5];
 	
 	cardArray[0] = new PlayerCard();
@@ -116,6 +116,12 @@ public class BingoGUI extends JFrame {
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
+    // Updates all necessary GUI objects to display newly-called numbers.
+    public void showNewNumber(int n) {
+	executor.execute(new BallTickerNewNumberTask(n));
+	mc.toggleToken(n);
+    }
+    
     /*
     Returns a font to use for GUI elements.
     First tries to get pre-installed Cooper Black font.
@@ -145,5 +151,19 @@ public class BingoGUI extends JFrame {
 	}
 
 	return gameFont;
+    }
+    
+    // Task for adding a new Ball to BallTicker without needing to wait for animation to finish.
+    private class BallTickerNewNumberTask implements Runnable {
+	private final int newNumber;
+	
+	private BallTickerNewNumberTask (int n) {
+	    newNumber = n;
+	}
+	
+	@Override
+	public void run() {
+	    bt.addBall(newNumber);
+	}
     }
 }

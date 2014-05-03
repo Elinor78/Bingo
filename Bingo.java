@@ -4,28 +4,45 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class Bingo {
     
     /*Instance variables*/
-    private ArrayList<Computer> computerPlayers = new ArrayList<Computer>();
+    private final ArrayList<Computer> computerPlayers = new ArrayList<>();
     private int numberOfBingos;
-    private boolean calledNumbers[] = new boolean[75];
+    private final boolean calledNumbers[] = new boolean[75];
+    private boolean areBingosLeft = true;
+    private BingoGUI bGUI;
+    
+    ///// Testing number calls /////
+    private final Random randomGen = new Random();
+    private final ActionListener timerListener = new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    bGUI.showNewNumber(randomGen.nextInt(74) + 1);
+	}
+     };
+    private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, timerListener);
+    ///// Testing number calls /////
     
     /*Default constructor.EAH
 	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
-        BingoGUI bGUI = new BingoGUI();
-		generateComputerPlayers();
-		Human player = new Human();
-		setNumberOfBingos(Player.totalPlayers);
-	
-		//bGUI.setVisible(true);
+        bGUI = new BingoGUI();
+	generateComputerPlayers();
+	Human player = new Human();
+	setNumberOfBingos(Player.totalPlayers);
+
+	bGUI.setVisible(true);
+
+	testBallTimer.start();
     }
     
     /*Generates random # of computer players. Increments totalPlayers.EAH*/
-    public void generateComputerPlayers() {
+    private void generateComputerPlayers() {
         final int LOW = 50;
 		final int HIGH = 75;
 		
@@ -38,7 +55,7 @@ public class Bingo {
     }
     
     /*Sets number of Bingos.EAH*/
-    public void setNumberOfBingos(int numberOfPlayers) {
+    private void setNumberOfBingos(int numberOfPlayers) {
         numberOfBingos = (int)(0.4*numberOfPlayers);
     }
     
@@ -53,7 +70,7 @@ public class Bingo {
 		while(areBingosLeft()){
 			boolean isCalled = true;			
 			Random rand = new Random();
-			int randomNumber = rand.nextInt(75) + 1;
+			int randomNumber = rand.nextInt(74) + 1;
 			while(isCalled){
 				if(isNumberCalled(randomNumber)){
 					isCalled = true;
@@ -83,12 +100,6 @@ public class Bingo {
         
         return calledNumbers[numberCalled - 1];
 
-    }
-
-    
-    /*Updates the position of the recently called numbers. EAH*/
-    public void changeBallPosition(int newCalledNumber) {
-        
     }
     
     /*Speaks called number aloud.*/
