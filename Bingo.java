@@ -22,7 +22,7 @@ public class Bingo {
     private final ActionListener timerListener = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-	    bGUI.showNewNumber(randomGen.nextInt(74) + 1);
+	    bGUI.showNewNumber(randomGen.nextInt(75) + 1);
 	}
      };
     private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, timerListener);
@@ -70,7 +70,7 @@ public class Bingo {
 		while(areBingosLeft()){
 			boolean isCalled = true;			
 			Random rand = new Random();
-			int randomNumber = rand.nextInt(74) + 1;
+			int randomNumber = rand.nextInt(75) + 1;
 			while(isCalled){
 				if(isNumberCalled(randomNumber)){
 					isCalled = true;
