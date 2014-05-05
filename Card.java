@@ -1,11 +1,10 @@
-/*
+ /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
 import java.awt.*;
-import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,65 +41,4 @@ public abstract class Card extends JPanel {
     
     // Abstract method for adding the proper number of cells, numbers, cell behavior.
     protected abstract void generateCardLayout();
-    
-    public void checkForBingo(){
-        
-        boolean isBingo = false;
-        
-        //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
-        for( int i = 0 ; i < 5 ; i++ ){
-            for( int j = 0 ; j < 5 ; j++){
-                if(!cardLayout[i][j] ){
-                    isBingo = false;
-                    break;
-                }
-                else
-                    isBingo = true;
-            }
-            if(isBingo)
-                break;
-        }
-        if(!isBingo){
-        //////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
-        for( int j = 0 ; j < NUMBER_OF_COLUMNS ; j++ ){
-            for( int i = 0 ; i < NUMBER_OF_COLUMNS ; i++){
-                if(!cardLayout[i][j] ){
-                    isBingo = false;
-                    break;
-                }
-                else
-                    isBingo = true;
-            }
-            if(isBingo)
-                break;
-        }
-        }
-        
-        if(!isBingo){//IF THERE HAS BEEN A BINGO SKIP OVER
-            if( cardLayout[0][0] && cardLayout[1][1] && cardLayout[3][3] && cardLayout[4][4])//CHECKS DIAGONAL LEFT -> RIGHT
-                isBingo = true;
-            else if( cardLayout[4][0] && cardLayout[3][1] && cardLayout[1][3] && cardLayout[0][4] )//CHECKS DIAGONAL LEFT <- RIGHT
-                isBingo = true;
-            else if( cardLayout[0][0] && cardLayout[0][4] && cardLayout[4][0] && cardLayout[4][4] )//CHECKS CORNERS
-                isBingo = true;
-        }
-        
-        if(isBingo)
-            cardWin();
-        else
-            cardFreeze();
-    }
-    
-    public void cardWin(){
-        //winPanel.setVisible(true);
-    }
-    
-    public void cardFreeze(){
-        //freezePanel.setVisible(true);
-        
-        //Timer timer = new Timer();
-        //timer.schedule(null, 5000);
-       
-        //freezePanel.setVisible(false);
-    }
 }

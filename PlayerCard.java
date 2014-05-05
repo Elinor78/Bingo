@@ -19,7 +19,7 @@ public class PlayerCard extends Card {
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     private final JPanel callButtonPanel = new JPanel();
     
-    private boolean isBingo;
+    private boolean isBingo = false;
 	    
     public PlayerCard() {
 	totalCards++;
@@ -95,13 +95,8 @@ public class PlayerCard extends Card {
     private class CallButtonMouseListener extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
-	    System.out.println("I'm calling BINGO. This will call isValidBingo().");
+	    System.out.println("Valid pattern? " + isValidBingo());
 	}
-    }
-    
-    /*Sets isBingo to true. No point in allowing a card to be set from true to false.*/
-    private void setIsBingo() {
-        this.isBingo = true;
     }
     
     /*Returns the value of isbingo.*/
@@ -112,21 +107,82 @@ public class PlayerCard extends Card {
     /*Scans cardLayout for valid Bingo and sets isBingo to true if valid. 
     Calls cardFreeze() or cardWin()? */
     private boolean isValidBingo() {
-        if (/*the claim is*/ true) {
-	    return true;
+	boolean isValidBingo = false;
+	boolean validPatternFound = true;
+	
+        //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
+        for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
+	    validPatternFound = true;	// Reset optimistic assumption for each column
+            for (int row = 0; row < NUMBER_OF_ROWS; row++) {		// Iterate rows
+                if (!cardLayout[row][column].isMarked()) {
+                    validPatternFound = false;
+                    break;
+                }
+            }
+	    // This line executes after each bottom Cell has been checked AND after any row break.
+	    if (validPatternFound) {
+		break;
+	    }
+        }
+	
+	if (!validPatternFound) {
+	    validPatternFound = true; // Reset optimistic valid pattern assumption
+	    //////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
+	    for (int row = 0 ; row < NUMBER_OF_ROWS; row++) {			// Iterate rows
+		validPatternFound = true;   // Reset optimistic assumption for each row
+		for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
+		    if (!cardLayout[row][column].isMarked()) {
+			validPatternFound = false;
+			break;
+		    }
+		}
+		// This line executes after each right-most Cell has been checked AND after any column break.
+		if (validPatternFound) {
+		    break;
+		}
+	    }
 	}
-	else {
-	 return false;   
+        
+        if (!validPatternFound) {
+            if (cardLayout[0][0].isMarked() && 
+		cardLayout[1][1].isMarked() && 
+		cardLayout[3][3].isMarked() && 
+		cardLayout[4][4].isMarked()) //CHECKS DIAGONAL LEFT -> RIGHT
+		    validPatternFound = true;
+            else if (cardLayout[4][0].isMarked() && 
+		cardLayout[3][1].isMarked() && 
+		cardLayout[1][3].isMarked() && 
+		cardLayout[0][4].isMarked()) //CHECKS DIAGONAL LEFT <- RIGHT
+		    validPatternFound = true;
+            else if (cardLayout[0][0].isMarked() && 
+		cardLayout[0][4].isMarked() && 
+		cardLayout[4][0].isMarked() && 
+		cardLayout[4][4].isMarked()) //CHECKS CORNERS
+		    validPatternFound = true;
+        }
+	
+	/*
+	// If valid pattern has been found, check that those numbers have been called
+	if (validPatternFound) {
+	    // check the numbers
 	}
+	*/
+        
+        return validPatternFound;
     }
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
+        //freezePanel.setVisible(true);
         
+        //Timer timer = new Timer();
+        //timer.schedule(null, 5000);
+       
+        //freezePanel.setVisible(false);
     }
     
     /*Congratulates user & disables input on card.*/
     private void cardWin() {
-        
+        //winPanel.setVisible(true);
     }
 }
