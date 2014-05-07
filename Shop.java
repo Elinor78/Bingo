@@ -162,16 +162,10 @@ public class Shop extends JFrame {
 
     private void configureCardsToPurchase() {
 	shopFont = BingoGUI.getGameFont().deriveFont(75f);
-        cardsToPurchaseLabel.setSize(57, 57);
-        cardsToPurchaseLabel.setLocation(492, 210);
+        cardsToPurchaseLabel.setSize(60, 80);
+        cardsToPurchaseLabel.setLocation(492, 200);
         cardsToPurchaseLabel.setFont(shopFont);
-        cardsToPurchaseLabel.setVerticalTextPosition(JLabel.CENTER);
-        cardsToPurchaseLabel.setHorizontalTextPosition(JLabel.CENTER);
         cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
-	
-	cardsToPurchaseLabel.setBackground(Color.red);
-	cardsToPurchaseLabel.setOpaque(true);
-	
         backgroundJL.add(cardsToPurchaseLabel);
     }
 }
