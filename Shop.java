@@ -4,6 +4,7 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -151,8 +152,7 @@ public class Shop extends JFrame {
     }
 
     private void configureTicketBank() {
-        /*I'm not sure if it's because I'm on a Mac but I could not get BingoGUI's getGameFont working. This, however, did work.*/
-        shopFont = new Font("Cooper Black", Font.BOLD, 80);
+	shopFont = BingoGUI.getGameFont().deriveFont(80f);
         ticketBankLabel.setSize(115, 80);
         ticketBankLabel.setLocation(225, 200);
         ticketBankLabel.setFont(shopFont);
@@ -161,14 +161,17 @@ public class Shop extends JFrame {
     }
 
     private void configureCardsToPurchase() {
-        /*I am having trouble making the text not cut off along the bottom. Greg, help?*/
-        shopFont = new Font("Cooper Black", Font.BOLD, 75);
+	shopFont = BingoGUI.getGameFont().deriveFont(75f);
         cardsToPurchaseLabel.setSize(57, 57);
         cardsToPurchaseLabel.setLocation(492, 210);
         cardsToPurchaseLabel.setFont(shopFont);
         cardsToPurchaseLabel.setVerticalTextPosition(JLabel.CENTER);
         cardsToPurchaseLabel.setHorizontalTextPosition(JLabel.CENTER);
         cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+	
+	cardsToPurchaseLabel.setBackground(Color.red);
+	cardsToPurchaseLabel.setOpaque(true);
+	
         backgroundJL.add(cardsToPurchaseLabel);
     }
 }
