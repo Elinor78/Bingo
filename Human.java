@@ -6,20 +6,14 @@
 
 import javax.swing.JOptionPane;
 
-public class Human extends Player{
+public class Human {
     
-    /*Instance variables*/
-    private int ticketBank;
+    /*Initial ticket count of 10.*/
+    private int ticketBank = 10;
     
-    /*Default constructor w/ 1 card, increments totalCards & totalPlayers.*/
+    /*Default constructor increments totalPlayers.*/
     public Human() {
-        totalPlayers++;
-    }
-    
-    /*Constructor to start human player with tickets.*/
-    public Human(int initialTicketBank) {
-        this();
-        ticketBank = initialTicketBank;
+        Bingo.totalPlayers++;
     }
     
     /*Change value of ticketBank in positive or negative values.*/
@@ -32,14 +26,11 @@ public class Human extends Player{
         return ticketBank;
     }
     
-    /*Adds cards to playerCards ArrayList and adjusts ticketBank.*/
-    public void purchaseCards(int amountOfCards) {
-        if (amountOfCards < ticketBank) {
-            for (int i = 0; i < amountOfCards; i++) {
-                playerCards.add(new PlayerCard());
-                ticketBank--;
+    /*Adjusts ticketBank.*/
+    public void purchaseCards(int cardsToPurchase) {
+        if (cardsToPurchase < ticketBank) {
+            ticketBank -= cardsToPurchase;
             }
-        }
         else
             JOptionPane.showMessageDialog(null, "You do not have enough tickets", "Insufficient Funds", JOptionPane.OK_OPTION);
     }

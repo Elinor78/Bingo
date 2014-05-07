@@ -16,6 +16,8 @@ public class Bingo {
     private final boolean calledNumbers[] = new boolean[75];
     private boolean areBingosLeft = true;
     private BingoGUI bGUI;
+    public static int totalPlayers;
+    public static Human player = new Human();
     
     ///// Testing number calls /////
     private final Random randomGen = new Random();
@@ -33,8 +35,7 @@ public class Bingo {
     public Bingo() {
         bGUI = new BingoGUI();
 	generateComputerPlayers();
-	Human player = new Human();
-	setNumberOfBingos(Player.totalPlayers);
+	setNumberOfBingos(totalPlayers);
 
 	bGUI.setVisible(true);
 
@@ -51,6 +52,7 @@ public class Bingo {
 		
 		for(int i = 0; i < randomInt; i++){
 			computerPlayers.add(new Computer());
+                        totalPlayers++;
 		}
     }
     

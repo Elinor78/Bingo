@@ -59,7 +59,9 @@ public class Shop extends JFrame {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
+                /*Sends the amount of cards to purchase to Bingo.*/
                 Bingo newGame = new Bingo();
+                Bingo.player.purchaseCards(cardsToPurchase);
                 /*Close the Shop window.*/
                 dispose();
             }

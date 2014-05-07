@@ -6,7 +6,7 @@
 
 import java.util.Random;
 
-public class Computer extends Player {
+public class Computer {
     
     /*Instance variables*/
     private double responseTime;
@@ -15,17 +15,12 @@ public class Computer extends Player {
     public Computer() {
         generateResponseTime();
         generateNumberOfCards();
-		totalPlayers++; //EAH
+		//totalPlayers++; //EAH
     }
     
     /*Randomly generates # of cards between 1 and 4.*/
     public final void generateNumberOfCards() {
-        /*Generate random number between 1 and 4*/
-        int numberOfCards = new Random().nextInt(4) + 1;
-        /*Add the number of cards generated to the playerCards array.*/
-        for (int i = 0; i < numberOfCards; i++) {
-            playerCards.add(new PlayerCard());
-        }
+        int numberOfCards = new Random().nextInt(4) + 1;   
     }
     
     /*Randomly generates # of seconds between 0 and 3.*/
