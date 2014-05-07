@@ -113,10 +113,8 @@ public class Bingo {
     }
     
     public static void main(String[] args) {
-	// If player selected "Play Bingo"...
-        Bingo newGame = new Bingo();
-	// Else show Instructions or Credits
-        //This is a test.
+        /*Load the shop interface with which to launch the game.*/
+        Shop newShop = new Shop();
     }
     
 }
