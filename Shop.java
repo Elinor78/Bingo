@@ -4,7 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

@@ -13,18 +13,21 @@ public class Bingo {
     /*Instance variables*/
     private final ArrayList<Computer> computerPlayers = new ArrayList<>();
     private int numberOfBingos;
-    private final boolean calledNumbers[] = new boolean[75];
+    private final ArrayList<Integer> availableNumbers = populateNumberArray();
     private boolean areBingosLeft = true;
     private BingoGUI bGUI;
     public static int totalPlayers;
     public static Human player = new Human();
+    private int nextNumber;
     
     ///// Testing number calls /////
     private final Random randomGen = new Random();
     private final ActionListener timerListener = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-	    bGUI.showNewNumber(randomGen.nextInt(75) + 1);
+	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
+	    bGUI.showNewNumber(nextNumber);
+	    setNumberCalled(nextNumber);
 	}
      };
     private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, timerListener);
@@ -41,6 +44,14 @@ public class Bingo {
 
 	testBallTimer.start();
     }
+    
+    private ArrayList<Integer> populateNumberArray(){
+		ArrayList<Integer> list = new ArrayList<>(75);
+		for(int i = 1; i <= 75; i++){
+			list.add(i);									
+		}	
+		return list;
+	}
     
     /*Generates random # of computer players. Increments totalPlayers.EAH*/
     private void generateComputerPlayers() {
@@ -92,16 +103,13 @@ public class Bingo {
 		return true;
 	}
     
-    /*Sets a called number in the calledNumbers array. EAH*/
-    public void setNumberCalled(int numberCalled) {
-        calledNumbers[numberCalled - 1] = true;
+    private void setNumberCalled(int numberCalled) {
+        availableNumbers.remove((Integer)numberCalled);
     }
     
-    /*Checks if a number has been called or not. EAH*/
+    // If numberCalled is not in availableNumbers, returns true.
     public boolean isNumberCalled(int numberCalled) {
-        
-        return calledNumbers[numberCalled - 1];
-
+	return Collections.binarySearch(availableNumbers, numberCalled) < 0;
     }
     
     /*Speaks called number aloud.*/
@@ -116,7 +124,11 @@ public class Bingo {
     
     public static void main(String[] args) {
         /*Load the shop interface with which to launch the game.*/
-        Shop newShop = new Shop();
+	
+	//while (true) { // Deliberate infinite loop
+	    Shop newShop = new Shop();
+	    System.out.println("If main is going to control the flow, this line shouldn't execute until a BingoGUI round ends.\n But currently, it executes as soon as the Shop window appears.\n Because JFrames automatically get their own threads.\n");
+	//}
     }
     
 }
