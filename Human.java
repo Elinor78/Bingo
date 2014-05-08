@@ -4,12 +4,10 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import javax.swing.JOptionPane;
-
 public class Human {
     
     /*Initial ticket count of 10.*/
-    private int ticketBank = 10;
+    private int ticketBank = 20;
     
     /*Default constructor increments totalPlayers.*/
     public Human() {
@@ -27,12 +25,7 @@ public class Human {
     }
     
     /*Adjusts ticketBank.*/
-    public void purchaseCards(int cardsToPurchase) {
-        if (cardsToPurchase < ticketBank) {
-            ticketBank -= cardsToPurchase;
+    public void purchaseCards(int cardsToPurchase, int cardCost) {
+            ticketBank -= cardsToPurchase * cardCost;
             }
-        else
-            JOptionPane.showMessageDialog(null, "You do not have enough tickets", "Insufficient Funds", JOptionPane.OK_OPTION);
     }
-    
-}

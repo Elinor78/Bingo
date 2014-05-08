@@ -7,10 +7,7 @@
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 public class Shop extends JFrame {
 
@@ -24,10 +21,19 @@ public class Shop extends JFrame {
     private final JLabel ticketBankLabel = new JLabel();
     private final JLabel cardsToPurchaseLabel = new JLabel();
     private Font shopFont;
-    public static int cardsToPurchase = 1;
+    public static int cardsToPurchase = 1; // Is there a reason for this to be static? GK
+    private final int CARD_COST;
     
+    // Creates Shop with default card price of 2.
     public Shop() {
-        configureBackground();
+	this(2);
+    }
+    
+    // Creates Shop with specified card price. Allows for discounts.
+    public Shop(int salePrice) {
+	CARD_COST = salePrice;
+	
+	configureBackground();
         configureStartButton();
         configureQuitButton();
         configureCreditsButton();
@@ -59,11 +65,16 @@ public class Shop extends JFrame {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
-                /*Sends the amount of cards to purchase to Bingo.*/
-                Bingo newGame = new Bingo();
-                Bingo.player.purchaseCards(cardsToPurchase);
-                /*Close the Shop window.*/
-                dispose();
+		if (Bingo.player.getTicketBank() < CARD_COST) {
+		    JOptionPane.showMessageDialog(null, "You do not have enough tickets.", "Insufficient Funds", JOptionPane.OK_OPTION);
+		}
+		else {
+		    /*Sends the amount of cards to purchase to Bingo.*/
+		    Bingo newGame = new Bingo();
+		    Bingo.player.purchaseCards(cardsToPurchase, CARD_COST);
+		    /*Close the Shop window.*/
+		    dispose();
+		}
             }
         });
         backgroundJL.add(startButton);
@@ -124,8 +135,11 @@ public class Shop extends JFrame {
             /*Increase the amount of cards to be purchased up to 4.*/
             public void mouseReleased(MouseEvent e) {
                 if (cardsToPurchase < 4) {
-                    cardsToPurchase++;
-                    cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+		    if (Integer.parseInt(ticketBankLabel.getText()) - CARD_COST >= 0) {
+			cardsToPurchase++;
+			cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+			ticketBankLabel.setText(String.valueOf(Integer.parseInt(ticketBankLabel.getText()) - CARD_COST));
+		    }
                 }
             }
         });
@@ -144,6 +158,7 @@ public class Shop extends JFrame {
                 if (cardsToPurchase > 1) {
                     cardsToPurchase--;
                     cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+		    ticketBankLabel.setText(String.valueOf(Integer.parseInt(ticketBankLabel.getText()) + CARD_COST));
                 }
             }
         });
@@ -151,20 +166,32 @@ public class Shop extends JFrame {
     }
 
     private void configureTicketBank() {
-	shopFont = BingoGUI.getGameFont().deriveFont(80f);
-        ticketBankLabel.setSize(115, 80);
-        ticketBankLabel.setLocation(225, 200);
+	shopFont = BingoGUI.getGameFont().deriveFont(75f);
+        ticketBankLabel.setSize(155, 110);
+        ticketBankLabel.setLocation(190, 190);
         ticketBankLabel.setFont(shopFont);
-        ticketBankLabel.setText("10");
+	if (Bingo.player.getTicketBank() < CARD_COST) {
+	    ticketBankLabel.setText("0");
+	}
+	else {
+	    ticketBankLabel.setText(String.valueOf(Bingo.player.getTicketBank() - CARD_COST));
+	}
+	ticketBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundJL.add(ticketBankLabel);
     }
 
     private void configureCardsToPurchase() {
 	shopFont = BingoGUI.getGameFont().deriveFont(75f);
-        cardsToPurchaseLabel.setSize(60, 80);
-        cardsToPurchaseLabel.setLocation(492, 200);
+        cardsToPurchaseLabel.setSize(90, 90);
+        cardsToPurchaseLabel.setLocation(465, 200);
         cardsToPurchaseLabel.setFont(shopFont);
-        cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+	if (Bingo.player.getTicketBank() < CARD_COST) {
+	    cardsToPurchaseLabel.setText("0");
+	}
+	else {
+	    cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+	}
+	cardsToPurchaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundJL.add(cardsToPurchaseLabel);
     }
 }
