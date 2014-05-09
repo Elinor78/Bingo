@@ -107,20 +107,52 @@ public class PlayerCard extends Card {
     /*Scans cardLayout for valid Bingo and sets isBingo to true if valid. 
     Calls cardFreeze() or cardWin()? */
     private boolean isValidBingo() {
-	boolean isValidBingo = false;
-	boolean validPatternFound = true;
+	int[] claimedNumbers = getClaimedNumbers();
 	
-        //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
+	if (claimedNumbers == null) { // Not a valid pattern
+	    return false;
+	}
+	else {
+	    boolean allNumbersWereCalled = true;
+	    
+	    for (int i = 0; i < 5; i++) {
+		if (!Bingo.isNumberCalled(claimedNumbers[i])) {
+		    allNumbersWereCalled = false;
+		}
+	    }
+	    
+	    return allNumbersWereCalled;
+	   }
+    }
+    
+    /*
+    If a valid pattern is found, returns an int[] of the claimed numbers.
+    If no pattern found, returns null.
+    Since valid patterns can have 4 or 5 numbers, let values of -1 represent empty indexes.
+    */
+    private int[] getClaimedNumbers() {
+	int[] claimedNumbers = new int[5];
+	int[] freshArray = { -1, -1, -1, -1, -1}; // For resetting claimedNumbers at the start of each pattern check.
+	boolean validPatternFound = true; // Optimistic assumption
+	
+	//////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
         for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
 	    validPatternFound = true;	// Reset optimistic assumption for each column
+	    System.arraycopy(freshArray, 0, claimedNumbers, 0, 5); // Reset claimedNumbers to -1 values
             for (int row = 0; row < NUMBER_OF_ROWS; row++) {		// Iterate rows
                 if (!cardLayout[row][column].isMarked()) {
                     validPatternFound = false;
                     break;
                 }
+		else {
+		    claimedNumbers[row] = cardLayout[row][column].getNumber();
+		}
             }
 	    // This line executes after each bottom Cell has been checked AND after any row break.
 	    if (validPatternFound) {
+		if (column == 2) {
+			claimedNumbers[2] = -1; // Set value of blank center space to -1
+		    }
 		break;
 	    }
         }
@@ -130,14 +162,21 @@ public class PlayerCard extends Card {
 	    //////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
 	    for (int row = 0 ; row < NUMBER_OF_ROWS; row++) {			// Iterate rows
 		validPatternFound = true;   // Reset optimistic assumption for each row
+		System.arraycopy(freshArray, 0, claimedNumbers, 0, 5); // Reset claimedNumbers to -1 values
 		for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
 		    if (!cardLayout[row][column].isMarked()) {
 			validPatternFound = false;
 			break;
 		    }
+		    else {
+			claimedNumbers[column] = cardLayout[row][column].getNumber();
+		    }
 		}
 		// This line executes after each right-most Cell has been checked AND after any column break.
 		if (validPatternFound) {
+		    if (row == 2) {
+			claimedNumbers[2] = -1; // Set value of blank center space to -1
+		    }
 		    break;
 		}
 	    }
@@ -147,28 +186,44 @@ public class PlayerCard extends Card {
             if (cardLayout[0][0].isMarked() && 
 		cardLayout[1][1].isMarked() && 
 		cardLayout[3][3].isMarked() && 
-		cardLayout[4][4].isMarked()) //CHECKS DIAGONAL LEFT -> RIGHT
+		cardLayout[4][4].isMarked()) { //CHECKS DIAGONAL LEFT -> RIGHT
+		    claimedNumbers[0] = cardLayout[0][0].getNumber();
+		    claimedNumbers[1] = cardLayout[1][1].getNumber();
+		    claimedNumbers[2] = cardLayout[3][3].getNumber();
+		    claimedNumbers[3] = cardLayout[4][4].getNumber();
+		    claimedNumbers[4] = -1;
 		    validPatternFound = true;
+	    }
             else if (cardLayout[4][0].isMarked() && 
 		cardLayout[3][1].isMarked() && 
 		cardLayout[1][3].isMarked() && 
-		cardLayout[0][4].isMarked()) //CHECKS DIAGONAL LEFT <- RIGHT
+		cardLayout[0][4].isMarked()) { //CHECKS DIAGONAL LEFT <- RIGHT
+		    claimedNumbers[0] = cardLayout[4][0].getNumber();
+		    claimedNumbers[1] = cardLayout[3][1].getNumber();
+		    claimedNumbers[2] = cardLayout[1][3].getNumber();
+		    claimedNumbers[3] = cardLayout[0][4].getNumber();
+		    claimedNumbers[4] = -1;
 		    validPatternFound = true;
+	    }
             else if (cardLayout[0][0].isMarked() && 
 		cardLayout[0][4].isMarked() && 
 		cardLayout[4][0].isMarked() && 
-		cardLayout[4][4].isMarked()) //CHECKS CORNERS
+		cardLayout[4][4].isMarked()) { //CHECKS CORNERS
+		    claimedNumbers[0] = cardLayout[0][0].getNumber();
+		    claimedNumbers[1] = cardLayout[0][4].getNumber();
+		    claimedNumbers[2] = cardLayout[4][0].getNumber();
+		    claimedNumbers[3] = cardLayout[4][4].getNumber();
+		    claimedNumbers[4] = -1;
 		    validPatternFound = true;
+	    }
         }
 	
-	/*
-	// If valid pattern has been found, check that those numbers have been called
-	if (validPatternFound) {
-	    // check the numbers
+        if (validPatternFound) {
+	   return claimedNumbers; 
 	}
-	*/
-        
-        return validPatternFound;
+	else {
+	 return null;   
+	}
     }
     
     /*Dims card & disables input for 5 seconds.*/
