@@ -21,7 +21,7 @@ public class Shop extends JFrame {
     private final JLabel ticketBankLabel = new JLabel();
     private final JLabel cardsToPurchaseLabel = new JLabel();
     private Font shopFont;
-    public static int cardsToPurchase = 1; // Is there a reason for this to be static? GK
+    private int cardsToPurchase = 1; // Is there a reason for this to be static? GK
     private final int CARD_COST;
     
     // Creates Shop with default card price of 2.

@@ -6,7 +6,7 @@
 
 public class Human {
     
-    /*Initial ticket count of 10.*/
+    /*Initial ticket count of 20.*/
     private int ticketBank = 20;
     
     /*Default constructor increments totalPlayers.*/
