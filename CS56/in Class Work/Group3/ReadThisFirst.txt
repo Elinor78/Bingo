@@ -1,0 +1,17 @@
+Memebers
+David Villarreal 			
+Noa Altschul		
+Martin Reyes                     
+Gregory Sandoval     
+Joshua Lee          
+HuaJun Zhang      
+
+How To Run the Game
+Import the game Folder(CS56Final) into Eclipse click run button. Make sure that GameMain1 is the main class
+
+To Play the game wait for the introduction to finish
+press the start icon
+use w s d a charater to move  and space bar to jump
+
+Hope you get better 
+Thank you for teaching us Advanced Java
