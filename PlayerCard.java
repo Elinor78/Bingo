@@ -113,15 +113,7 @@ public class PlayerCard extends Card {
 	    return false;
 	}
 	else {
-	    boolean allNumbersWereCalled = true;
-	    
-	    for (int i = 0; i < 5; i++) {
-		if (!Bingo.isNumberCalled(claimedNumbers[i])) {
-		    allNumbersWereCalled = false;
-		}
-	    }
-	    
-	    return allNumbersWereCalled;
+	    return Bingo.isNumberCalled(claimedNumbers);
 	   }
     }
     

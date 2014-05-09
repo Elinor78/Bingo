@@ -112,6 +112,19 @@ public class Bingo {
 	return Collections.binarySearch(availableNumbers, numberCalled) < 0;
     }
     
+    // Returns true if all numbers in array were called.
+    public boolean isNumberCalled(int[] array) {
+	boolean allNumbersWereCalled = true;
+	
+	for (int i = 0; i < array.length; i++) {
+	    if (!isNumberCalled(array[i])) {
+		allNumbersWereCalled = false;
+	    }
+	}
+	
+	return allNumbersWereCalled;
+    }
+    
     /*Speaks called number aloud.*/
     public void speakNumber(int numberToSpeak) {
         
