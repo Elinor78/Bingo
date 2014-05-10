@@ -18,6 +18,7 @@ public class PlayerCard extends Card {
     private final Random numberGenerator = new Random();
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     private final JPanel callButtonPanel = new JPanel();
+    private final CellMouseListener cellListener = new CellMouseListener();
     
     private boolean isBingo = false;
 	    
@@ -65,7 +66,7 @@ public class PlayerCard extends Card {
 		cardLayout[row][column] = new Cell(numberCandidate);
 
 		//cardLayout[row][column].setFontSize(20);
-		cardLayout[row][column].addMouseListener(new CellMouseListener());
+		cardLayout[row][column].addMouseListener(cellListener);
 		cellPanel.add(cardLayout[row][column]);
 	    }
 	}
@@ -115,8 +116,27 @@ public class PlayerCard extends Card {
 	else {
 	    return Bingo.isNumberCalled(claimedNumbers);
 	   }
+	
+	/*
+	// Sample of what it would look like if we checked for more patterns if number-validation failed. GK
+	
+	boolean isValidBingo = false;
+	int[] step = {1};
+	
+	do {
+	    int[] claimedNumbers = getClaimedNumbers(step); // step is altered inside the method
+	    
+	    if (step != 14) { // If step == 14, no pattern was found, so no numbers to validate
+		if (Bingo.isNumberCalled(claimedNumbers)) {
+		    isValidBingo = true;
+		}
+	    }
+	} while ((step < 14) && (isValidBingo == false));
+	
+	return isValidBingo;
+	*/
     }
-    
+
     /*
     If a valid pattern is found, returns an int[] of the claimed numbers.
     If no pattern found, returns null.
