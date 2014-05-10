@@ -21,7 +21,7 @@ public class BingoGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
-    private final ExecutorService executor = Executors.newCachedThreadPool();
+    //private final ExecutorService executor = Executors.newCachedThreadPool();
     
     public BingoGUI() {	
 	backgroundJL.setLayout(new GridBagLayout());
@@ -118,7 +118,8 @@ public class BingoGUI extends JFrame {
     
     // Updates all necessary GUI objects to display newly-called numbers.
     public void showNewNumber(int n) {
-	executor.execute(new BallTickerNewNumberTask(n));
+	//executor.execute(new BallTickerNewNumberTask(n));
+	bt.addBall(n);
 	mc.toggleToken(n);
     }
     
@@ -153,6 +154,7 @@ public class BingoGUI extends JFrame {
 	return gameFont;
     }
     
+    /*
     // Task for adding a new Ball to BallTicker without needing to wait for animation to finish.
     private class BallTickerNewNumberTask implements Runnable {
 	private final int newNumber;
@@ -166,4 +168,5 @@ public class BingoGUI extends JFrame {
 	    bt.addBall(newNumber);
 	}
     }
+    */
 }
