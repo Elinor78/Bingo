@@ -36,7 +36,7 @@ public class Bingo {
     /*Default constructor.EAH
 	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
-        bGUI = new BingoGUI();
+        bGUI = new BingoGUI(this);
 	generateComputerPlayers();
 	setNumberOfBingos(totalPlayers);
 

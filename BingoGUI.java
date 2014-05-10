@@ -7,11 +7,12 @@
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.Executors;
 import javax.swing.*;
 
 public class BingoGUI extends JFrame {
+    private final Bingo b;
     private static Font gameFont;
     private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif"));
     private final JLabel backgroundJL = new JLabel(background);
@@ -21,9 +22,12 @@ public class BingoGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
+    private final StatusWindow sw = new StatusWindow();
     //private final ExecutorService executor = Executors.newCachedThreadPool();
     
-    public BingoGUI() {	
+    public BingoGUI(Bingo b) {	
+	this.b = b;
+	
 	backgroundJL.setLayout(new GridBagLayout());
 	GridBagConstraints mainFrameConstraint = new GridBagConstraints();
 	
@@ -69,12 +73,12 @@ public class BingoGUI extends JFrame {
 	// Test PlayerCards -- remove when no longer needed
 	PlayerCard[] cardArray = new PlayerCard[5];
 	
-	cardArray[0] = new PlayerCard();
+	cardArray[0] = new PlayerCard(b);
 	
-	cardArray[1] = new PlayerCard();
-	cardArray[2] = new PlayerCard();
-	cardArray[3] = new PlayerCard();
-	cardArray[4] = new PlayerCard();
+	cardArray[1] = new PlayerCard(b);
+	cardArray[2] = new PlayerCard(b);
+	cardArray[3] = new PlayerCard(b);
+	cardArray[4] = new PlayerCard(b);
 	
 	if (PlayerCard.totalCards == 1) {
 	    cardPanel.add(cardArray[0]);
@@ -105,6 +109,9 @@ public class BingoGUI extends JFrame {
 	
 	// Add BallTicker to statusPanel
 	statusPanel.add(bt, statusTop);
+	
+	// Add StatusWindow to statusPanel
+	statusPanel.add(sw, statusMiddle);
 	
 	// Add everything to Jframe and set static size
 	this.add(backgroundJL);

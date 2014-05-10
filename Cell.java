@@ -31,12 +31,6 @@ public class Cell extends JLabel {
 	this.setText(String.valueOf(number));
     }
     
-    public Cell(char c) {
-	marker = new ImageIcon(getClass().getResource("/img/Card/markerSmall.png"));
-	genericInitializations();
-	this.setText(String.valueOf(c));
-    }
-    
     private void genericInitializations() {
 	this.setBorder(new LineBorder(Color.black, 1));
 	this.setOpaque(true);
@@ -69,6 +63,10 @@ public class Cell extends JLabel {
     
     public int getNumber() {
 	return cellNumber;
+    }
+    
+    public void setNumber(int n) {
+	cellNumber = n;
     }
     
     public boolean isMarked() {

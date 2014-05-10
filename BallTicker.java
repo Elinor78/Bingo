@@ -49,7 +49,6 @@ public class BallTicker extends JLabel {
     }
     
     public void addBall(int n) {
-	synchronized (this) {
 	    // Make new ball and add to the queue
 	    Ball newBall = new Ball(n);
 	    ballQueue.offer(newBall);
@@ -67,11 +66,9 @@ public class BallTicker extends JLabel {
 	    if (ballQueue.size() > 5) {
 		ballQueue.poll();
 	    }
-	}
     }
     
     private void slideBalls1px() {
-	synchronized (this) {
 	    for (Ball b : ballQueue) {
 		Rectangle bounds = b.getBounds();
 		b.setBounds(bounds.x + 1, bounds.y, bounds.width, bounds.height);
@@ -80,7 +77,6 @@ public class BallTicker extends JLabel {
 	    interiorPanel.repaint();
 
 	    numberOfPixelsSlid++;
-	}
     }
     
     private class Ball extends JLabel {
