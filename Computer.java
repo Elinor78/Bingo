@@ -7,6 +7,7 @@
 import java.util.Random;
 
 public class Computer {
+    static int NumComputerPlayers = 0;
     
     /*Instance variables*/
     private double responseTime;
@@ -15,7 +16,7 @@ public class Computer {
     public Computer() {
         generateResponseTime();
         generateNumberOfCards();
-		//totalPlayers++; //EAH
+	NumComputerPlayers++;
     }
     
     /*Randomly generates # of cards between 1 and 4.*/

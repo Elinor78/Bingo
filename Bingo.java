@@ -16,13 +16,12 @@ public class Bingo {
     private final ArrayList<Integer> availableNumbers = populateNumberArray();
     private boolean areBingosLeft = true;
     private BingoGUI bGUI;
-    public static int totalPlayers;
     public static Human player = new Human();
     private int nextNumber;
     
     ///// Testing number calls /////
     private final Random randomGen = new Random();
-    private final ActionListener timerListener = new ActionListener() {
+    private final ActionListener callNewNumber = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
@@ -30,18 +29,19 @@ public class Bingo {
 	    setNumberCalled(nextNumber);
 	}
      };
-    private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, timerListener);
+    private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, callNewNumber);
     ///// Testing number calls /////
     
     /*Default constructor.EAH
 	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
-        bGUI = new BingoGUI(this);
 	generateComputerPlayers();
-	setNumberOfBingos(totalPlayers);
+	setNumberOfBingos(Computer.NumComputerPlayers + 1);
+        bGUI = new BingoGUI(this);
 
 	bGUI.setVisible(true);
-
+System.out.println("Number of Computer: " + computerPlayers.size());
+System.out.println("Number of bingos: " + numberOfBingos);
 	testBallTimer.start();
     }
     
@@ -53,18 +53,14 @@ public class Bingo {
 		return list;
 	}
     
-    /*Generates random # of computer players. Increments totalPlayers.EAH*/
+    /*Generates random # of computer players.EAH*/
     private void generateComputerPlayers() {
-        final int LOW = 50;
-		final int HIGH = 75;
-		
-		Random rand = new Random();
-		int randomInt = rand.nextInt(HIGH) + LOW;
-		
-		for(int i = 0; i < randomInt; i++){
-			computerPlayers.add(new Computer());
-                        totalPlayers++;
-		}
+        final int LOWEST = 50;
+	final int RANGE = 75;
+
+	for(int i = 0; i < new Random().nextInt(RANGE) + LOWEST; i++){
+	    computerPlayers.add(new Computer());
+	}
     }
     
     /*Sets number of Bingos.EAH*/
@@ -137,11 +133,7 @@ public class Bingo {
     
     public static void main(String[] args) {
         /*Load the shop interface with which to launch the game.*/
-	
-	//while (true) { // Deliberate infinite loop
 	    Shop newShop = new Shop();
-	    System.out.println("If main is going to control the flow, this line shouldn't execute until a BingoGUI round ends.\n But currently, it executes as soon as the Shop window appears.\n Because JFrames automatically get their own threads.\n");
-	//}
     }
     
 }

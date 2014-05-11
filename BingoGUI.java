@@ -21,7 +21,7 @@ public class BingoGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
-    private final StatusWindow sw = new StatusWindow();
+    private final StatusWindow sw;
     //private final ExecutorService executor = Executors.newCachedThreadPool();
     
     public BingoGUI(Bingo b) {	
@@ -101,6 +101,7 @@ public class BingoGUI extends JFrame {
 	statusPanel.add(bt, statusTop);
 	
 	// Add StatusWindow to statusPanel
+	sw = new StatusWindow(b);
 	statusPanel.add(sw, statusMiddle);
 	
 	// Add everything to Jframe and set static size

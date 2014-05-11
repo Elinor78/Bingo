@@ -11,7 +11,6 @@ public class Human {
     
     /*Default constructor increments totalPlayers.*/
     public Human() {
-        Bingo.totalPlayers++;
     }
     
     /*Change value of ticketBank in positive or negative values.*/
