@@ -12,7 +12,6 @@ import java.io.InputStream;
 import javax.swing.*;
 
 public class BingoGUI extends JFrame {
-    private final Bingo b;
     private static Font gameFont;
     private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif"));
     private final JLabel backgroundJL = new JLabel(background);
@@ -26,8 +25,6 @@ public class BingoGUI extends JFrame {
     //private final ExecutorService executor = Executors.newCachedThreadPool();
     
     public BingoGUI(Bingo b) {	
-	this.b = b;
-	
 	backgroundJL.setLayout(new GridBagLayout());
 	GridBagConstraints mainFrameConstraint = new GridBagConstraints();
 	
@@ -70,24 +67,17 @@ public class BingoGUI extends JFrame {
 	pcLowerRight.gridy = 1;
 	pcLowerRight.insets = new Insets(5, 5, 5, 5);
 	
-	// Test PlayerCards -- remove when no longer needed
-	PlayerCard[] cardArray = new PlayerCard[5];
-	
-	cardArray[0] = new PlayerCard(b);
-	
-	cardArray[1] = new PlayerCard(b);
-	cardArray[2] = new PlayerCard(b);
-	cardArray[3] = new PlayerCard(b);
-	cardArray[4] = new PlayerCard(b);
-	
-	if (PlayerCard.totalCards == 1) {
-	    cardPanel.add(cardArray[0]);
+	if (Bingo.player.getNumberOfCards() == 1) {
+	    PlayerCard bigCard = new PlayerCard(b);
+	    bigCard.convertToLargeCard();
+	    cardPanel.add(bigCard);
 	}
 	else {
-	    cardPanel.add(cardArray[1], pcUpperLeft);
-	    cardPanel.add(cardArray[2], pcUpperRight);
-	    cardPanel.add(cardArray[3], pcLowerLeft);
-	    cardPanel.add(cardArray[4], pcLowerRight);
+	    GridBagConstraints[] orderOfCardInsertion = {pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight};
+	
+	    for (int i = 0; i < Bingo.player.getNumberOfCards(); i++) {
+		cardPanel.add(new PlayerCard(b), orderOfCardInsertion[i]);
+	    }
 	}
 	
 	// Place JPanel to hold number ticker & bingo status window

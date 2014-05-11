@@ -70,8 +70,8 @@ public class Shop extends JFrame {
 		}
 		else {
 		    /*Sends the amount of cards to purchase to Bingo.*/
-		    Bingo newGame = new Bingo();
 		    Bingo.player.purchaseCards(cardsToPurchase, CARD_COST);
+		    Bingo newGame = new Bingo();
 		    /*Close the Shop window.*/
 		    dispose();
 		}

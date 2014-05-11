@@ -10,19 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
 public class Cell extends JLabel {
-    private final ImageIcon marker;
+    private ImageIcon marker;
     private int cellNumber = -1;
     private boolean isMarked = false;
     private float FONT_SIZE;
     
     public Cell(int number) {
-	if (Card.totalCards > 1) {
-	    // Card is small
-	    marker = new ImageIcon(getClass().getResource("/img/Card/markerSmall.png"));
-	}
-	else {
-	    marker = new ImageIcon(getClass().getResource("/img/Card/marker.png"));
-	}
+	marker = new ImageIcon(getClass().getResource("/img/Card/markerSmall.png"));
 	
 	FONT_SIZE = (float)(marker.getIconHeight() * .9);
 	
@@ -46,6 +40,12 @@ public class Cell extends JLabel {
     public void setFontSize(int n) {
 	FONT_SIZE = n;
 	this.setFont(Card.cellFont.deriveFont(FONT_SIZE));
+    }
+    
+    public void convertToLargeCell() {
+	marker = new ImageIcon(getClass().getResource("/img/Card/marker.png"));
+	setFontSize((int)(marker.getIconHeight() * .9));
+	repaint();
     }
 
     public void toggleToken() {

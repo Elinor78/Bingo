@@ -29,12 +29,8 @@ public class PlayerCard extends Card {
 	totalCards++;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
-	
-	if (totalCards > 1) {
-	    // Make small card
-	    Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
-	    headerImg = new ImageIcon(scaledImg);  
-	}
+	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
+	headerImg = new ImageIcon(scaledImg);
 	
 	header.setIcon(headerImg);
 	cellLayout.setRows(NUMBER_OF_ROWS);
@@ -102,6 +98,20 @@ public class PlayerCard extends Card {
 	public void mousePressed(MouseEvent e) {
 	    System.out.println("Valid pattern? " + isValidBingo());
 	}
+    }
+    
+    public void convertToLargeCard() {
+	header.setIcon(new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg")));
+	for (int row = 0; row < NUMBER_OF_ROWS; row++) {
+	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {
+		cardLayout[row][column].convertToLargeCell();
+	    }
+	}
+	
+	cardLayout[2][2].convertToLargeCell();
+	cardLayout[2][2].toggleToken();
+	cardLayout[2][2].toggleToken();
+	repaint();
     }
     
     /*Returns the value of isbingo.*/

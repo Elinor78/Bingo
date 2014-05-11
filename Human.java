@@ -5,7 +5,7 @@
  */
 
 public class Human {
-    
+    private int numberOfCards = 0;
     /*Initial ticket count of 20.*/
     private int ticketBank = 20;
     
@@ -25,7 +25,12 @@ public class Human {
     }
     
     /*Adjusts ticketBank.*/
-    public void purchaseCards(int cardsToPurchase, int cardCost) {
-            ticketBank -= cardsToPurchase * cardCost;
-            }
+    public void purchaseCards(int numberOfCards, int cardCost) {
+	ticketBank -= numberOfCards * cardCost;
+	this.numberOfCards = numberOfCards;
     }
+    
+    public int getNumberOfCards() {
+	return numberOfCards;
+    }
+}
