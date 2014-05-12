@@ -20,8 +20,8 @@ public class Shop extends JFrame {
     private final JButton arrowDownButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/arrowDown.png")));
     private final JLabel ticketBankLabel = new JLabel();
     private final JLabel cardsToPurchaseLabel = new JLabel();
-    private Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
-    private int cardsToPurchase = 1; // Is there a reason for this to be static? GK
+    private final Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
+    private int cardsToPurchase = 1;
     private final int CARD_COST;
     
     // Creates Shop with default card price of 2.

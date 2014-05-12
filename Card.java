@@ -25,8 +25,6 @@ public abstract class Card extends JPanel {
     
     // Card gets and stores game font so that each individual Cell doesn't have to search the computer or load from file.
     static final Font cellFont = BingoGUI.getGameFont();
-    
-    static int totalCards = 0;
      
     public Card() {
 	this.setLayout(new BorderLayout());

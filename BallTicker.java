@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class BallTicker extends JLabel {
-    private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BallTicker/BallHolder.png"));
     static final Font ballFont = BingoGUI.getGameFont();
     private final JPanel interiorPanel = new JPanel();
     private final Insets insets;
@@ -36,7 +35,7 @@ public class BallTicker extends JLabel {
     private final Timer slideTimer = new Timer(1, timerListener);
     
     public BallTicker() {
-	this.setIcon(background);
+	this.setIcon(new ImageIcon(getClass().getResource("/img/BallTicker/BallHolder.png")));
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints interiorConstraint = new GridBagConstraints();
 	

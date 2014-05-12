@@ -36,12 +36,11 @@ public class Bingo {
 	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
 	generateComputerPlayers();
-	setNumberOfBingos(Computer.NumComputerPlayers + 1);
+	setNumberOfBingos(Computer.totalComputerPlayers + 1);
+	
         bGUI = new BingoGUI(this);
-
 	bGUI.setVisible(true);
-System.out.println("Number of Computer: " + computerPlayers.size());
-System.out.println("Number of bingos: " + numberOfBingos);
+	
 	testBallTimer.start();
     }
     

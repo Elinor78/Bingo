@@ -12,9 +12,7 @@ import java.io.InputStream;
 import javax.swing.*;
 
 public class BingoGUI extends JFrame {
-    private static Font gameFont;
-    private final ImageIcon background = new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif"));
-    private final JLabel backgroundJL = new JLabel(background);
+    private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif")));
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
     private final GridBagConstraints pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight;
@@ -129,27 +127,21 @@ public class BingoGUI extends JFrame {
     Font is returned at 1-point size.
     */
     public static Font getGameFont() {
-	boolean foundCooper = false;
 	GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Font[] fonts = g.getAllFonts();
 	for (Font font : fonts) {
 	    if (font.getFontName().equals("Cooper Black")) {
-		gameFont = font;
-		foundCooper = true;
-		break;
+		return font;
 	    }
 	}
-	if (!foundCooper) {
-	    try {
-		InputStream cooperFromFile = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");
-		gameFont = Font.createFont(Font.TRUETYPE_FONT, cooperFromFile);
-	    }
-	    catch (FontFormatException | IOException ex) {
-		gameFont = new Font("Impact", Font.PLAIN, 1);
-	    }
+	
+	try {
+	    InputStream cooperFromFile = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");
+	    return Font.createFont(Font.TRUETYPE_FONT, cooperFromFile);
 	}
-
-	return gameFont;
+	catch (FontFormatException | IOException ex) {
+	    return new Font("Impact", Font.PLAIN, 1);
+	}
     }
     
     /*

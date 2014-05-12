@@ -20,13 +20,14 @@ public class PlayerCard extends Card {
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
+    static int totalPlayerCards = 0;
     
     private boolean isBingo = false;
 	    
     public PlayerCard(Bingo b) {
 	this.b = b;
 	
-	totalCards++;
+	totalPlayerCards++;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
 	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
