@@ -36,7 +36,7 @@ public class Bingo {
 	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
 	generateComputerPlayers();
-	setNumberOfBingos(Computer.totalComputerPlayers + 1);
+	setInitialBingos(Computer.totalComputerPlayers + 1);
 	
         bGUI = new BingoGUI(this);
 	bGUI.setVisible(true);
@@ -63,13 +63,17 @@ public class Bingo {
     }
     
     /*Sets number of Bingos.EAH*/
-    private void setNumberOfBingos(int numberOfPlayers) {
+    private void setInitialBingos(int numberOfPlayers) {
         numberOfBingos = (int)(0.4*numberOfPlayers);
     }
     
     /*Gets number of Bingos.EAH*/
     public int getNumberOfBingos() {
         return numberOfBingos;
+    }
+    
+    public void decrementBingos() {
+	numberOfBingos--;
     }
     
     /*Calls a new number to be displayed for player.EAH*/
