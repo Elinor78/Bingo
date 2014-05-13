@@ -21,12 +21,9 @@ public class PlayerCard extends Card {
     private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
     static int totalPlayerCards = 0;
-    
-    private boolean isBingo = false;
 	    
     public PlayerCard(Bingo b) {
 	this.b = b;
-	
 	totalPlayerCards++;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
@@ -97,7 +94,10 @@ public class PlayerCard extends Card {
     private class CallButtonMouseListener extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
-	    System.out.println("Valid pattern? " + isValidBingo());
+	    if( isValidBingo())
+                cardWin();
+            else
+                cardFreeze();
 	}
     }
     
@@ -115,93 +115,70 @@ public class PlayerCard extends Card {
 	repaint();
     }
     
-    /*Returns the value of isbingo.*/
-    public boolean getIsBingo() {
-        return isBingo;
-    }
-
     private boolean isValidBingo() {
-	boolean isValid = true; // Optimistic assumption
-	
-	//////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
-        for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
-	    isValid = true;	// Reset optimistic assumption for each column
-            for (int row = 0; row < NUMBER_OF_ROWS; row++) {		// Iterate rows
-                if (!cardLayout[row][column].isMarked()) {
-                    isValid = false;
+        
+        boolean isBingo = false;
+
+        //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
+        for( int i = 0 ; i < 5 ; i++ ){
+            for( int j = 0 ; j < 5 ; j++){
+                if( !cardLayout[j][i].isMarked() || !b.isNumberCalled(cardLayout[j][i].getNumber())){//<--checks if card is marked, 
+                    isBingo = false;                                                                 //then takes the value in the cell and checks if that
+                    break;                                                                           //number has been called or not
+                }
+                else
+                    isBingo = true;
+            }
+            if( isBingo )
+                break;
+        }
+        
+        //////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
+        for( int i = 0 ; i < 5 ; i++ ){
+            for( int j = 0 ; j < 5 ; j++){
+                if( !cardLayout[i][j].isMarked() || !b.isNumberCalled(cardLayout[i][j].getNumber())){//<--same as above ^^^^
+                    isBingo = false;
                     break;
                 }
-		else { // Cell is marked, but...
-		    if (!b.isNumberCalled(cardLayout[row][column].getNumber())) {
-			isValid = false;
-			break;
-		    }
-		}
+                else
+                    isBingo = true;
             }
-	    // This line executes after each bottom Cell has been checked AND after any row break.
-	    if (isValid) {
-		break;
-	    }
+            if( isBingo )
+                break;
         }
-	
-	if (!isValid) {
-	    //////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
-	    for (int row = 0 ; row < NUMBER_OF_ROWS; row++) {			// Iterate rows
-		isValid = true;   // Reset optimistic assumption for each row
-		for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
-		    if (!cardLayout[row][column].isMarked()) {
-			isValid = false;
-			break;
-		    }
-		    else { // Cell is marked, but...
-			if (!b.isNumberCalled(cardLayout[row][column].getNumber())) {
-			    isValid = false;
-			    break;
-			}
-		    }
-		}
-		// This line executes after each right-most Cell has been checked AND after any column break.
-		if (isValid) {
-		    break;
-		}
-	    }
-	}
         
-        if (!isValid) {
-            if (cardLayout[0][0].isMarked() && cardLayout[1][1].isMarked() && 
-		cardLayout[3][3].isMarked() && cardLayout[4][4].isMarked()) { //CHECKS DIAGONAL LEFT -> RIGHT
-		if (b.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[1][1].getNumber(), 
-		    cardLayout[3][3].getNumber(), cardLayout[4][4].getNumber()})) {
-		    isValid = true;
-		}
-	    }
-            else if (cardLayout[4][0].isMarked() && cardLayout[3][1].isMarked() && 
-		cardLayout[1][3].isMarked() && cardLayout[0][4].isMarked()) { //CHECKS DIAGONAL LEFT <- RIGHT
-		if (b.isNumberCalled(new int[] {cardLayout[4][0].getNumber(), cardLayout[3][1].getNumber(), 
-		    cardLayout[1][3].getNumber(), cardLayout[0][4].getNumber()})) {
-		    isValid = true;
-		}
-	    }
-            else if (cardLayout[0][0].isMarked() && cardLayout[0][4].isMarked() && 
-		cardLayout[4][0].isMarked() && cardLayout[4][4].isMarked()) { //CHECKS CORNERS
-		if (b.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[0][4].getNumber(), 
-		    cardLayout[4][0].getNumber(), cardLayout[4][4].getNumber()})) {
-		    isValid = true;
-		}
-	    }
+        //////////////////////// CHECKS DIAGONAL AND CORNER BINGOS ////////////////////////////
+        if( !isBingo ){
+            if( ( cardLayout[0][0].isMarked() && b.isNumberCalled(cardLayout[0][0].getNumber())) && 
+                ( cardLayout[1][1].isMarked() && b.isNumberCalled(cardLayout[1][1].getNumber())) && 
+                ( cardLayout[3][3].isMarked() && b.isNumberCalled(cardLayout[3][3].getNumber())) && 
+                ( cardLayout[4][4].isMarked() && b.isNumberCalled(cardLayout[4][4].getNumber())))//CHECKS DIAGONAL LEFT -> RIGHT
+                isBingo = true;
+            else if(
+                ( cardLayout[4][0].isMarked() && b.isNumberCalled(cardLayout[4][0].getNumber())) && 
+                ( cardLayout[3][1].isMarked() && b.isNumberCalled(cardLayout[3][1].getNumber())) && 
+                ( cardLayout[1][3].isMarked() && b.isNumberCalled(cardLayout[1][3].getNumber())) && 
+                ( cardLayout[0][4].isMarked() && b.isNumberCalled(cardLayout[0][4].getNumber())))//CHECKS DIAGONAL LEFT <- RIGHT
+                isBingo = true;
+            else if( 
+                ( cardLayout[0][0].isMarked() && b.isNumberCalled(cardLayout[0][0].getNumber())) && 
+                ( cardLayout[0][4].isMarked() && b.isNumberCalled(cardLayout[0][4].getNumber())) && 
+                ( cardLayout[4][0].isMarked() && b.isNumberCalled(cardLayout[4][0].getNumber())) && 
+                ( cardLayout[4][4].isMarked() && b.isNumberCalled(cardLayout[4][4].getNumber())))//CHECKS CORNERS
+                isBingo = true;
         }
-	
-	return isValid;
+        return isBingo;
     }
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
         //this.remove(cellPanel);
-	
+        System.out.println("In cardFreeze()");
     }
     
     /*Congratulates user & disables input on card.*/
     private void cardWin() {
         //this.remove(cellPanel);
+        System.out.println("In cardWin()");
     }
 }
