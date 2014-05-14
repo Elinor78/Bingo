@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import static java.awt.Color.white;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -17,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class PlayerCard extends Card {
     private final Bingo b;
@@ -28,6 +26,7 @@ public class PlayerCard extends Card {
     private final CellMouseListener cellListener = new CellMouseListener();
     static int totalPlayerCards = 0;
     static boolean isLarge = false;
+    final JPanel freezePanel = new JPanel();
 	    
     public PlayerCard(Bingo b) {
 	this.b = b;
@@ -43,6 +42,36 @@ public class PlayerCard extends Card {
 	generateCardLayout();
 	addCallButton();
     }
+    
+    public class freezeThread extends Thread {
+        
+    @Override
+    public void run() {
+        int tim = 5;
+        long delay = 5000;
+        
+        PlayerCard.this.remove(cellPanel);
+        freezePanel.setBackground(white);
+        freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ) );
+        PlayerCard.this.add(freezePanel);
+        System.out.println("In freeze panel");
+        do{
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(PlayerCard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(tim / 1);
+            tim = tim - 1;
+           delay = delay - 1000;
+        }while (delay != 0);
+        
+        PlayerCard.this.remove(freezePanel);
+        PlayerCard.this.add(cellPanel);
+        
+        System.out.println("end freeze panel");
+    }
+}
     
     @Override
     protected final void generateCardLayout() {
@@ -183,29 +212,9 @@ public class PlayerCard extends Card {
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
-        final JPanel freezePanel = new JPanel();
-        //Timer freezeTimer = new Timer( 5000, (ActionListener) this);
-        this.remove(cellPanel);
-        freezePanel.setBackground(white);
-        freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ) );
-        this.add(freezePanel);
-        int tim = 5;
-        long delay = 5000;
-
-        do{
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PlayerCard.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(tim / 1);
-            tim = tim - 1;
-           delay = delay - 1000;
-        }while (delay != 0);
-
-        this.remove(freezePanel);
-        this.add(cellPanel);
-        //System.out.println("In cardFreeze()");
+        System.out.println("Start cardFreeze()");
+        (new freezeThread()).start();
+        System.out.println("End cardFreeze()");
     }
     
     /*Congratulates user & disables input on card.*/
