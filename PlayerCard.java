@@ -5,14 +5,12 @@
  */
 
 import java.awt.BorderLayout;
-import static java.awt.Color.white;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -49,12 +47,22 @@ public class PlayerCard extends Card {
     public void run() {
         int tim = 5;
         long delay = 5000;
-        
-        PlayerCard.this.remove(cellPanel);
-        freezePanel.setBackground(white);
+	
+        freezePanel.setBackground(Color.white);
         freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ) );
-        PlayerCard.this.add(freezePanel);
-        System.out.println("In freeze panel");
+	
+        remove(cellPanel);
+        add(freezePanel);
+	
+	repaint();
+        System.out.println("Just added the panel");
+	
+	try {
+	    Thread.sleep(5000);
+	} catch (InterruptedException ex) {
+            }
+	
+	/*
         do{
             try {
                 Thread.sleep(1000);
@@ -65,11 +73,12 @@ public class PlayerCard extends Card {
             tim = tim - 1;
            delay = delay - 1000;
         }while (delay != 0);
-        
-        PlayerCard.this.remove(freezePanel);
-        PlayerCard.this.add(cellPanel);
-        
-        System.out.println("end freeze panel");
+        */
+	
+        remove(freezePanel);
+        add(cellPanel);
+        repaint();
+        System.out.println("Just removed the panel");
     }
 }
     
