@@ -5,13 +5,19 @@
  */
 
 import java.awt.BorderLayout;
+import static java.awt.Color.white;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class PlayerCard extends Card {
     private final Bingo b;
@@ -21,6 +27,7 @@ public class PlayerCard extends Card {
     private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
     static int totalPlayerCards = 0;
+    static boolean isLarge = false;
 	    
     public PlayerCard(Bingo b) {
 	this.b = b;
@@ -108,11 +115,15 @@ public class PlayerCard extends Card {
 		cardLayout[row][column].convertToLargeCell();
 	    }
 	}
-	
+	isLarge = true;
 	cardLayout[2][2].convertToLargeCell();
 	cardLayout[2][2].toggleToken();
 	cardLayout[2][2].toggleToken();
 	repaint();
+    }
+    
+    boolean isLargeCard(){
+        return isLarge;
     }
     
     private boolean isValidBingo() {
@@ -120,9 +131,9 @@ public class PlayerCard extends Card {
         boolean isBingo = false;
 
         //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
-        for( int i = 0 ; i < 5 ; i++ ){
-            for( int j = 0 ; j < 5 ; j++){
-                if( !cardLayout[j][i].isMarked() || !b.isNumberCalled(cardLayout[j][i].getNumber())){//<--checks if card is marked, 
+        for( int j = 0 ; j < 5 ; j++ ){
+            for( int i = 0 ; i < 5 ; i++){
+                if( !cardLayout[i][j].isMarked() || !b.isNumberCalled(cardLayout[i][j].getNumber())){//<--checks if card is marked, 
                     isBingo = false;                                                                 //then takes the value in the cell and checks if that
                     break;                                                                           //number has been called or not
                 }
@@ -172,8 +183,29 @@ public class PlayerCard extends Card {
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
-        //this.remove(cellPanel);
-        System.out.println("In cardFreeze()");
+        final JPanel freezePanel = new JPanel();
+        //Timer freezeTimer = new Timer( 5000, (ActionListener) this);
+        this.remove(cellPanel);
+        freezePanel.setBackground(white);
+        freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ) );
+        this.add(freezePanel);
+        int tim = 5;
+        long delay = 5000;
+
+        do{
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(PlayerCard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(tim / 1);
+            tim = tim - 1;
+           delay = delay - 1000;
+        }while (delay != 0);
+
+        this.remove(freezePanel);
+        this.add(cellPanel);
+        //System.out.println("In cardFreeze()");
     }
     
     /*Congratulates user & disables input on card.*/
