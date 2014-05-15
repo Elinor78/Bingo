@@ -5,8 +5,6 @@
  */
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,10 +20,9 @@ public class PlayerCard extends Card {
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
-    static int totalPlayerCards = 0;
-    static boolean isLarge = false;
-    final JPanel freezePanel = new JPanel();
-	    
+    static int totalPlayerCards = 0;    
+    final static JPanel freezePanel = new JPanel(); 
+    
     public PlayerCard(Bingo b) {
 	this.b = b;
 	totalPlayerCards++;
@@ -40,8 +37,8 @@ public class PlayerCard extends Card {
 	generateCardLayout();
 	addCallButton();
     }
-    
-    public class freezeThread extends Thread {
+   /* 
+    public class FreezeThread implements Runnable{
         
     @Override
     public void run() {
@@ -49,12 +46,12 @@ public class PlayerCard extends Card {
         long delay = 5000;
 	
         freezePanel.setBackground(Color.white);
-        freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ) );
+        freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight()));
 	
         remove(cellPanel);
         add(freezePanel);
-	
 	repaint();
+	
         System.out.println("Just added the panel");
 	
 	try {
@@ -73,14 +70,14 @@ public class PlayerCard extends Card {
             tim = tim - 1;
            delay = delay - 1000;
         }while (delay != 0);
-        */
+        
 	
         remove(freezePanel);
         add(cellPanel);
         repaint();
         System.out.println("Just removed the panel");
     }
-}
+}*/
     
     @Override
     protected final void generateCardLayout() {
@@ -153,15 +150,11 @@ public class PlayerCard extends Card {
 		cardLayout[row][column].convertToLargeCell();
 	    }
 	}
-	isLarge = true;
+
 	cardLayout[2][2].convertToLargeCell();
 	cardLayout[2][2].toggleToken();
 	cardLayout[2][2].toggleToken();
 	repaint();
-    }
-    
-    boolean isLargeCard(){
-        return isLarge;
     }
     
     private boolean isValidBingo() {
@@ -221,8 +214,12 @@ public class PlayerCard extends Card {
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
+        
         System.out.println("Start cardFreeze()");
-        (new freezeThread()).start();
+        //(new freezeThread()).start();
+        FreezeThread freeze = new FreezeThread(this);
+        Thread fThread = new Thread(freeze);
+        fThread.start();
         System.out.println("End cardFreeze()");
     }
     
