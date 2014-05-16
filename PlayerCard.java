@@ -136,10 +136,13 @@ public class PlayerCard extends Card {
     private class CallButtonMouseListener extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
-	    if( isValidBingo())
+	    if( isValidBingo()) {
+                b.decrementBingos();
                 cardWin();
-            else
+            }
+            else {
                 cardFreeze();
+            }
 	}
     }
     

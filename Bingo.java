@@ -7,6 +7,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.concurrent.locks.*;
 
 public class Bingo {
     
@@ -18,6 +19,8 @@ public class Bingo {
     private BingoGUI bGUI;
     public static Human player = new Human();
     private int nextNumber;
+    private static final Lock lock = new ReentrantLock();
+    private static final Condition noBingosLeft = lock.newCondition();
     
     ///// Testing number calls /////
     private final Random randomGen = new Random();
@@ -74,12 +77,41 @@ public class Bingo {
     
     public void decrementBingos() {
 	numberOfBingos--;
+        
+        /*If the number of bingos after decrementing is zero, this locks to only one thread which signals to the others to go ahead.*/
+        if (numberOfBingos == 0) {
+            areBingosLeft = false;
+            lock.lock();
+            try {
+                noBingosLeft.signalAll();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+    
+    /*This method is locked to one thread which waits for the signal that no bingos are left.*/
+    public void awaitNoBingosLeft() {
+        lock.lock();
+        try {
+            noBingosLeft.await();
+        } catch (InterruptedException ex) {
+            System.out.println("Thread had trouble waiting.");
+        }
+        finally {
+            lock.unlock();
+        }
+    }
+    
+    /*Method to dispose of the BingoGUI when the round is over.*/
+    public void closeBingoGUI() {
+        bGUI.dispose();
     }
     
     /*Calls a new number to be displayed for player.EAH*/
 	/*changed return from void to int - EAH */
     public void callNumber() {
-		while(areBingosLeft()){
+		while(areBingosLeft){
 			boolean isCalled = true;			
 			Random rand = new Random();
 			int randomNumber = rand.nextInt(75) + 1;
@@ -98,9 +130,6 @@ public class Bingo {
 		}
     }
 	/* */
-	public boolean areBingosLeft(){
-		return true;
-	}
     
     private void setNumberCalled(int numberCalled) {
         availableNumbers.remove((Integer)numberCalled);
@@ -136,7 +165,7 @@ public class Bingo {
     
     public static void main(String[] args) {
         /*Load the shop interface with which to launch the game.*/
-	    Shop newShop = new Shop();
+	Shop newShop = new Shop();  
     }
-    
+
 }

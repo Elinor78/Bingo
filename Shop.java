@@ -23,6 +23,7 @@ public class Shop extends JFrame {
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
     private int cardsToPurchase = 1;
     private final int CARD_COST;
+    public Bingo newGame;
     
     // Creates Shop with default card price of 2.
     public Shop() {
@@ -69,11 +70,7 @@ public class Shop extends JFrame {
 		    JOptionPane.showMessageDialog(null, "You do not have enough tickets.", "Insufficient Funds", JOptionPane.OK_OPTION);
 		}
 		else {
-		    /*Sends the amount of cards to purchase to Bingo.*/
-		    Bingo.player.purchaseCards(cardsToPurchase, CARD_COST);
-		    Bingo newGame = new Bingo();
-		    /*Close the Shop window.*/
-		    dispose();
+		    startBingo();
 		}
             }
         });
@@ -192,4 +189,36 @@ public class Shop extends JFrame {
 	cardsToPurchaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundJL.add(cardsToPurchaseLabel);
     }
+    
+    private void startBingo() {
+        /*Hide the Shop window.*/
+        this.setVisible(false);
+        
+        /*Sends the amount of cards to purchase to static human player in Bingo Class.*/
+	Bingo.player.purchaseCards(cardsToPurchase, CARD_COST);
+        
+        /*Create a new Bingo game instance still in the main thread.*/
+        newGame = new Bingo();
+        
+        /*Create a new listener thread and start it.*/
+        Thread checkEndState = new Thread(new CheckForEndState());
+        checkEndState.start();
+    }
+    
+    public class CheckForEndState implements Runnable {
+
+        @Override
+        public void run() {
+            /*Wait for the signal that no bingos are left.*/
+            newGame.awaitNoBingosLeft();
+            
+            /*After signal received, reshow the shop window, dispose of the BingoGUI, 
+            and dereference the Bingo instance so that Garbage Collection can clean it up. */
+            Shop.this.setVisible(true);
+            newGame.closeBingoGUI();
+            newGame = null;
+        }  
+    }
+   
+
 }
