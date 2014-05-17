@@ -56,7 +56,7 @@ public class Computer {
     
     public void receiveNewNumber(int n) {
 	for (ComputerCard card : cards) {
-	    if (!card.isBingo() && card != null) {
+	    if (card != null && !card.isBingo()) {
 		card.markAndCall(n);
 	    }
 	    else {
@@ -119,7 +119,7 @@ public class Computer {
 	    
 	}
 	
-	public void markAndCall(int n) {
+	private void markAndCall(int n) {
 	// For efficiency, search only the column that "n" could possibly be in, and mark if found.
 	// Then, search the entire card for the any valid bingo pattern.
 	// If bingo, set isBingo to true and decrement the number of bingos available.
@@ -127,7 +127,7 @@ public class Computer {
 	    checkValidBingo();
 	}
 	
-	public void markCard(int n) {
+	private void markCard(int n) {
 	    int column;
 	    /*Determine the column so there is less looping.*/
 	    if (n >= B_COLUMN_START && n<= B_COLUMN_END) {
@@ -155,9 +155,7 @@ public class Computer {
 	    
 	}
 	
-	public void checkValidBingo() {
-	  
-	    boolean isValidBingo = false;
+	private void checkValidBingo() {
 	    boolean validPatternFound = true;
 	
 	    //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
@@ -195,49 +193,56 @@ public class Computer {
 		}	
 	    }   
 
-	    /*Check Diagonal and Four Corners Bingos*/
-	    /*Diagonal left to right.*/
-	    if( 
-		(card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
-		(card[I_COLUMN][1][CELL_MARKED] == TRUE) && 
-		(card[G_COLUMN][3][CELL_MARKED] == TRUE) && 
-		(card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
-		callBingo();
-	    }
-	    /*Diagonal right to left.*/
-	    else if(
-		(card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
-		(card[G_COLUMN][1][CELL_MARKED] == TRUE) && 
-		(card[I_COLUMN][3][CELL_MARKED] == TRUE) && 
-		(card[B_COLUMN][4][CELL_MARKED] == TRUE)) {
-		callBingo();
-	    }
-	    /*Four corners.*/
-	    else if( 
-		(card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
-		(card[B_COLUMN][4][CELL_MARKED] == TRUE) && 
-		(card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
-		(card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
-		callBingo();
+	    if (!validPatternFound) {
+		/*Check Diagonal and Four Corners Bingos*/
+		/*Diagonal left to right.*/
+		if( 
+		    (card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
+		    (card[I_COLUMN][1][CELL_MARKED] == TRUE) && 
+		    (card[G_COLUMN][3][CELL_MARKED] == TRUE) && 
+		    (card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
+		    callBingo();
+		}
+		/*Diagonal right to left.*/
+		else if(
+		    (card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
+		    (card[G_COLUMN][1][CELL_MARKED] == TRUE) && 
+		    (card[I_COLUMN][3][CELL_MARKED] == TRUE) && 
+		    (card[B_COLUMN][4][CELL_MARKED] == TRUE)) {
+		    callBingo();
+		}
+		/*Four corners.*/
+		else if( 
+		    (card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
+		    (card[B_COLUMN][4][CELL_MARKED] == TRUE) && 
+		    (card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
+		    (card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
+		    callBingo();
+		}
 	    }
 	}
 	
-	public void callBingo() {
+	private void callBingo() {
 	    this.isBingo = true;
 	    b.decrementBingos();
+	    printWinningCard();
 	}
 
 	private boolean isBingo() {
 	    return isBingo;
 	}
 	
-	public void printWinningCard() {
-	    System.out.println("B   I   N   G   O");
+	private void printWinningCard() {
+	    System.out.println("Response time: " + responseTime);
+	    System.out.println("B\tI\tN\tG\tO");
 	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {
 		for (int row = 0; row < NUMBER_OF_ROWS; row++) {
-		    System.out.print(card[column][row][CELL_VALUE] + " " + card[column][row][CELL_MARKED] + " ");
+		    System.out.print(card[column][row][CELL_VALUE] + " ");
+		    String marked = (card[column][row][CELL_MARKED] == 1) ? "*" : "";
+		    System.out.print(marked + "\t");
 		}
 		System.out.println();
+		System.out.println("-----------------------------------");
 		
 	    }
 	    System.out.println();
