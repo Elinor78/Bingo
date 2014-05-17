@@ -225,6 +225,7 @@ public class Computer {
 	private void callBingo() {
 	    this.isBingo = true;
 	    b.decrementBingos();
+	    // Show notification in NewBingoBubble
 	    printWinningCard();
 	}
 

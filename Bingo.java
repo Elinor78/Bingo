@@ -12,7 +12,7 @@ import java.util.concurrent.locks.*;
 public class Bingo {
     
     /*Instance variables*/
-    private final ArrayList<Computer> computerPlayers = new ArrayList<>();
+    private final ArrayList<Computer> computerPlayers = new ArrayList<>(50);
     private int numberOfBingos;
     private final ArrayList<Integer> availableNumbers = populateNumberArray();
     private BingoGUI bGUI;
