@@ -214,9 +214,10 @@ public class Shop extends JFrame {
             
             /*After signal received, reshow the shop window, close Bingo, 
             and dereference the Bingo instance so that Garbage Collection can clean it up. */
-            Shop.this.setVisible(true);
+            //Shop.this.setVisible(true);
             newGame.closeBingo();
             newGame = null;
+	    new RoundSummary(Shop.this);
         }  
     }
    
