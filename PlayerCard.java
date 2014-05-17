@@ -5,6 +5,8 @@
  */
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,7 +23,7 @@ public class PlayerCard extends Card {
     private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
     static int totalPlayerCards = 0;    
-    final static JPanel freezePanel = new JPanel(); 
+    private final JPanel freezePanel = new JPanel();
     
     public PlayerCard(Bingo b) {
 	this.b = b;
@@ -36,6 +38,8 @@ public class PlayerCard extends Card {
 	
 	generateCardLayout();
 	addCallButton();
+	
+	freezePanel.setBackground(Color.white);
     }
    /* 
     public class FreezeThread implements Runnable{
@@ -141,6 +145,7 @@ public class PlayerCard extends Card {
                 cardWin();
             }
             else {
+		b.decrementBingos();
                 cardFreeze();
             }
 	}
@@ -217,18 +222,38 @@ public class PlayerCard extends Card {
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
-        
-        System.out.println("Start cardFreeze()");
-        //(new freezeThread()).start();
-        FreezeThread freeze = new FreezeThread(this);
-        Thread fThread = new Thread(freeze);
-        fThread.start();
-        System.out.println("End cardFreeze()");
+	Thread fThread = new Thread(new FreezeCardTask());
+	fThread.start();
     }
     
     /*Congratulates user & disables input on card.*/
     private void cardWin() {
         //this.remove(cellPanel);
         System.out.println("In cardWin()");
+    }
+    
+    private class FreezeCardTask implements Runnable {
+	@Override
+	public void run() {
+	    callButton.removeMouseListener(callButton.getMouseListeners()[0]);
+	    freezePanel.setPreferredSize( new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
+
+	    remove(cellPanel);
+	    add(freezePanel);
+	    revalidate();
+	    repaint();
+
+	    try {
+		Thread.sleep(5000);
+	    } catch (InterruptedException ex) {
+            }
+
+	    remove(freezePanel);
+	    add(cellPanel);
+	    revalidate();
+	    repaint();
+	    
+	    callButton.addMouseListener(new CallButtonMouseListener());
+	}
     }
 }
