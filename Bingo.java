@@ -21,6 +21,10 @@ public class Bingo {
     private static final Lock lock = new ReentrantLock();
     private static final Condition noBingosLeft = lock.newCondition();
     
+    /*Audio objects*/
+    private static AudioPlayer2 bgMusic;
+    private static AudioPlayer2[] numbers;
+    
     ///// Testing number calls /////
     private final Random randomGen = new Random();
     private final ActionListener callNewNumber = new ActionListener() {
@@ -147,7 +151,8 @@ public class Bingo {
     
     /*Plays background music.*/ 
     public void playBackgroundMusic() {
-        
+        bgMusic = new AudioPlayer2();
+        bgMusic.loop();
     }
     
     public static void main(String[] args) {
