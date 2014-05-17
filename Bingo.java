@@ -77,6 +77,7 @@ public class Bingo {
     
     public void decrementBingos() {
 	numberOfBingos--;
+	bGUI.sw.updateAvailableBingos();
         
         /*If the number of bingos after decrementing is zero, this locks to only one thread which signals to the others to go ahead.*/
         if (numberOfBingos == 0) {

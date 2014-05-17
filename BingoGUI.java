@@ -19,7 +19,7 @@ public class BingoGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
-    private final StatusWindow sw;
+    final StatusWindow sw;
     //private final ExecutorService executor = Executors.newCachedThreadPool();
     
     public BingoGUI(Bingo b) {	
@@ -80,7 +80,6 @@ public class BingoGUI extends JFrame {
 	
 	// Place JPanel to hold number ticker & bingo status window
 	statusPanel.setPreferredSize(new Dimension(268, 295));
-	statusPanel.setBackground(new Color(0,0,0,90)); // Delete this line when no longer needed
 	mainFrameConstraint.insets = new Insets(61, 0, 0, 0);
 	mainFrameConstraint.gridx = 2;
 	backgroundJL.add(statusPanel, mainFrameConstraint);
