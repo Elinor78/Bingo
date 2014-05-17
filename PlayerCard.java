@@ -41,47 +41,6 @@ public class PlayerCard extends Card {
 	
 	freezePanel.setBackground(Color.white);
     }
-   /* 
-    public class FreezeThread implements Runnable{
-        
-    @Override
-    public void run() {
-        int tim = 5;
-        long delay = 5000;
-	
-        freezePanel.setBackground(Color.white);
-        freezePanel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight()));
-	
-        remove(cellPanel);
-        add(freezePanel);
-	repaint();
-	
-        System.out.println("Just added the panel");
-	
-	try {
-	    Thread.sleep(5000);
-	} catch (InterruptedException ex) {
-            }
-	
-	/*
-        do{
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PlayerCard.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(tim / 1);
-            tim = tim - 1;
-           delay = delay - 1000;
-        }while (delay != 0);
-        
-	
-        remove(freezePanel);
-        add(cellPanel);
-        repaint();
-        System.out.println("Just removed the panel");
-    }
-}*/
     
     @Override
     protected final void generateCardLayout() {
@@ -140,12 +99,11 @@ public class PlayerCard extends Card {
     private class CallButtonMouseListener extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
-	    if( isValidBingo()) {
+	    if (isValidBingo()) {
                 b.decrementBingos();
                 cardWin();
             }
             else {
-		b.decrementBingos();
                 cardFreeze();
             }
 	}
