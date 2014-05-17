@@ -15,7 +15,6 @@ public class Bingo {
     private final ArrayList<Computer> computerPlayers = new ArrayList<>();
     private int numberOfBingos;
     private final ArrayList<Integer> availableNumbers = populateNumberArray();
-    private boolean areBingosLeft = true;
     private BingoGUI bGUI;
     public static Human player = new Human();
     private int nextNumber;
@@ -30,6 +29,9 @@ public class Bingo {
 	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
 	    bGUI.showNewNumber(nextNumber);
 	    setNumberCalled(nextNumber);
+	    for (Computer computer : computerPlayers) {
+		computer.receiveNewNumber(nextNumber);
+	    }
 	}
      };
     private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, callNewNumber);
@@ -39,7 +41,9 @@ public class Bingo {
 	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
 	generateComputerPlayers();
-	setInitialBingos(Computer.totalComputerPlayers + 1);
+	
+	/*The ratio I came up with is all the computer cards divided by 4. It comes out to close to the iPad game we looked at.*/
+	setInitialBingos((Computer.totalComputerCards + player.getNumberOfCards()) / 4);
 	
         bGUI = new BingoGUI(this);
 	bGUI.setVisible(true);
@@ -61,7 +65,7 @@ public class Bingo {
 	final int RANGE = 75;
 
 	for(int i = 0; i < new Random().nextInt(RANGE) + LOWEST; i++){
-	    computerPlayers.add(new Computer());
+	    computerPlayers.add(new Computer(this));
 	}
     }
     
@@ -76,12 +80,12 @@ public class Bingo {
     }
     
     public void decrementBingos() {
+	System.out.println("In decrement bingos");
 	numberOfBingos--;
 	bGUI.sw.updateAvailableBingos();
         
         /*If the number of bingos after decrementing is zero, this locks to only one thread which signals to the others to go ahead.*/
         if (numberOfBingos == 0) {
-            areBingosLeft = false;
             lock.lock();
             try {
                 noBingosLeft.signalAll();
@@ -108,29 +112,6 @@ public class Bingo {
     public void closeBingoGUI() {
         bGUI.dispose();
     }
-    
-    /*Calls a new number to be displayed for player.EAH*/
-	/*changed return from void to int - EAH */
-    public void callNumber() {
-		while(areBingosLeft){
-			boolean isCalled = true;			
-			Random rand = new Random();
-			int randomNumber = rand.nextInt(75) + 1;
-			while(isCalled){
-				if(isNumberCalled(randomNumber)){
-					isCalled = true;
-					rand = new Random();
-					randomNumber = rand.nextInt(75) +1;
-				}
-				else{
-					setNumberCalled(randomNumber);
-					isCalled = false;
-				}
-			}
-			speakNumber(randomNumber);//We also need some method to control where this is sent so it can be displayed.
-		}
-    }
-	/* */
     
     private void setNumberCalled(int numberCalled) {
         availableNumbers.remove((Integer)numberCalled);

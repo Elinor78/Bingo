@@ -215,6 +215,9 @@ public class Shop extends JFrame {
             /*After signal received, reshow the shop window, dispose of the BingoGUI, 
             and dereference the Bingo instance so that Garbage Collection can clean it up. */
             Shop.this.setVisible(true);
+	    /*Reset static computer variables.*/
+	    Computer.totalComputerCards = 0;
+	    Computer.totalComputerPlayers = 0;
             newGame.closeBingoGUI();
             newGame = null;
         }  
