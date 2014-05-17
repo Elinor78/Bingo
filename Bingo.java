@@ -26,12 +26,14 @@ public class Bingo {
     private final ActionListener callNewNumber = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
-	    bGUI.showNewNumber(nextNumber);
-	    setNumberCalled(nextNumber);
-	    for (Computer computer : computerPlayers) {
-		computer.receiveNewNumber(nextNumber);
-	    }
+	    		
+		nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
+		bGUI.showNewNumber(nextNumber);
+		setNumberCalled(nextNumber);
+		for (Computer computer : computerPlayers) {
+		    computer.receiveNewNumber(nextNumber);
+		}
+	    
 	}
      };
     private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, callNewNumber);
@@ -42,8 +44,7 @@ public class Bingo {
     public Bingo() {
 	generateComputerPlayers();
 	
-	/*The ratio I came up with is all the computer cards divided by 4. It comes out to close to the iPad game we looked at.*/
-	setInitialBingos((Computer.totalComputerCards + player.getNumberOfCards()) / 4);
+	setInitialBingos();
 	
         bGUI = new BingoGUI(this);
 	bGUI.setVisible(true);
@@ -70,8 +71,9 @@ public class Bingo {
     }
     
     /*Sets number of Bingos.EAH*/
-    private void setInitialBingos(int numberOfPlayers) {
-        numberOfBingos = (int)(0.4*numberOfPlayers);
+    private void setInitialBingos() {
+	/*This ratio can totally be played with.*/
+        numberOfBingos = ((Computer.totalComputerCards + player.getNumberOfCards()) / 3);
     }
     
     /*Gets number of Bingos.EAH*/
@@ -80,7 +82,6 @@ public class Bingo {
     }
     
     public void decrementBingos() {
-	System.out.println("In decrement bingos");
 	numberOfBingos--;
 	bGUI.sw.updateAvailableBingos();
         
@@ -109,8 +110,12 @@ public class Bingo {
     }
     
     /*Method to dispose of the BingoGUI when the round is over.*/
-    public void closeBingoGUI() {
+    public void closeBingo() {
         bGUI.dispose();
+	testBallTimer.stop();
+	Computer.totalComputerCards = 0;
+	Computer.totalComputerPlayers = 0;
+	computerPlayers.clear();
     }
     
     private void setNumberCalled(int numberCalled) {

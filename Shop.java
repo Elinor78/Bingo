@@ -212,13 +212,10 @@ public class Shop extends JFrame {
             /*Wait for the signal that no bingos are left.*/
             newGame.awaitNoBingosLeft();
             
-            /*After signal received, reshow the shop window, dispose of the BingoGUI, 
+            /*After signal received, reshow the shop window, close Bingo, 
             and dereference the Bingo instance so that Garbage Collection can clean it up. */
             Shop.this.setVisible(true);
-	    /*Reset static computer variables.*/
-	    Computer.totalComputerCards = 0;
-	    Computer.totalComputerPlayers = 0;
-            newGame.closeBingoGUI();
+            newGame.closeBingo();
             newGame = null;
         }  
     }
