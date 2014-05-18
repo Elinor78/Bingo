@@ -66,7 +66,7 @@ public class Computer {
 	}
     }
     
-    private final class ComputerCard {
+    final class ComputerCard {
 	private final int NUMBER_OF_COLUMNS = 5;
 	private final int NUMBER_OF_ROWS = 5;
 	private final int CELL_VALUE = 0;
@@ -130,7 +130,7 @@ public class Computer {
 	private void markCard(int n) {
 	    int column;
 	    /*Determine the column so there is less looping.*/
-	    if (n >= B_COLUMN_START && n<= B_COLUMN_END) {
+	    if (n<= B_COLUMN_END) {
 		column = B_COLUMN;
 	    }
 	    else if (n<= I_COLUMN_END) {
@@ -224,9 +224,9 @@ public class Computer {
 	
 	private void callBingo() {
 	    this.isBingo = true;
-	    b.decrementBingos();
+	    b.decrementBingos(this);
 	    // Show notification in NewBingoBubble
-	    printWinningCard();
+	    printWinningCard(); // DELETE AFTER TESTING IS COMPLETE
 	}
 
 	private boolean isBingo() {

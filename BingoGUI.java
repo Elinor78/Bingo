@@ -7,8 +7,6 @@
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-//import java.util.concurrent.ExecutorService;
-//import java.util.concurrent.Executors;
 import javax.swing.*;
 
 public class BingoGUI extends JFrame {
@@ -20,8 +18,7 @@ public class BingoGUI extends JFrame {
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
     final StatusWindow sw;
-    private final NewBingoNotification newBingo = new NewBingoNotification();
-    //private final ExecutorService executor = Executors.newCachedThreadPool();
+    final NewBingoNotification newBingo = new NewBingoNotification();
     
     public BingoGUI(Bingo b) {	
 	backgroundJL.setLayout(new GridBagLayout());
@@ -146,20 +143,4 @@ public class BingoGUI extends JFrame {
 	    return new Font("Impact", Font.PLAIN, 1);
 	}
     }
-    
-    /*
-    // Task for adding a new Ball to BallTicker without needing to wait for animation to finish.
-    private class BallTickerNewNumberTask implements Runnable {
-	private final int newNumber;
-	
-	private BallTickerNewNumberTask (int n) {
-	    newNumber = n;
-	}
-	
-	@Override
-	public void run() {
-	    bt.addBall(newNumber);
-	}
-    }
-    */
 }

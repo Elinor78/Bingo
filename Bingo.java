@@ -25,26 +25,21 @@ public class Bingo {
     private static AudioPlayer2 bgMusic;
     private static AudioPlayer2[] numbers;
     
-    ///// Testing number calls /////
+    // Number calls
     private final Random randomGen = new Random();
     private final ActionListener callNewNumber = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-	    		
 		nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
 		bGUI.showNewNumber(nextNumber);
 		setNumberCalled(nextNumber);
 		for (Computer computer : computerPlayers) {
 		    computer.receiveNewNumber(nextNumber);
 		}
-	    
 	}
      };
-    private final javax.swing.Timer testBallTimer = new javax.swing.Timer(5000, callNewNumber);
-    ///// Testing number calls /////
+    private final javax.swing.Timer callNumberTimer = new javax.swing.Timer(5000, callNewNumber);
     
-    /*Default constructor.EAH
-	This is unfinished because I am not sure what the control flow should be*/
     public Bingo() {
 	generateComputerPlayers();
 	
@@ -53,7 +48,7 @@ public class Bingo {
         bGUI = new BingoGUI(this);
 	bGUI.setVisible(true);
 	
-	testBallTimer.start();
+	callNumberTimer.start();
     }
     
     private ArrayList<Integer> populateNumberArray(){
@@ -76,7 +71,6 @@ public class Bingo {
     
     /*Sets number of Bingos.EAH*/
     private void setInitialBingos() {
-	/*This ratio can totally be played with.*/
         numberOfBingos = ((Computer.totalComputerCards + player.getNumberOfCards()) / 3);
     }
     
@@ -85,7 +79,11 @@ public class Bingo {
         return numberOfBingos;
     }
     
-    public void decrementBingos() {
+    public void decrementBingos(Object o) {
+	if (o instanceof Computer.ComputerCard) {
+	    bGUI.newBingo.showClaimedBingo();
+	}
+	
 	numberOfBingos--;
 	bGUI.sw.updateAvailableBingos();
         
@@ -116,7 +114,7 @@ public class Bingo {
     /*Method to dispose of the BingoGUI when the round is over.*/
     public void closeBingo() {
         bGUI.dispose();
-	testBallTimer.stop();
+	callNumberTimer.stop();
 	Computer.totalComputerCards = 0;
 	Computer.totalComputerPlayers = 0;
 	computerPlayers.clear();

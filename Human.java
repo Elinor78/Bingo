@@ -27,6 +27,7 @@ public class Human {
     public void purchaseCards(int numberOfCards, int cardCost) {
 	ticketBank -= numberOfCards * cardCost;
 	this.numberOfCards = numberOfCards;
+	System.out.println("I now have " + ticketBank + " tickets.");
     }
     
     public int getNumberOfCards() {
