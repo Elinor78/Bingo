@@ -43,6 +43,11 @@ public class StatusWindow extends JLabel {
     }
     
     public void updateAvailableBingos() {
-	bingosLeft.setText(String.valueOf(b.getNumberOfBingos()));
+	if (b.getNumberOfBingos() < 0) {
+	    bingosLeft.setText("0");
+	}
+	else {
+	    bingosLeft.setText(String.valueOf(b.getNumberOfBingos()));
+	}
     }
 }
