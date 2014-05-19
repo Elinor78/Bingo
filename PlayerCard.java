@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PlayerCard extends Card {
@@ -22,8 +23,11 @@ public class PlayerCard extends Card {
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
+    private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();
     static int totalPlayerCards = 0;    
-    private final JPanel freezePanel = new JPanel();
+    private final JPanel bingoFeedbackPanel = new JPanel();
+    private final JLabel freezeLabel = new JLabel("<html><center>PLACEHOLDER TEXT<br>Wait 5 seconds...</center><html>");
+    private final JLabel winLabel = new JLabel("<html><center>PLACEHOLDER TEXT<br>You won!</center><html>");
     
     public PlayerCard(Bingo b) {
 	this.b = b;
@@ -38,8 +42,6 @@ public class PlayerCard extends Card {
 	
 	generateCardLayout();
 	addCallButton();
-	
-	freezePanel.setBackground(Color.white);
     }
     
     @Override
@@ -83,7 +85,7 @@ public class PlayerCard extends Card {
     private void addCallButton() {
 	callButton.setContentAreaFilled(false);
 	callButton.setBorder(null);
-	callButton.addMouseListener(new CallButtonMouseListener());
+	callButton.addMouseListener(buttonListener);
 	callButtonPanel.add(callButton);
 	callButtonPanel.setOpaque(false);
 	this.add(callButtonPanel, BorderLayout.SOUTH);
@@ -175,24 +177,41 @@ public class PlayerCard extends Card {
     
     /*Dims card & disables input for 5 seconds.*/
     private void cardFreeze() {
-	Thread fThread = new Thread(new FreezeCardTask());
-	fThread.start();
+	Thread freezeThread = new Thread(new FreezeCardTask());
+	freezeThread.start();
     }
     
     /*Congratulates user & disables input on card.*/
     private void cardWin() {
-        //this.remove(cellPanel);
-        System.out.println("In cardWin()");
+        callButton.removeMouseListener(buttonListener);
+	bingoFeedbackPanel.setPreferredSize(new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
+
+	winLabel.setPreferredSize(new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
+	winLabel.setBackground(new Color(212,175,55));
+	winLabel.setOpaque(true);
+	winLabel.setHorizontalAlignment(JLabel.CENTER);
+
+	remove(cellPanel);
+	add(bingoFeedbackPanel);
+	bingoFeedbackPanel.add(winLabel);
+	revalidate();
+	repaint();
     }
     
     private class FreezeCardTask implements Runnable {
 	@Override
 	public void run() {
-	    callButton.removeMouseListener(callButton.getMouseListeners()[0]);
-	    freezePanel.setPreferredSize( new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
+	    callButton.removeMouseListener(buttonListener);
+	    bingoFeedbackPanel.setPreferredSize(new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
+	    
+	    freezeLabel.setPreferredSize(new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
+	    freezeLabel.setBackground(Color.white);
+	    freezeLabel.setOpaque(true);
+	    freezeLabel.setHorizontalAlignment(JLabel.CENTER);
 
 	    remove(cellPanel);
-	    add(freezePanel);
+	    add(bingoFeedbackPanel);
+	    bingoFeedbackPanel.add(freezeLabel);
 	    revalidate();
 	    repaint();
 
@@ -201,12 +220,13 @@ public class PlayerCard extends Card {
 	    } catch (InterruptedException ex) {
             }
 
-	    remove(freezePanel);
+	    bingoFeedbackPanel.remove(freezeLabel);
+	    remove(bingoFeedbackPanel);
 	    add(cellPanel);
 	    revalidate();
 	    repaint();
 	    
-	    callButton.addMouseListener(new CallButtonMouseListener());
+	    callButton.addMouseListener(buttonListener);
 	}
     }
 }
