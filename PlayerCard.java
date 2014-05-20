@@ -5,6 +5,7 @@
  */
 
 import java.awt.*;
+import static java.awt.Color.white;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -20,7 +21,7 @@ public class PlayerCard extends Card {
     private final CellMouseListener cellListener = new CellMouseListener();
     private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();  
     private final JPanel bingoFeedbackPanel = new JPanel();
-    private final JLabel freezeLabel = new JLabel("<html><center>PLACEHOLDER TEXT<br>Wait 5 seconds...</center><html>");
+    private final JLabel freezeLabel = new JLabel();
     private final JLabel winLabel = new JLabel("<html><center>PLACEHOLDER TEXT<br>You won!</center><html>");
     static int totalPlayerCards = 0;  
     
@@ -191,9 +192,15 @@ public class PlayerCard extends Card {
 	bingoFeedbackPanel.setPreferredSize(new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
 
 	winLabel.setPreferredSize(new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
-	winLabel.setBackground(new Color(212,175,55));
+	winLabel.setBackground(white);
 	winLabel.setOpaque(true);
 	winLabel.setHorizontalAlignment(JLabel.CENTER);
+        
+        ImageIcon winImg;
+        winImg = new ImageIcon(getClass().getResource("/img/PlayerCard/CardWin.jpg"));
+	Image scaledImg = winImg.getImage().getScaledInstance( cellPanel.getWidth(), cellPanel.getHeight(), java.awt.Image.SCALE_SMOOTH);  
+	winImg = new ImageIcon(scaledImg);
+        winLabel.setIcon(winImg);
 
 	remove(cellPanel);
 	add(bingoFeedbackPanel);
@@ -212,7 +219,15 @@ public class PlayerCard extends Card {
 	    freezeLabel.setBackground(Color.white);
 	    freezeLabel.setOpaque(true);
 	    freezeLabel.setHorizontalAlignment(JLabel.CENTER);
-
+            
+            ImageIcon freezeImg;
+            freezeImg = new ImageIcon(getClass().getResource("/img/PlayerCard/FrozenCard.jpg"));
+	    Image scaledImg = freezeImg.getImage().getScaledInstance( cellPanel.getWidth(), cellPanel.getHeight(), java.awt.Image.SCALE_SMOOTH);  
+	    freezeImg = new ImageIcon(scaledImg);
+            freezeLabel.setIcon(freezeImg);
+            
+            
+            
 	    remove(cellPanel);
 	    add(bingoFeedbackPanel);
 	    bingoFeedbackPanel.add(freezeLabel);

@@ -149,8 +149,8 @@ public class Bingo {
     
     /*Plays background music.*/ 
     public void playBackgroundMusic() {
-        bgMusic = new AudioPlayer2();
-        bgMusic.loop();
+        //bgMusic = new AudioPlayer2();
+        //bgMusic.loop();
     }
     
     public static void main(String[] args) {
