@@ -4,10 +4,7 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -19,15 +16,13 @@ import javax.swing.JPanel;
 public class PlayerCard extends Card {
     private final Bingo b;
     private final int NUMBER_OF_ROWS = 5;
-    private final Random numberGenerator = new Random();
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
-    private final JPanel callButtonPanel = new JPanel();
     private final CellMouseListener cellListener = new CellMouseListener();
-    private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();
-    static int totalPlayerCards = 0;    
+    private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();  
     private final JPanel bingoFeedbackPanel = new JPanel();
     private final JLabel freezeLabel = new JLabel("<html><center>PLACEHOLDER TEXT<br>Wait 5 seconds...</center><html>");
     private final JLabel winLabel = new JLabel("<html><center>PLACEHOLDER TEXT<br>You won!</center><html>");
+    static int totalPlayerCards = 0;  
     
     public PlayerCard(Bingo b) {
 	this.b = b;
@@ -42,10 +37,17 @@ public class PlayerCard extends Card {
 	
 	generateCardLayout();
 	addCallButton();
+	
+	// Make the cell cursor
+	Toolkit toolkit = Toolkit.getDefaultToolkit();
+	Image cursorImage = new ImageIcon(this.getClass().getResource("/img/Card/Dauber.png")).getImage();
+	Cursor cursor = toolkit.createCustomCursor(cursorImage, new Point(0, 0), "Dauber");
+	cellPanel.setCursor(cursor);
     }
     
     @Override
     protected final void generateCardLayout() {
+	Random numberGenerator = new Random();
 	cardLayout = new Cell[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 	
 	// Cells are added from left to right, row by row.
@@ -86,6 +88,8 @@ public class PlayerCard extends Card {
 	callButton.setContentAreaFilled(false);
 	callButton.setBorder(null);
 	callButton.addMouseListener(buttonListener);
+	
+	JPanel callButtonPanel = new JPanel();
 	callButtonPanel.add(callButton);
 	callButtonPanel.setOpaque(false);
 	this.add(callButtonPanel, BorderLayout.SOUTH);
