@@ -5,7 +5,6 @@
  */
 
 import java.awt.*;
-import static java.awt.Color.white;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -18,11 +17,9 @@ public class PlayerCard extends Card {
     private final Bingo b;
     private final int NUMBER_OF_ROWS = 5;
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
-    private final CellMouseListener cellListener = new CellMouseListener();
     private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();  
     private final JPanel bingoFeedbackPanel = new JPanel();
     private final JLabel freezeLabel = new JLabel();
-    private final JLabel winLabel = new JLabel();
     static int totalPlayerCards = 0;  
     private Font freezeFont = BingoGUI.getFreezeFont().deriveFont(35f);
     
@@ -42,7 +39,7 @@ public class PlayerCard extends Card {
 	
 	// Make the cell cursor
 	Toolkit toolkit = Toolkit.getDefaultToolkit();
-	Image cursorImage = new ImageIcon(this.getClass().getResource("/img/Card/Dauber.png")).getImage();
+	Image cursorImage = new ImageIcon(this.getClass().getResource("/img/Card/PlayerCard/Dauber.png")).getImage();
 	Cursor cursor = toolkit.createCustomCursor(cursorImage, new Point(0, 0), "Dauber");
 	cellPanel.setCursor(cursor);
     }
@@ -50,6 +47,7 @@ public class PlayerCard extends Card {
     @Override
     protected final void generateCardLayout() {
 	Random numberGenerator = new Random();
+	CellMouseListener cellListener = new CellMouseListener();
 	cardLayout = new Cell[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 	
 	// Cells are added from left to right, row by row.
@@ -189,17 +187,15 @@ public class PlayerCard extends Card {
     
     /*Congratulates user & disables input on card.*/
     private void cardWin() {
+	JLabel winLabel = new JLabel();
    
         callButton.removeMouseListener( buttonListener );
 	bingoFeedbackPanel.setPreferredSize( new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
      
 	winLabel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ));
-	winLabel.setBackground( white );
-	winLabel.setOpaque( true );
-	winLabel.setHorizontalAlignment( JLabel.CENTER );
         
         ImageIcon winImg;
-        winImg = new ImageIcon(getClass().getResource( "/img/PlayerCard/CardWin.jpg" ));
+        winImg = new ImageIcon(getClass().getResource( "/img/Card/PlayerCard/CardWin.jpg" ));
 	Image scaledImg = winImg.getImage().getScaledInstance( cellPanel.getWidth(), cellPanel.getHeight(), java.awt.Image.SCALE_SMOOTH);  
 	winImg = new ImageIcon( scaledImg );
         winLabel.setIcon( winImg );
@@ -224,7 +220,7 @@ public class PlayerCard extends Card {
             
             //Sets freeze Image
             ImageIcon freezeImg;
-            freezeImg = new ImageIcon(getClass().getResource("/img/PlayerCard/FrozenCard.jpg"));
+            freezeImg = new ImageIcon(getClass().getResource("/img/Card/PlayerCard/FrozenCard.jpg"));
 	    Image scaledImg = freezeImg.getImage().getScaledInstance( cellPanel.getWidth(), cellPanel.getHeight(), java.awt.Image.SCALE_SMOOTH);  
 	    freezeImg = new ImageIcon(scaledImg);
             freezeLabel.setIcon(freezeImg);
@@ -241,21 +237,21 @@ public class PlayerCard extends Card {
 	    revalidate();
 	    repaint();
 
-        long timeLeft = 5000;
-        int countDown = 5;
-        do{
-
-            try {
-                String lbl = "<html>" + "<center>" + "Card Frozen!" + "<br>" + countDown + ":00" + "</center>" + "</html>";
-                freezeLabel.setText(lbl);
-                Thread.sleep( 1000 );
-                countDown--;
-	    } catch (InterruptedException ex) {
-            }
-            timeLeft -= 1000;
-        }while ( timeLeft != 0);
+	    int timeLeft = 5000;
+	    int countDown = 5;
+	    
+	    do{
+		try {
+		    String lbl = "<html><center>Card Frozen!<br>0:0" + countDown + "</center></html>";
+		    freezeLabel.setText(lbl);
+		    Thread.sleep( 1000 );
+		    countDown--;
+		} catch (InterruptedException ex) {
+		}
+		timeLeft -= 1000;
+	    }while ( timeLeft != 0);
   
-        //Puts number grid back up
+	    //Puts number grid back up
 	    bingoFeedbackPanel.remove(freezeLabel);
 	    remove(bingoFeedbackPanel);
 	    add(cellPanel);
@@ -264,9 +260,5 @@ public class PlayerCard extends Card {
 	    
 	    callButton.addMouseListener(buttonListener);
 	}
-
-        private Color Color(int i, int i0, int i1) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
     }
 }
