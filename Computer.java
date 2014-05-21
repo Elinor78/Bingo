@@ -4,7 +4,12 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
+import javax.swing.Timer;
 
 public class Computer {
     /*Class variables*/
@@ -12,14 +17,18 @@ public class Computer {
     static int totalComputerCards = 0;
     
     /*Instance variables*/
-    private double responseTime;
+    private int responseTime;
     private final ComputerCard[] cards;
     private final Bingo b;
+    private final Queue<Integer> numberQueue = new LinkedList<>();
+    private final Timer callNumberTimer;
+    private final numberReader readNumber = new numberReader();
     
     /*Default constructor calls generateResponseTime() & generateNumberOfCards() & increments totalCards.*/
     public Computer(Bingo b) {
 	this.b = b;
         generateResponseTime();
+	callNumberTimer = new Timer(responseTime, readNumber);
         cards = generateComputerCards();
 	totalComputerPlayers++;
     }
@@ -39,14 +48,9 @@ public class Computer {
 	return temp;
     }
     
-    /*Randomly generates # of seconds between 0 and 3.*/
+    /*Randomly generates # of milliseconds between 1000 and 6000.*/
     private void generateResponseTime() {
-        responseTime = ((Math.random() * (4 - 1)) + 1);
-    }
-    
-    /*Set the response time.*/
-    public void setResponseTime(double responseTime) {
-        this.responseTime = responseTime;
+        responseTime = (int)((Math.random() * (5000)) + 1000);
     }
     
     /*Returns the response time.*/
@@ -55,16 +59,29 @@ public class Computer {
     }
     
     public void receiveNewNumber(int n) {
-	for (ComputerCard card : cards) {
-	    if (card != null && !card.isBingo()) {
-		card.markAndCall(n);
+	numberQueue.offer(n);
+	callNumberTimer.start();
+    }
+    
+    
+    private class numberReader implements ActionListener {
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    int numberBeingRead = numberQueue.poll();
+
+	    for (ComputerCard card : cards) {
+		if (card != null && !card.isBingo()) {
+		    card.markAndCall(numberBeingRead);
+		}
+		else {
+		    card = null;
+		}
 	    }
-	    else {
-		totalComputerCards--;
-		card = null;
-	    }
+
+	    callNumberTimer.stop();
 	}
     }
+    
     
     final class ComputerCard {
 	private final int NUMBER_OF_COLUMNS = 5;
@@ -224,9 +241,8 @@ public class Computer {
 	
 	private void callBingo() {
 	    this.isBingo = true;
+	    totalComputerCards--;
 	    b.decrementBingos(this);
-	    // Show notification in NewBingoBubble
-	    printWinningCard(); // DELETE AFTER TESTING IS COMPLETE
 	}
 
 	private boolean isBingo() {
@@ -249,5 +265,5 @@ public class Computer {
 	    System.out.println();
 	}
 	
-    }
-}
+    } // end ComputerCard
+} // end Computer
