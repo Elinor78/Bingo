@@ -10,6 +10,7 @@ import java.io.InputStream;
 import javax.swing.*;
 
 public class BingoGUI extends JFrame {
+
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif")));
     private final JPanel masterCardPanel = new JPanel(new BorderLayout());
     private final JPanel cardPanel = new JPanel();
@@ -140,6 +141,24 @@ public class BingoGUI extends JFrame {
 	try {
 	    InputStream cooperFromFile = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");
 	    return Font.createFont(Font.TRUETYPE_FONT, cooperFromFile);
+	}
+	catch (FontFormatException | IOException ex) {
+	    return new Font("Impact", Font.PLAIN, 1);
+	}
+    }
+    
+    public static Font getFreezeFont() {
+	GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Font[] fonts = g.getAllFonts();
+	for (Font font : fonts) {
+	    if (font.getFontName().equals("Igloo Laser")) {
+		return font;
+	    }
+	}
+	
+	try {
+	    InputStream iglooFromFile = BingoGUI.class.getResourceAsStream("/fonts/IGLOO.TTF");
+	    return Font.createFont(Font.TRUETYPE_FONT, iglooFromFile);
 	}
 	catch (FontFormatException | IOException ex) {
 	    return new Font("Impact", Font.PLAIN, 1);
