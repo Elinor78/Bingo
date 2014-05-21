@@ -10,9 +10,7 @@ import javax.swing.JLabel;
 
 public class StatusWindow extends JLabel {
     private final Bingo b;
-    private final Font smallerFont = BingoGUI.getGameFont().deriveFont(25f);
     private final JLabel bingosLeft = new JLabel();
-    private final JLabel compOpponents = new JLabel();
     private final JLabel cardsInPlay = new JLabel();
     
     public StatusWindow(Bingo b) {
@@ -27,6 +25,9 @@ public class StatusWindow extends JLabel {
 	bingosLeft.setHorizontalAlignment(JLabel.CENTER);
 	this.add(bingosLeft);
 	
+	Font smallerFont = BingoGUI.getGameFont().deriveFont(25f);
+	
+	JLabel compOpponents = new JLabel();
 	compOpponents.setSize(50, 25);
         compOpponents.setLocation(65, 80);
         compOpponents.setFont(smallerFont);
@@ -48,6 +49,7 @@ public class StatusWindow extends JLabel {
 	}
 	else {
 	    bingosLeft.setText(String.valueOf(b.getNumberOfBingos()));
+	    cardsInPlay.setText(String.valueOf(Computer.totalComputerCards));
 	}
     }
 }

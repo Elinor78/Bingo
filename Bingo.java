@@ -30,12 +30,12 @@ public class Bingo {
     private final ActionListener callNewNumber = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
-		bGUI.showNewNumber(nextNumber);
-		setNumberCalled(nextNumber);
-		for (Computer computer : computerPlayers) {
-		    computer.receiveNewNumber(nextNumber);
-		}
+	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
+	    bGUI.showNewNumber(nextNumber);
+	    setNumberCalled(nextNumber);
+	    for (Computer computer : computerPlayers) {
+		computer.receiveNewNumber(nextNumber);
+	    }
 	}
      };
     private final javax.swing.Timer callNumberTimer = new javax.swing.Timer(5000, callNewNumber);
