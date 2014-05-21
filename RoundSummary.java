@@ -55,7 +55,7 @@ public class RoundSummary extends JFrame {
 	youWonLabel.setSize(350, 300);
         youWonLabel.setLocation(40, 5);
         youWonLabel.setFont(shopFont);
-	youWonLabel.setText(String.format("<html><div WIDTH=%d>%s <div style=\"text-align: center;\"</div><html>", 350, "You won no tickets"));
+	youWonLabel.setText(String.format("<html><div WIDTH=%d>%s <div style=\"text-align: center;\"</div><html>", 350, "You won 0 tickets"));
 	youWonLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	youWonLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(youWonLabel);

@@ -60,8 +60,8 @@ public class Shop extends JFrame {
     private void configureStartButton() {
         startButton.setContentAreaFilled(false);
 	startButton.setBorder(null);
-        startButton.setSize(200, 70);
-        startButton.setLocation(450, 345);
+        startButton.setSize(160, 60);
+        startButton.setLocation(15, 345);//450 345
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
@@ -80,8 +80,8 @@ public class Shop extends JFrame {
     private void configureQuitButton() {
         quitButton.setContentAreaFilled(false);
 	quitButton.setBorder(null);
-        quitButton.setSize(200, 66);
-        quitButton.setLocation(50, 345);
+        quitButton.setSize(160, 60);
+        quitButton.setLocation(525, 345);
         quitButton.addMouseListener(new MouseAdapter() {
             @Override
             /*Close the app if the Quit button is clicked.*/
@@ -95,8 +95,8 @@ public class Shop extends JFrame {
     private void configureCreditsButton() {
         creditsButton.setContentAreaFilled(false);
 	creditsButton.setBorder(null);
-        creditsButton.setSize(160, 58);
-        creditsButton.setLocation(516, 30);
+        creditsButton.setSize(160, 60);
+        creditsButton.setLocation(190, 345);
         creditsButton.addMouseListener(new MouseAdapter() {
             @Override
             /*Open a new credits window.*/
@@ -110,8 +110,8 @@ public class Shop extends JFrame {
     private void configureRulesButton() {
         rulesButton.setContentAreaFilled(false);
         rulesButton.setBorder(null);
-        rulesButton.setSize(160, 58);
-        rulesButton.setLocation(325, 30);
+        rulesButton.setSize(160, 60);
+        rulesButton.setLocation(360, 345);
         rulesButton.addMouseListener(new MouseAdapter() {
             @Override
             /*Open a new Rules window.*/

@@ -14,7 +14,8 @@ import javax.swing.Timer;
 public class NewBingoNotification extends JLabel {
     private int alphaValue = 255;
     private Color textColor = new Color(0, 0, 0, alphaValue);
-    
+    int currentBingoNumber = 1;
+        String appendix = null;
     private final ActionListener decreaseOpacity = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
@@ -38,13 +39,23 @@ public class NewBingoNotification extends JLabel {
     
     public void showClaimedBingo() {
 	textTimer.stop(); 
-	
 	alphaValue = 255;
+        currentBingoNumber++;
 	textTimer.start();
     }
     
     private void setBingoText() {
+        
+        if( currentBingoNumber == 1 || currentBingoNumber == 21 || currentBingoNumber == 31 || currentBingoNumber == 41 || currentBingoNumber == 51 || currentBingoNumber == 61 || currentBingoNumber == 71)
+            appendix = "st";
+        else if( currentBingoNumber == 2 || currentBingoNumber == 22 || currentBingoNumber == 32 || currentBingoNumber == 42 || currentBingoNumber == 52 || currentBingoNumber == 62 || currentBingoNumber == 72)
+            appendix = "nd";
+        else if( currentBingoNumber == 3 || currentBingoNumber == 23 || currentBingoNumber == 33 || currentBingoNumber == 43 || currentBingoNumber == 53 || currentBingoNumber == 63 || currentBingoNumber == 73)
+            appendix = "rd";
+        else if( currentBingoNumber > 3 && currentBingoNumber < 21 || currentBingoNumber > 23 && currentBingoNumber < 31 || currentBingoNumber > 33 && currentBingoNumber < 41 || currentBingoNumber > 43 && currentBingoNumber < 51 || currentBingoNumber > 53 && currentBingoNumber < 61 || currentBingoNumber > 63 && currentBingoNumber < 71)
+            appendix = "th";
+            
 	this.setForeground(textColor);
-	this.setText("An opponent got a bingo!");
+	this.setText( currentBingoNumber + appendix + " Bingo has been called");
     }
 }
