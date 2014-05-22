@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package Source;
-
 import javax.sound.sampled.*;
 
 public class AudioPlayer {

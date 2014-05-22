@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package Source;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

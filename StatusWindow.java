@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package Source;
-
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

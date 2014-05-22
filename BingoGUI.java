@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package Source;
-
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;

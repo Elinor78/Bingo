@@ -4,8 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-package Source;
-
 import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.event.*;
