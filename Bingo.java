@@ -6,6 +6,11 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.concurrent.locks.*;
 
@@ -170,6 +175,34 @@ public class Bingo {
 	    }
 	});
 	backgroundMusic.start();
+	
+	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+	    
+	    @Override
+	    public void run() {
+		/*Write the current balance to the user's home directory when the program is exited in any way.*/
+		Properties ticketProperties = new Properties();
+		OutputStream ticketOutputStream = null;
+		try {
+		    File propertiesFile = new File(System.getProperty("user.home") + "/tickets.properties");
+		    System.out.println(propertiesFile.getAbsolutePath());
+		    ticketOutputStream = new FileOutputStream(propertiesFile);
+		    ticketProperties.setProperty("Tickets", String.valueOf(Bingo.player.getCurrentBalance()));
+		    ticketProperties.store(ticketOutputStream, null);
+		} catch (FileNotFoundException e) {
+		    System.out.println("Could not write ticket balance. File Not Found");
+		} catch (IOException ex) {
+		    System.out.println("Could not write ticket balance. IO Exception");
+		}
+		finally {
+		    try {
+			ticketOutputStream.close();
+		    } catch (IOException ex) {
+			System.out.println("Could not close output stream.");
+		    }
+		}
+	    }
+	}));
     }
 
 }
