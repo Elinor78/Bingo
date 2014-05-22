@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Human {
     private int numberOfCards = 0;
-    private ArrayList<Integer> bankHistory= new ArrayList<>();
+    private final ArrayList<Integer> bankHistory= new ArrayList<>();
     
     public Human() {
 	/*Initial ticket count of 20.*/

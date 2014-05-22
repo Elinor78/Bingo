@@ -95,7 +95,6 @@ public class Computer {
 	private final int N_COLUMN = 2;
 	private final int G_COLUMN = 3;
 	private final int O_COLUMN = 4;
-	private final int B_COLUMN_START = 1;
 	private final int B_COLUMN_END = 15;
 	private final int I_COLUMN_END = 30;
 	private final int N_COLUMN_END = 45;

@@ -10,13 +10,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 /*This is the GUI for showing the team's credits.*/
-public class Credits extends JDialog{
+public class Credits extends JDialog {
     
     public Credits() {
         this.add(new JLabel(new ImageIcon(getClass().getResource("/img/Credits/credits.png"))));
-        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 	this.setSize(300, 400);
 	this.setLocationRelativeTo(null);
+	this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+	this.setAlwaysOnTop(true);
 	this.setResizable(false);
         this.setVisible(true);
     }

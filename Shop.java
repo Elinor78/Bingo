@@ -12,12 +12,6 @@ import javax.swing.*;
 public class Shop extends JFrame {
 
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/Shop/background.png")));
-    private final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/startButton.png")));
-    private final JButton quitButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/quitButton.png")));
-    private final JButton creditsButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/creditsButton.png")));
-    private final JButton rulesButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/rulesButton.png")));
-    private final JButton arrowUpButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/arrowUp.png")));
-    private final JButton arrowDownButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/arrowDown.png")));
     private final JLabel ticketBankLabel = new JLabel();
     private final JLabel cardsToPurchaseLabel = new JLabel();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
@@ -58,6 +52,7 @@ public class Shop extends JFrame {
     }
 
     private void configureStartButton() {
+	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/startButton.png")));
         startButton.setContentAreaFilled(false);
 	startButton.setBorder(null);
         startButton.setSize(160, 60);
@@ -78,6 +73,7 @@ public class Shop extends JFrame {
     }
 
     private void configureQuitButton() {
+	final JButton quitButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/quitButton.png")));
         quitButton.setContentAreaFilled(false);
 	quitButton.setBorder(null);
         quitButton.setSize(160, 60);
@@ -93,6 +89,7 @@ public class Shop extends JFrame {
     }
 
     private void configureCreditsButton() {
+	final JButton creditsButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/creditsButton.png")));
         creditsButton.setContentAreaFilled(false);
 	creditsButton.setBorder(null);
         creditsButton.setSize(160, 60);
@@ -108,6 +105,7 @@ public class Shop extends JFrame {
     }
 
     private void configureRulesButton() {
+	final JButton rulesButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/rulesButton.png")));
         rulesButton.setContentAreaFilled(false);
         rulesButton.setBorder(null);
         rulesButton.setSize(160, 60);
@@ -123,6 +121,7 @@ public class Shop extends JFrame {
     }
 
     private void configureArrowUpButton() {
+	final JButton arrowUpButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/arrowUp.png")));
         arrowUpButton.setContentAreaFilled(false);
         arrowUpButton.setBorder(null);
         arrowUpButton.setSize(60, 61);
@@ -144,6 +143,7 @@ public class Shop extends JFrame {
     }
 
     private void configureArrowDownButton() {
+	final JButton arrowDownButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/arrowDown.png")));
         arrowDownButton.setContentAreaFilled(false);
         arrowDownButton.setBorder(null);
         arrowDownButton.setSize(60, 61);
@@ -163,6 +163,7 @@ public class Shop extends JFrame {
     }
 
     private void configureTicketBank() {
+	final JLabel ticketBankLabel = new JLabel();
         ticketBankLabel.setSize(155, 110);
         ticketBankLabel.setLocation(190, 190);
         ticketBankLabel.setFont(shopFont);
@@ -226,7 +227,7 @@ public class Shop extends JFrame {
 	    /*Open a new Round Summary.*/
 	    new RoundSummary(Shop.this);
 	    
-	    /*Reset the amount of cards to purchase to 1.*/
+	    /*Reset labels*/
 	    Shop.this.cardsToPurchase = 1;
 	    Shop.this.resetTicketLabels();
         }  
