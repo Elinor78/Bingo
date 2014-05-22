@@ -62,7 +62,7 @@ public class RoundSummary extends JDialog {
 	youWonLabel.setSize(250, 250);
         youWonLabel.setLocation(25, 5);
         youWonLabel.setFont(shopFont);
-	youWonLabel.setText("<html><div style=\"text-align: center;\">" + "You won " + String.valueOf(PlayerCard.cardsWon) + " tickets" + "</html>");
+	youWonLabel.setText("<html><div style=\"text-align: center;\">" + "You won " + String.valueOf(PlayerCard.ticketsWon) + " tickets" + "</html>");
 	youWonLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	youWonLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(youWonLabel);
