@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.concurrent.locks.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Bingo {
     
@@ -22,8 +24,8 @@ public class Bingo {
     private static final Condition noBingosLeft = lock.newCondition();
     
     /*Audio objects*/
-    private static AudioPlayer2 bgMusic;
-    private static AudioPlayer2[] numbers;
+    private static AudioPlayer bgMusic;
+    private static AudioPlayer[] numbers;
     
     // Number calls
     private final Random randomGen = new Random();
@@ -148,14 +150,27 @@ public class Bingo {
     }
     
     /*Plays background music.*/ 
-    public void playBackgroundMusic() {
-        //bgMusic = new AudioPlayer2();
-        //bgMusic.loop();
+    public void playBackgroundMusic() throws Exception {
+        bgMusic = new AudioPlayer();
+        bgMusic.loop();
     }
     
     public static void main(String[] args) {
         /*Load the shop interface with which to launch the game.*/
-	Shop newShop = new Shop();  
+	Shop newShop = new Shop();
+	/*Thread backgroundMusic = new Thread(new Runnable() {
+	    AudioPlayer bgMusic;
+	    @Override
+	    public void run() {
+		try {
+		    bgMusic = new AudioPlayer();
+		} catch (Exception ex) {
+		    System.out.println("Something went wrong with audio.");
+		}
+		bgMusic.loop();
+	    }
+	});
+	backgroundMusic.start();*/
     }
 
 }

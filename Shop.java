@@ -178,7 +178,7 @@ public class Shop extends JFrame {
 
     private void configureCardsToPurchase() {
         cardsToPurchaseLabel.setSize(90, 90);
-        cardsToPurchaseLabel.setLocation(465, 200);
+        cardsToPurchaseLabel.setLocation(470, 195);
         cardsToPurchaseLabel.setFont(shopFont);
 	if (Bingo.player.getCurrentBalance() < CARD_COST) {
 	    cardsToPurchaseLabel.setText("0");
@@ -188,6 +188,11 @@ public class Shop extends JFrame {
 	}
 	cardsToPurchaseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundJL.add(cardsToPurchaseLabel);
+    }
+    
+    private void resetTicketLabels() {
+	ticketBankLabel.setText(String.valueOf(Bingo.player.getCurrentBalance() - CARD_COST));
+	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
     }
     
     private void startBingo() {
@@ -203,6 +208,7 @@ public class Shop extends JFrame {
         /*Create a new listener thread and start it.*/
         Thread checkEndState = new Thread(new CheckForEndState());
         checkEndState.start();
+	
     }
     
     public class CheckForEndState implements Runnable {
@@ -214,10 +220,15 @@ public class Shop extends JFrame {
             
             /*After signal received, reshow the shop window, close Bingo, 
             and dereference the Bingo instance so that Garbage Collection can clean it up. */
-            //Shop.this.setVisible(true);
             newGame.closeBingo();
             newGame = null;
+	    
+	    /*Open a new Round Summary.*/
 	    new RoundSummary(Shop.this);
+	    
+	    /*Reset the amount of cards to purchase to 1.*/
+	    Shop.this.cardsToPurchase = 1;
+	    Shop.this.resetTicketLabels();
         }  
     }
    

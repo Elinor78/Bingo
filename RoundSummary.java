@@ -10,6 +10,7 @@ import javax.swing.*;
 
 public class RoundSummary extends JFrame {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/RoundSummary/background.png")));
+    private final JButton shopButton = new JButton(new ImageIcon(getClass().getResource("/img/RoundSummary/storeButton.png")));
     private final JLabel youWonLabel = new JLabel();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(55f);
     private final Shop shop;
@@ -34,7 +35,6 @@ public class RoundSummary extends JFrame {
     }
 
     private void configureShopButton() {
-	final JButton shopButton = new JButton(new ImageIcon(getClass().getResource("/img/RoundSummary/storeButton.png")));
 	shopButton.setContentAreaFilled(false);
 	shopButton.setBorder(null);
         shopButton.setSize(200, 100);
