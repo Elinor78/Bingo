@@ -163,7 +163,6 @@ public class Shop extends JFrame {
     }
 
     private void configureTicketBank() {
-	final JLabel ticketBankLabel = new JLabel();
         ticketBankLabel.setSize(155, 110);
         ticketBankLabel.setLocation(190, 190);
         ticketBankLabel.setFont(shopFont);
