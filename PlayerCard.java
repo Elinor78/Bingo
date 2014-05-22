@@ -107,6 +107,7 @@ public class PlayerCard extends Card {
 	public void mousePressed(MouseEvent e) {
 	    if ( isValidBingo() ) {
                 b.decrementBingos(this);
+		Bingo.player.setTicketBank(2);
                 cardWin();
             }
             else {

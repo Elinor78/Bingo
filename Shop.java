@@ -66,7 +66,7 @@ public class Shop extends JFrame {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
-		if (Bingo.player.getTicketBank() < CARD_COST) {
+		if (Bingo.player.getCurrentBalance() < CARD_COST) {
 		    JOptionPane.showMessageDialog(null, "You do not have enough tickets.", "Insufficient Funds", JOptionPane.OK_OPTION);
 		}
 		else {
@@ -166,11 +166,11 @@ public class Shop extends JFrame {
         ticketBankLabel.setSize(155, 110);
         ticketBankLabel.setLocation(190, 190);
         ticketBankLabel.setFont(shopFont);
-	if (Bingo.player.getTicketBank() < CARD_COST) {
+	if (Bingo.player.getCurrentBalance() < CARD_COST) {
 	    ticketBankLabel.setText("0");
 	}
 	else {
-	    ticketBankLabel.setText(String.valueOf(Bingo.player.getTicketBank() - CARD_COST));
+	    ticketBankLabel.setText(String.valueOf(Bingo.player.getCurrentBalance() - CARD_COST));
 	}
 	ticketBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundJL.add(ticketBankLabel);
@@ -180,7 +180,7 @@ public class Shop extends JFrame {
         cardsToPurchaseLabel.setSize(90, 90);
         cardsToPurchaseLabel.setLocation(465, 200);
         cardsToPurchaseLabel.setFont(shopFont);
-	if (Bingo.player.getTicketBank() < CARD_COST) {
+	if (Bingo.player.getCurrentBalance() < CARD_COST) {
 	    cardsToPurchaseLabel.setText("0");
 	}
 	else {

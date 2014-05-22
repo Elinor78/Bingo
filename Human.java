@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
@@ -6,31 +9,41 @@
 
 public class Human {
     private int numberOfCards = 0;
-    /*Initial ticket count of 20.*/
-    private int ticketBank = 20;
+    private ArrayList<Integer> bankHistory= new ArrayList<>();
     
-    /*Default constructor increments totalPlayers.*/
     public Human() {
+	/*Initial ticket count of 20.*/
+	bankHistory.add(20);
     }
     
     /*Change value of ticketBank in positive or negative values.*/
     public void setTicketBank(int amountOfTickets) {
-        ticketBank += amountOfTickets;
+	bankHistory.add(getCurrentBalance() + amountOfTickets);
     }
     
     /*Retrieve value of ticketBank.*/
-    public int getTicketBank() {
-        return ticketBank;
+    public int getCurrentBalance() {
+        return bankHistory.get(bankHistory.size() - 1);
+    }
+    
+    public int getLatestWinnings() {
+	if (bankHistory.size() > 1) {
+	    final int latestWinnings = getCurrentBalance() - bankHistory.get(bankHistory.size() - 2);
+	    return latestWinnings > 0 ? latestWinnings : 0;
+	}
+	else
+	    return 0;
     }
     
     /*Adjusts ticketBank.*/
-    public void purchaseCards(int numberOfCards, int cardCost) {
-	ticketBank -= numberOfCards * cardCost;
-	this.numberOfCards = numberOfCards;
-	System.out.println("I now have " + ticketBank + " tickets.");
+    public void purchaseCards(int cards, int cardCost) {
+	bankHistory.add(getCurrentBalance() - (cards * cardCost));
+	this.numberOfCards = cards;
+	System.out.println("I now have " + getCurrentBalance() + " tickets.");
     }
     
     public int getNumberOfCards() {
 	return numberOfCards;
     }
+   
 }

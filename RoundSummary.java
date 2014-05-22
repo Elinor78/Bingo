@@ -10,9 +10,8 @@ import javax.swing.*;
 
 public class RoundSummary extends JFrame {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/RoundSummary/background.png")));
-    private final JButton shopButton = new JButton(new ImageIcon(getClass().getResource("/img/RoundSummary/logo.png")));
     private final JLabel youWonLabel = new JLabel();
-    private final Font shopFont = BingoGUI.getGameFont().deriveFont(65f);
+    private final Font shopFont = BingoGUI.getGameFont().deriveFont(55f);
     private final Shop shop;
     
     public RoundSummary(Shop s) {
@@ -21,9 +20,8 @@ public class RoundSummary extends JFrame {
         configureShopButton();
 	configureYouWonLabel();
 	
-	
 	this.add(backgroundJL);
-	this.setSize(400, 500);
+	this.setSize(300, 400);
 	this.setLocationRelativeTo(null);
 	this.setResizable(false);
 	this.setUndecorated(true);
@@ -31,15 +29,16 @@ public class RoundSummary extends JFrame {
     }
 
     private void configureBackground() {
-	backgroundJL.setSize(400, 500);
+	backgroundJL.setSize(300, 400);
         backgroundJL.setLocation(0, 0);
     }
 
     private void configureShopButton() {
+	final JButton shopButton = new JButton(new ImageIcon(getClass().getResource("/img/RoundSummary/storeButton.png")));
 	shopButton.setContentAreaFilled(false);
 	shopButton.setBorder(null);
-        shopButton.setSize(266, 103);
-        shopButton.setLocation(67, 330);
+        shopButton.setSize(200, 100);
+        shopButton.setLocation(50, 275);
         shopButton.addMouseListener(new MouseAdapter() {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
@@ -52,10 +51,10 @@ public class RoundSummary extends JFrame {
     }
 
     private void configureYouWonLabel() {
-	youWonLabel.setSize(350, 300);
-        youWonLabel.setLocation(40, 5);
+	youWonLabel.setSize(250, 250);
+        youWonLabel.setLocation(25, 5);
         youWonLabel.setFont(shopFont);
-	youWonLabel.setText(String.format("<html><div WIDTH=%d>%s <div style=\"text-align: center;\"</div><html>", 350, "You won 0 tickets"));
+	youWonLabel.setText("<html><div style=\"text-align: center;\">" + "You won " + String.valueOf(Bingo.player.getLatestWinnings()) + " tickets" + "</html>");
 	youWonLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	youWonLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(youWonLabel);
