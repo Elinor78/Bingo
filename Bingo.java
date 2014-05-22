@@ -13,6 +13,7 @@ public class Bingo {
     
     /*Instance variables*/
     private final ArrayList<Computer> computerPlayers = new ArrayList<>(50);
+    private int numberOfBonusTickets = 10;
     private int numberOfBingos;
     private final ArrayList<Integer> availableNumbers = populateNumberArray();
     private BingoGUI bGUI;
@@ -79,9 +80,17 @@ public class Bingo {
         return numberOfBingos;
     }
     
+    public int getBonusTicketsLeft() {
+	return numberOfBonusTickets;
+    }
+    
     public void decrementBingos(Object o) {
 	if (o instanceof Computer.ComputerCard) {
 	    bGUI.newBingo.showClaimedBingo();
+	}
+	
+	if (numberOfBonusTickets > 0) {
+	    numberOfBonusTickets--; // Claim a bonus ticket for the first 10 bingos
 	}
 	
 	numberOfBingos--;

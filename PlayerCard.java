@@ -24,12 +24,12 @@ public class PlayerCard extends Card {
     private final JLabel freezeLabel = new JLabel();
     static int totalPlayerCards = 0;
     private Font freezeFont = getFreezeFont().deriveFont(35f);
-    static int cardsWon = 0;
+    static int ticketsWonInRound = 0;
     
     public PlayerCard(Bingo b) {
 	this.b = b;
 	totalPlayerCards++;
-	cardsWon = 0;
+	ticketsWonInRound = 0;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
 	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
@@ -111,8 +111,18 @@ public class PlayerCard extends Card {
 	public void mousePressed(MouseEvent e) {
 	    if ( isValidBingo() ) {
                 b.decrementBingos(this);
-		Bingo.player.setTicketBank(2);
-		cardsWon += 2;
+		
+		int ticketsToAward;
+		if (b.getBonusTicketsLeft() >= 0) {
+		    ticketsToAward = 3;
+		}
+		else {
+		    ticketsToAward = 2;
+		}
+		
+		Bingo.player.setTicketBank(ticketsToAward);
+		ticketsWonInRound += ticketsToAward;
+		
                 cardWin();
             }
             else {
