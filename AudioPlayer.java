@@ -4,21 +4,16 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.io.File;
 import javax.sound.sampled.*;
 
 public class AudioPlayer {
 
-	static Clip clip;
+	private Clip clip;
 
 	public AudioPlayer() throws Exception {
-	    System.out.println("In AudioPlayer()");
 	    clip = AudioSystem.getClip();
-	    System.out.println("Got Clip");
-	    AudioInputStream ais = AudioSystem.getAudioInputStream(new File("/Audio/backgroundMusic.wav"));
-	    System.out.println("Saved Input Stream");
+	    AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResource("/Audio/backgroundMusic.wav"));
 	    clip.open(ais);
-	    System.out.println("Open Input Stream");
 	}
 
 	public void play() {

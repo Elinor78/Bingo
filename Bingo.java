@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.concurrent.locks.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Bingo {
     
@@ -158,7 +156,7 @@ public class Bingo {
     public static void main(String[] args) {
         /*Load the shop interface with which to launch the game.*/
 	Shop newShop = new Shop();
-	/*Thread backgroundMusic = new Thread(new Runnable() {
+	Thread backgroundMusic = new Thread(new Runnable() {
 	    AudioPlayer bgMusic;
 	    @Override
 	    public void run() {
@@ -170,7 +168,7 @@ public class Bingo {
 		bgMusic.loop();
 	    }
 	});
-	backgroundMusic.start();*/
+	backgroundMusic.start();
     }
 
 }

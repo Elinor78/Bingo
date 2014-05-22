@@ -21,11 +21,13 @@ public class PlayerCard extends Card {
     private final JPanel bingoFeedbackPanel = new JPanel();
     private final JLabel freezeLabel = new JLabel();
     static int totalPlayerCards = 0;  
+    static int cardsWon = 0;
     private Font freezeFont = BingoGUI.getFreezeFont().deriveFont(35f);
     
     public PlayerCard(Bingo b) {
 	this.b = b;
 	totalPlayerCards++;
+	cardsWon = 0;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
 	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
@@ -108,6 +110,7 @@ public class PlayerCard extends Card {
 	    if ( isValidBingo() ) {
                 b.decrementBingos(this);
 		Bingo.player.setTicketBank(2);
+		cardsWon += 2;
                 cardWin();
             }
             else {
