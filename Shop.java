@@ -61,7 +61,7 @@ public class Shop extends JFrame {
         startButton.setContentAreaFilled(false);
 	startButton.setBorder(null);
         startButton.setSize(160, 60);
-        startButton.setLocation(15, 345);//450 345
+        startButton.setLocation(525, 345);//450 345
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
@@ -81,7 +81,7 @@ public class Shop extends JFrame {
         quitButton.setContentAreaFilled(false);
 	quitButton.setBorder(null);
         quitButton.setSize(160, 60);
-        quitButton.setLocation(525, 345);
+        quitButton.setLocation(15, 345);
         quitButton.addMouseListener(new MouseAdapter() {
             @Override
             /*Close the app if the Quit button is clicked.*/
