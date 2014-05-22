@@ -1,8 +1,10 @@
- /*
+/*
  * CS 56 Team #1 - Bingo
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
+
+package Source;
 
 import java.awt.*;
 import javax.swing.ImageIcon;

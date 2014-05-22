@@ -1,3 +1,10 @@
+/*
+ * CS 56 Team #1 - Bingo
+ * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
+ * Elinor Huntington, Linus Carlsson, Armand Flores
+ */
+
+package Source;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -5,12 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
-
-/*
- * CS 56 Team #1 - Bingo
- * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
- * Elinor Huntington, Linus Carlsson, Armand Flores
- */
 
 public class Human {
     private int numberOfCards = 0;

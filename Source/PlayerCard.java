@@ -4,6 +4,8 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+package Source;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

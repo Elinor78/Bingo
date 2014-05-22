@@ -3,6 +3,7 @@
  * Authors: Joshua Wallace, Sidney Eubanks, Greg Knight, 
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
+package Source;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
