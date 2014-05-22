@@ -162,10 +162,11 @@ public class Bingo {
 	    public void run() {
 		try {
 		    bgMusic = new AudioPlayer();
+		    bgMusic.loop();
 		} catch (Exception ex) {
 		    System.out.println("Something went wrong with audio.");
+		    System.out.println(ex.getMessage());
 		}
-		bgMusic.loop();
 	    }
 	});
 	backgroundMusic.start();

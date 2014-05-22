@@ -7,6 +7,8 @@
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,9 +22,9 @@ public class PlayerCard extends Card {
     private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();  
     private final JPanel bingoFeedbackPanel = new JPanel();
     private final JLabel freezeLabel = new JLabel();
-    static int totalPlayerCards = 0;  
+    static int totalPlayerCards = 0;
+    private Font freezeFont = getFreezeFont().deriveFont(35f);
     static int cardsWon = 0;
-    private Font freezeFont = BingoGUI.getFreezeFont().deriveFont(35f);
     
     public PlayerCard(Bingo b) {
 	this.b = b;
@@ -126,7 +128,7 @@ public class PlayerCard extends Card {
 		cardLayout[row][column].convertToLargeCell();
 	    }
 	}
-        freezeFont = BingoGUI.getFreezeFont().deriveFont(60f);
+        freezeFont = getFreezeFont().deriveFont(70f);
 	cardLayout[2][2].convertToLargeCell();
 	cardLayout[2][2].toggleToken();
 	cardLayout[2][2].toggleToken();
@@ -189,6 +191,21 @@ public class PlayerCard extends Card {
 	freezeThread.start();
     }
     
+    private Font getFreezeFont() {
+	GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+	try {
+	    InputStream getIgloo = BingoGUI.class.getResourceAsStream("/fonts/IGLOO.TTF");
+	    Font iglooFromFile = Font.createFont(Font.TRUETYPE_FONT, getIgloo);
+	    g.registerFont(iglooFromFile);
+
+	    return iglooFromFile;
+	}
+	catch (FontFormatException | IOException ex) {
+	    return new Font("Impact", Font.PLAIN, 1);
+	}
+    }
+    
     /*Congratulates user & disables input on card.*/
     private void cardWin() {
 	JLabel winLabel = new JLabel();
@@ -238,6 +255,7 @@ public class PlayerCard extends Card {
 	    remove(cellPanel);
 	    add(bingoFeedbackPanel);
 	    bingoFeedbackPanel.add(freezeLabel);
+	    freezeLabel.setText("<html></html>");
 	    revalidate();
 	    repaint();
 
@@ -246,8 +264,7 @@ public class PlayerCard extends Card {
 	    
 	    do{
 		try {
-		    String lbl = "<html><center>Card Frozen!<br>0:0" + countDown + "</center></html>";
-		    freezeLabel.setText(lbl);
+		    freezeLabel.setText("<html><center>False Bingo!<br>Card Frozen<br>0:0" + countDown + "</center></html>");
 		    Thread.sleep( 1000 );
 		    countDown--;
 		} catch (InterruptedException ex) {

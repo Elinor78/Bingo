@@ -139,26 +139,11 @@ public class BingoGUI extends JFrame {
 	}
 	
 	try {
-	    InputStream cooperFromFile = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");
-	    return Font.createFont(Font.TRUETYPE_FONT, cooperFromFile);
-	}
-	catch (FontFormatException | IOException ex) {
-	    return new Font("Impact", Font.PLAIN, 1);
-	}
-    }
-    
-    public static Font getFreezeFont() {
-	GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Font[] fonts = g.getAllFonts();
-	for (Font font : fonts) {
-	    if (font.getFontName().equals("Igloo Laser")) {
-		return font;
-	    }
-	}
-	
-	try {
-	    InputStream iglooFromFile = BingoGUI.class.getResourceAsStream("/fonts/IGLOO.TTF");
-	    return Font.createFont(Font.TRUETYPE_FONT, iglooFromFile);
+	    InputStream getCooper = BingoGUI.class.getResourceAsStream("/fonts/COOPBL.TTF");
+	    Font cooperFromFile = Font.createFont(Font.TRUETYPE_FONT, getCooper);
+	    g.registerFont(cooperFromFile);
+	    
+	    return cooperFromFile;
 	}
 	catch (FontFormatException | IOException ex) {
 	    return new Font("Impact", Font.PLAIN, 1);
