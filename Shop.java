@@ -62,7 +62,9 @@ public class Shop extends JFrame {
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
 		if (Bingo.player.getCurrentBalance() < CARD_COST) {
-		    JOptionPane.showMessageDialog(null, "You do not have enough tickets.", "Insufficient Funds", JOptionPane.OK_OPTION);
+		    JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
+		    Bingo.player.setTicketBank(20);
+		    resetTicketLabels();
 		}
 		else {
 		    startBingo();
@@ -190,7 +192,7 @@ public class Shop extends JFrame {
         backgroundJL.add(cardsToPurchaseLabel);
     }
     
-    private void resetTicketLabels() {
+    public void resetTicketLabels() {
 	ticketBankLabel.setText(String.valueOf(Bingo.player.getCurrentBalance() - CARD_COST));
 	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
     }
@@ -226,9 +228,8 @@ public class Shop extends JFrame {
 	    /*Open a new Round Summary.*/
 	    new RoundSummary(Shop.this);
 	    
-	    /*Reset labels*/
+	    /*Reset cardsToPurchase*/
 	    Shop.this.cardsToPurchase = 1;
-	    Shop.this.resetTicketLabels();
         }  
     }
    

@@ -1,5 +1,10 @@
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /*
  * CS 56 Team #1 - Bingo
@@ -12,8 +17,26 @@ public class Human {
     private final ArrayList<Integer> bankHistory= new ArrayList<>();
     
     public Human() {
-	/*Initial ticket count of 20.*/
-	bankHistory.add(20);
+	/*If a properties file exists in the user's home directory, use it. If not, just start off with 20 tickets.*/
+	Properties ticketProperties = new Properties();
+	InputStream ticketInputStream = null;
+	try {
+	    ticketInputStream = new FileInputStream(new File(System.getProperty("user.home") + "/tickets.properties"));
+	    ticketProperties.load(ticketInputStream);
+	    bankHistory.add(Integer.parseInt(ticketProperties.getProperty("Tickets")));
+	} catch (IOException | NumberFormatException e) {
+	    System.out.println("Couldn't load the file.");
+	    bankHistory.add(20);
+	}
+	finally {
+	    try {
+		if (ticketInputStream != null) {
+		   ticketInputStream.close(); 
+		}
+	    } catch (IOException ex) {
+		System.out.println("Couldn't close the properties input stream.");
+	    }
+	}
     }
     
     /*Change value of ticketBank in positive or negative values.*/
@@ -39,7 +62,6 @@ public class Human {
     public void purchaseCards(int cards, int cardCost) {
 	bankHistory.add(getCurrentBalance() - (cards * cardCost));
 	this.numberOfCards = cards;
-	System.out.println("I now have " + getCurrentBalance() + " tickets.");
     }
     
     public int getNumberOfCards() {

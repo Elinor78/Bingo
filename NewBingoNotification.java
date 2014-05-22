@@ -14,7 +14,7 @@ import javax.swing.Timer;
 public class NewBingoNotification extends JLabel {
     private int alphaValue = 255;
     private Color textColor = new Color(0, 0, 0, alphaValue);
-    private int currentBingoNumber = 0;
+    public static int currentBingoNumber = 0;
     
     private final ActionListener decreaseOpacity = new ActionListener() {
 	@Override

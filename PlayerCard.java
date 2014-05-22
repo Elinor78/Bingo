@@ -122,7 +122,8 @@ public class PlayerCard extends Card {
 		
 		Bingo.player.setTicketBank(ticketsToAward);
 		ticketsWonInRound += ticketsToAward;
-		
+		NewBingoNotification.currentBingoNumber++;
+
                 cardWin();
             }
             else {

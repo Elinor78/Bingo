@@ -45,8 +45,13 @@ public class RoundSummary extends JDialog {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
-		shop.setVisible(true);
 		RoundSummary.this.dispose();
+		if (Bingo.player.getCurrentBalance() < 2) {
+		    JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
+		    Bingo.player.setTicketBank(20);
+		}
+		shop.resetTicketLabels();
+		shop.setVisible(true);
             }
         });
         backgroundJL.add(shopButton);
@@ -58,6 +63,7 @@ public class RoundSummary extends JDialog {
         youWonLabel.setLocation(25, 5);
         youWonLabel.setFont(shopFont);
 	youWonLabel.setText("<html><div style=\"text-align: center;\">" + "You won " + String.valueOf(PlayerCard.ticketsWonInRound) + " tickets" + "</html>");
+
 	youWonLabel.setHorizontalAlignment(SwingConstants.CENTER);
 	youWonLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(youWonLabel);
