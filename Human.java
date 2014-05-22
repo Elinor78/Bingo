@@ -21,8 +21,7 @@ public class Human {
 	Properties ticketProperties = new Properties();
 	InputStream ticketInputStream = null;
 	try {
-	    File propertiesFile = new File(System.getProperty("user.home") + "/tickets.properties");
-	    ticketInputStream = new FileInputStream(propertiesFile);
+	    ticketInputStream = new FileInputStream(new File(System.getProperty("user.home") + "/tickets.properties"));
 	    ticketProperties.load(ticketInputStream);
 	    bankHistory.add(Integer.parseInt(ticketProperties.getProperty("Tickets")));
 	} catch (IOException | NumberFormatException e) {
@@ -63,7 +62,6 @@ public class Human {
     public void purchaseCards(int cards, int cardCost) {
 	bankHistory.add(getCurrentBalance() - (cards * cardCost));
 	this.numberOfCards = cards;
-	System.out.println("I now have " + getCurrentBalance() + " tickets.");
     }
     
     public int getNumberOfCards() {

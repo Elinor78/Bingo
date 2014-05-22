@@ -184,9 +184,7 @@ public class Bingo {
 		Properties ticketProperties = new Properties();
 		OutputStream ticketOutputStream = null;
 		try {
-		    File propertiesFile = new File(System.getProperty("user.home") + "/tickets.properties");
-		    System.out.println(propertiesFile.getAbsolutePath());
-		    ticketOutputStream = new FileOutputStream(propertiesFile);
+		    ticketOutputStream = new FileOutputStream(new File(System.getProperty("user.home") + "/tickets.properties"));
 		    ticketProperties.setProperty("Tickets", String.valueOf(Bingo.player.getCurrentBalance()));
 		    ticketProperties.store(ticketOutputStream, null);
 		} catch (FileNotFoundException e) {
@@ -196,7 +194,9 @@ public class Bingo {
 		}
 		finally {
 		    try {
-			ticketOutputStream.close();
+			if (ticketOutputStream != null) {
+			    ticketOutputStream.close(); 
+			}
 		    } catch (IOException ex) {
 			System.out.println("Could not close output stream.");
 		    }
