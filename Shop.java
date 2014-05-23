@@ -62,7 +62,9 @@ public class Shop extends JFrame {
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
 		if (Bingo.player.getCurrentBalance() < CARD_COST) {
-		    JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
+		    //JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
+		    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", 
+			    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 		    Bingo.player.setTicketBank(20);
 		    resetTicketLabels();
 		}
