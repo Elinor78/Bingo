@@ -70,7 +70,10 @@ public class Computer {
 
 	    for (ComputerCard card : cards) {
 		if (card != null && !card.isBingo()) {
-		    card.markAndCall(numberBeingRead);
+		    card.markCard(numberBeingRead);
+		    
+		    // if some dice roll based on the number of marks and cards is satisfied...
+		    card.checkValidBingo();
 		}
 		else {
 		    card = null;
@@ -116,6 +119,7 @@ public class Computer {
 	private final int I_COLUMN_END = 30;
 	private final int N_COLUMN_END = 45;
 	private final int G_COLUMN_END = 60;
+	private int numberOfMarks = 0;
 	private final Random numberGenerator = new Random();
 	private boolean isBingo = false;
 	private final int[][][] card = new int[NUMBER_OF_COLUMNS][NUMBER_OF_ROWS][2];
@@ -152,14 +156,6 @@ public class Computer {
 	    
 	}
 	
-	private void markAndCall(int n) {
-	// For efficiency, search only the column that "n" could possibly be in, and mark if found.
-	// Then, search the entire card for the any valid bingo pattern.
-	// If bingo, set isBingo to true and decrement the number of bingos available.
-	    markCard(n);
-	    checkValidBingo();
-	}
-	
 	private void markCard(int n) {
 	    int column;
 	    /*Determine the column so there is less looping.*/
@@ -182,6 +178,7 @@ public class Computer {
 	    for (int row = 0; row < NUMBER_OF_ROWS; row++) {
 		if (card[row][column][CELL_VALUE] == n) {
 		    card[row][column][CELL_MARKED] = TRUE;
+		    numberOfMarks++;
 		    return;
 		}
 	    }
@@ -263,6 +260,10 @@ public class Computer {
 
 	private boolean isBingo() {
 	    return isBingo;
+	}
+	
+	private int getNumberOfMarks() {
+	    return numberOfMarks;
 	}
 	
 	private void printWinningCard() {
