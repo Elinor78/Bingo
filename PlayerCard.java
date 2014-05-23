@@ -275,7 +275,7 @@ public class PlayerCard extends Card {
 	    
 	    do{
 		try {
-		    freezeLabel.setText("<html><center>False Bingo!<br>Card Frozen<br>0:0" + countDown + "</center></html>");
+		    freezeLabel.setText("<html><center>Card Frozen<br>0:0" + countDown + "</center></html>");
 		    Thread.sleep( 1000 );
 		    countDown--;
 		} catch (InterruptedException ex) {
