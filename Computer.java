@@ -7,7 +7,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Random;
 import javax.swing.Timer;
 
@@ -20,7 +19,7 @@ public class Computer {
     private int responseTime;
     private final ComputerCard[] cards;
     private final Bingo b;
-    private final Queue<Integer> numberQueue = new LinkedList<>();
+    private final LimitedQueue numberQueue = new LimitedQueue(7);
     private final Timer callNumberTimer;
     private final numberReader readNumber = new numberReader();
     
@@ -67,7 +66,7 @@ public class Computer {
     private class numberReader implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-	    int numberBeingRead = numberQueue.poll();
+	    int numberBeingRead = (int)numberQueue.poll();
 
 	    for (ComputerCard card : cards) {
 		if (card != null && !card.isBingo()) {
@@ -82,6 +81,24 @@ public class Computer {
 	}
     }
     
+    private class LimitedQueue<E> extends LinkedList<E> {
+	private final int limit;
+
+	public LimitedQueue(int limit) {
+	    this.limit = limit;
+	}
+
+	@Override
+	public boolean add(E o) {
+	    super.add(o);
+	    
+	    while (size() > limit) {
+		super.remove();
+	    }
+	    
+	    return true;
+	}
+    }
     
     final class ComputerCard {
 	private final int NUMBER_OF_COLUMNS = 5;
