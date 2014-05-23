@@ -15,13 +15,14 @@ import java.util.Properties;
 public class Human {
     private int numberOfCards = 0;
     private final ArrayList<Integer> bankHistory= new ArrayList<>();
+    final String name = null;
     
     public Human() {
 	/*If a properties file exists in the user's home directory, use it. If not, just start off with 20 tickets.*/
 	Properties ticketProperties = new Properties();
 	InputStream ticketInputStream = null;
 	try {
-	    ticketInputStream = new FileInputStream(new File(System.getProperty("user.home") + "/tickets.properties"));
+	    ticketInputStream = new FileInputStream(new File(System.getProperty("user.home") + "/bingo.properties"));
 	    ticketProperties.load(ticketInputStream);
 	    bankHistory.add(Integer.parseInt(ticketProperties.getProperty("Tickets")));
 	} catch (IOException | NumberFormatException e) {

@@ -193,7 +193,7 @@ public class Bingo {
 		Properties ticketProperties = new Properties();
 		OutputStream ticketOutputStream = null;
 		try {
-		    ticketOutputStream = new FileOutputStream(new File(System.getProperty("user.home") + "/tickets.properties"));
+		    ticketOutputStream = new FileOutputStream(new File(System.getProperty("user.home") + "/bingo.properties"));
 		    ticketProperties.setProperty("Tickets", String.valueOf(Bingo.player.getCurrentBalance()));
 		    ticketProperties.store(ticketOutputStream, null);
 		} catch (FileNotFoundException e) {

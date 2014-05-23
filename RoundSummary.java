@@ -47,7 +47,8 @@ public class RoundSummary extends JDialog {
             public void mouseReleased(MouseEvent e) {
 		RoundSummary.this.dispose();
 		if (Bingo.player.getCurrentBalance() < 2) {
-		    JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
+		    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", 
+			    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 		    Bingo.player.setTicketBank(20);
 		}
 		shop.resetTicketLabels();
