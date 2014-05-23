@@ -56,6 +56,7 @@ public final class Shop extends JFrame {
 
     private void configureStartButton() {
 	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/startButton.png")));
+	startButton.setFocusPainted(false);
         startButton.setContentAreaFilled(false);
 	startButton.setBorder(null);
         startButton.setSize(160, 60);
@@ -72,6 +73,7 @@ public final class Shop extends JFrame {
 
     private void configureQuitButton() {
 	final JButton quitButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/quitButton.png")));
+	quitButton.setFocusPainted(false);
         quitButton.setContentAreaFilled(false);
 	quitButton.setBorder(null);
         quitButton.setSize(160, 60);
@@ -88,6 +90,7 @@ public final class Shop extends JFrame {
 
     private void configureCreditsButton() {
 	final JButton creditsButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/creditsButton.png")));
+	creditsButton.setFocusPainted(false);
         creditsButton.setContentAreaFilled(false);
 	creditsButton.setBorder(null);
         creditsButton.setSize(160, 60);
@@ -104,6 +107,7 @@ public final class Shop extends JFrame {
 
     private void configureRulesButton() {
 	final JButton rulesButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/rulesButton.png")));
+	rulesButton.setFocusPainted(false);
         rulesButton.setContentAreaFilled(false);
         rulesButton.setBorder(null);
         rulesButton.setSize(160, 60);
