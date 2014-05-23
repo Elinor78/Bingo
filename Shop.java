@@ -9,7 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 
-public class Shop extends JFrame {
+public final class Shop extends JFrame {
 
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/Shop/background.png")));
     private final JLabel ticketBankLabel = new JLabel();
@@ -44,6 +44,9 @@ public class Shop extends JFrame {
 	this.setResizable(false);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
+	
+	// This allows the 20-ticket freebie to appear when the program launches if tickets == 0, but maybe we just want to create a new player in that case...
+	resetTicketLabels(); 
     }
     
     private void configureBackground() {
@@ -61,16 +64,7 @@ public class Shop extends JFrame {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
-		if (Bingo.player.getCurrentBalance() < CARD_COST) {
-		    //JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
-		    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", 
-			    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
-		    Bingo.player.setTicketBank(20);
-		    resetTicketLabels();
-		}
-		else {
 		    startBingo();
-		}
             }
         });
         backgroundJL.add(startButton);
@@ -195,6 +189,12 @@ public class Shop extends JFrame {
     }
     
     public void resetTicketLabels() {
+	if (Bingo.player.getCurrentBalance() < CARD_COST) {
+	    //JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
+	    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
+	    Bingo.player.setTicketBank(20);
+	}
+	
 	ticketBankLabel.setText(String.valueOf(Bingo.player.getCurrentBalance() - CARD_COST));
 	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
     }
