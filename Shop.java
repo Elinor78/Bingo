@@ -233,10 +233,16 @@ public final class Shop extends JFrame {
             newGame = null;
 	    
 	    /*Open a new Round Summary.*/
-	    new RoundSummary(Shop.this);
+	    //new RoundSummary(Shop.this);
+	    new MessageDialog("You won " + String.valueOf(Shop.player.getTicketsWonInLatestRound()) + " tickets, " + Shop.player.getName() + "!", 
+		    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 	    
-	    /*Reset cardsToPurchase*/
+	    player.resetTicketsWonInLatestRound();
+	    
+	    /*Reset values in Shop.*/
 	    Shop.this.cardsToPurchase = 1;
+	    Shop.this.resetTicketLabels();
+	    Shop.this.setVisible(true);
         }  
     }
    
