@@ -58,18 +58,13 @@ public final class MessageDialog extends JDialog {
     private void configureTextArea() {
 	final JTextPane dialogText = new JTextPane();
 	Font dialogFont = BingoGUI.getGameFont().deriveFont(65f);
-	FontMetrics fontMetrics;
+	FontMetrics fontMetrics = dialogText.getFontMetrics(dialogFont);
 	
 	/*This loops down from a font size of 65 and compares the string's measured width to a predefined width that is known to fit properly.
-	Unfortunately It works down to that width (which is about 71 characters long in Cooper 35f) and then after that it makes text much smaller
-	than I would anticipate. Would appreciate it if someone could take a stab at it. Otherwise, it works decently. It at least ensures that any 
-	text passed will fit just that longer messages will be smaller than anticipated.*/
-	for (float fontSize = 65; fontSize > 12; fontSize -= 0.5) {
-	    dialogFont = BingoGUI.getGameFont().deriveFont(fontSize);
+	Unfortunately It works down to that width (which is about 71 characters long in Cooper 35f) and then after that it makes text much smaller than I would anticipate. Would appreciate it if someone could take a stab at it. Otherwise, it works decently. It at least ensures that any text passed will fit just that longer messages will be smaller than anticipated.*/
+	for (float fontSize = 65; (fontMetrics.stringWidth(dialogMessage) >= 1271) && (fontSize > 12); fontSize -= 0.5) {
+	    dialogFont = dialogFont.deriveFont(fontSize);
 	    fontMetrics = dialogText.getFontMetrics(dialogFont);
-	    if (fontMetrics.stringWidth(dialogMessage) <= 1271) {
-		break;
-	    }
 	}
 	
 	dialogText.setSize(250, 250);
