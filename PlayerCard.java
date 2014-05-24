@@ -101,7 +101,7 @@ public class PlayerCard extends Card {
 	this.add(callButtonPanel, BorderLayout.SOUTH);
     }
     
-    private class CellMouseListener extends MouseAdapter {
+    private static class CellMouseListener extends MouseAdapter {
 	@Override
 	public void mousePressed(MouseEvent e) {
 	    ((Cell)e.getSource()).toggleToken();

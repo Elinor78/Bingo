@@ -98,7 +98,7 @@ public class Computer {
 	}
     }
     
-    private class LimitedQueue<E> extends LinkedList<E> {
+    private static class LimitedQueue<E> extends LinkedList<E> {
 	private final int limit;
 
 	public LimitedQueue(int limit) {

@@ -168,7 +168,7 @@ public class Bingo {
 	sayNumber.start();
     }
     
-    private class SayNumberTask implements Runnable {
+    private static class SayNumberTask implements Runnable {
 	char letter;
 	int number;
 	boolean okayToProceed = false;

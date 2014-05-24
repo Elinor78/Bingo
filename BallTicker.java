@@ -78,7 +78,7 @@ public class BallTicker extends JLabel {
 	    numberOfPixelsSlid++;
     }
     
-    private class Ball extends JLabel {
+    private static class Ball extends JLabel {
 	private final float FONT_SIZE = 21;
 	private final ImageIcon background;
 	
