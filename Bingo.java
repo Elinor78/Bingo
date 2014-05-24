@@ -33,7 +33,6 @@ public class Bingo {
     
     /*Audio objects*/
     private static AudioPlayer bgMusic;
-    private static AudioPlayer[] numbers;
     
     // Number calls
     private final Random randomGen = new Random();
