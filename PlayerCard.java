@@ -16,20 +16,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PlayerCard extends Card {
-    private final Bingo b;
+    private final Bingo bingo;
+    private final NewBingoNotification newBingo;
+    private final BingoGUI gui;
     private final int NUMBER_OF_ROWS = 5;
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
     private final CallButtonMouseListener buttonListener = new CallButtonMouseListener();  
     private final JPanel bingoFeedbackPanel = new JPanel();
     private final JLabel freezeLabel = new JLabel();
-    static int totalPlayerCards = 0;
     private Font freezeFont = getFreezeFont().deriveFont(35f);
-    static int ticketsWonInRound = 0;
     
-    public PlayerCard(Bingo b) {
-	this.b = b;
-	totalPlayerCards++;
-	ticketsWonInRound = 0;
+    public PlayerCard(Bingo b, NewBingoNotification n, BingoGUI g) {
+	this.bingo = b;
+	this.newBingo = n;
+	this.gui = g;
+	gui.totalPlayerCards++;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
 	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
@@ -110,23 +111,32 @@ public class PlayerCard extends Card {
 	@Override
 	public void mousePressed(MouseEvent e) {
 	    if ( isValidBingo() ) {
-                b.decrementBingos(this);
+                bingo.decrementBingos(this);
 		
 		int ticketsToAward;
-		if (b.getBonusTicketsLeft() >= 0) {
+		if (bingo.getBonusTicketsLeft() >= 0) {
 		    ticketsToAward = 3;
 		}
 		else {
 		    ticketsToAward = 2;
 		}
 		
-		Bingo.player.setTicketBank(ticketsToAward);
-		ticketsWonInRound += ticketsToAward;
-		NewBingoNotification.currentBingoNumber++;
+		Shop.player.setTicketBank(ticketsToAward);
+		Shop.player.addTicketsWonInLatestRound(ticketsToAward);
+		
+		newBingo.currentBingoNumber++;
+		
+		gui.totalPlayerCards--;
+	
+		if (gui.totalPlayerCards == 0) {
+		    
+		    bingo.signalNoBingosLeft();
+		}
 
                 cardWin();
             }
             else {
+		System.out.println("Total Player Cards = " + gui.totalPlayerCards);
                 cardFreeze();
             }
 	}
@@ -153,7 +163,7 @@ public class PlayerCard extends Card {
 	for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
 	    isValid = true;	// Reset optimistic assumption for each column
 	    for (int row = 0; row < NUMBER_OF_ROWS; row++) {		// Iterate rows
-		if (!cardLayout[row][column].isMarked() || !b.isNumberCalled(cardLayout[row][column].getNumber())) {
+		if (!cardLayout[row][column].isMarked() || !bingo.isNumberCalled(cardLayout[row][column].getNumber())) {
 		    isValid = false;
 		    break;
 		}
@@ -169,7 +179,7 @@ public class PlayerCard extends Card {
 	    for (int row = 0 ; row < NUMBER_OF_ROWS; row++) {			// Iterate rows
 		isValid = true;   // Reset optimistic assumption for each row
 		for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
-		    if (!cardLayout[row][column].isMarked() || !b.isNumberCalled(cardLayout[row][column].getNumber())) {
+		    if (!cardLayout[row][column].isMarked() || !bingo.isNumberCalled(cardLayout[row][column].getNumber())) {
 			isValid = false;
 			break;
 		    }
@@ -182,13 +192,13 @@ public class PlayerCard extends Card {
 	}
 
 	if (!isValid) {
-	    if (cardLayout[0][0].isMarked() && cardLayout[1][1].isMarked() && cardLayout[3][3].isMarked() && cardLayout[4][4].isMarked() && b.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[1][1].getNumber(), cardLayout[3][3].getNumber(), cardLayout[4][4].getNumber()})) { //CHECKS DIAGONAL LEFT -> RIGHT
+	    if (cardLayout[0][0].isMarked() && cardLayout[1][1].isMarked() && cardLayout[3][3].isMarked() && cardLayout[4][4].isMarked() && bingo.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[1][1].getNumber(), cardLayout[3][3].getNumber(), cardLayout[4][4].getNumber()})) { //CHECKS DIAGONAL LEFT -> RIGHT
 		isValid = true;
 	    }
-	    else if (cardLayout[4][0].isMarked() && cardLayout[3][1].isMarked() && cardLayout[1][3].isMarked() && cardLayout[0][4].isMarked() && b.isNumberCalled(new int[] {cardLayout[4][0].getNumber(), cardLayout[3][1].getNumber(), cardLayout[1][3].getNumber(), cardLayout[0][4].getNumber()})) { //CHECKS DIAGONAL LEFT <- RIGHT
+	    else if (cardLayout[4][0].isMarked() && cardLayout[3][1].isMarked() && cardLayout[1][3].isMarked() && cardLayout[0][4].isMarked() && bingo.isNumberCalled(new int[] {cardLayout[4][0].getNumber(), cardLayout[3][1].getNumber(), cardLayout[1][3].getNumber(), cardLayout[0][4].getNumber()})) { //CHECKS DIAGONAL LEFT <- RIGHT
 		isValid = true;
 	    }
-	    else if (cardLayout[0][0].isMarked() && cardLayout[0][4].isMarked() && cardLayout[4][0].isMarked() && cardLayout[4][4].isMarked() && b.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[0][4].getNumber(), cardLayout[4][0].getNumber(), cardLayout[4][4].getNumber()})) { //CHECKS CORNERS
+	    else if (cardLayout[0][0].isMarked() && cardLayout[0][4].isMarked() && cardLayout[4][0].isMarked() && cardLayout[4][4].isMarked() && bingo.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[0][4].getNumber(), cardLayout[4][0].getNumber(), cardLayout[4][4].getNumber()})) { //CHECKS CORNERS
 		isValid = true;
 	    }
 	}
@@ -235,6 +245,7 @@ public class PlayerCard extends Card {
 	remove( cellPanel );
 	add( bingoFeedbackPanel );
 	bingoFeedbackPanel.add( winLabel );
+	
 	revalidate();
 	repaint();
     }

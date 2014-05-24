@@ -22,7 +22,6 @@ public class Bingo {
     private int numberOfBingos;
     private final ArrayList<Integer> availableNumbers = populateNumberArray();
     private BingoGUI bGUI;
-    public static Human player = new Human();
     private int nextNumber;
     private static final Lock lock = new ReentrantLock();
     private static final Condition noBingosLeft = lock.newCondition();
@@ -77,7 +76,8 @@ public class Bingo {
     
     /*Sets number of Bingos.EAH*/
     private void setInitialBingos() {
-        numberOfBingos = ((Computer.totalComputerCards + player.getNumberOfCards()) / 3);
+	System.out.println("Total Computer Cards: " + Computer.totalComputerCards);
+        numberOfBingos = ((Computer.totalComputerCards + Shop.player.getNumberOfCards()) / 2);
     }
     
     /*Gets number of Bingos.EAH*/
@@ -91,7 +91,7 @@ public class Bingo {
     
     public void decrementBingos(Object o) {
 	if (o instanceof Computer.ComputerCard) {
-	    bGUI.newBingo.showClaimedBingo();
+	    bGUI.newNotification.showClaimedBingo();
 	}
 	
 	if (numberOfBonusTickets > 0) {
@@ -101,14 +101,18 @@ public class Bingo {
 	numberOfBingos--;
 	bGUI.sw.updateAvailableBingos();
         
-        /*If the number of bingos after decrementing is zero, this locks to only one thread which signals to the others to go ahead.*/
         if (numberOfBingos == 0) {
-            lock.lock();
-            try {
-                noBingosLeft.signalAll();
-            } finally {
-                lock.unlock();
-            }
+            signalNoBingosLeft();
+        }
+    }
+    
+    /*This locks to only one thread which signals to the others to go ahead.*/
+    public void signalNoBingosLeft() {
+	lock.lock();
+        try {
+	    noBingosLeft.signalAll();
+        } finally {
+	    lock.unlock();
         }
     }
     
@@ -194,7 +198,7 @@ public class Bingo {
 		OutputStream ticketOutputStream = null;
 		try {
 		    ticketOutputStream = new FileOutputStream(new File(System.getProperty("user.home") + "/bingo.properties"));
-		    ticketProperties.setProperty("Tickets", String.valueOf(Bingo.player.getCurrentBalance()));
+		    ticketProperties.setProperty("Tickets", String.valueOf(Shop.player.getCurrentBalance()));
 		    ticketProperties.store(ticketOutputStream, null);
 		} catch (FileNotFoundException e) {
 		    System.out.println("Could not write ticket balance. File Not Found");

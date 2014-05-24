@@ -17,6 +17,7 @@ public final class Shop extends JFrame {
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
     private int cardsToPurchase = 1;
     private final int CARD_COST;
+    public static Human player = new Human();
     public Bingo newGame;
     
     // Creates Shop with default card price of 2.
@@ -168,11 +169,11 @@ public final class Shop extends JFrame {
         ticketBankLabel.setSize(155, 110);
         ticketBankLabel.setLocation(190, 190);
         ticketBankLabel.setFont(shopFont);
-	if (Bingo.player.getCurrentBalance() < CARD_COST) {
+	if (player.getCurrentBalance() < CARD_COST) {
 	    ticketBankLabel.setText("0");
 	}
 	else {
-	    ticketBankLabel.setText(String.valueOf(Bingo.player.getCurrentBalance() - CARD_COST));
+	    ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
 	}
 	ticketBankLabel.setHorizontalAlignment(SwingConstants.CENTER);
         backgroundJL.add(ticketBankLabel);
@@ -182,7 +183,7 @@ public final class Shop extends JFrame {
         cardsToPurchaseLabel.setSize(90, 90);
         cardsToPurchaseLabel.setLocation(470, 195);
         cardsToPurchaseLabel.setFont(shopFont);
-	if (Bingo.player.getCurrentBalance() < CARD_COST) {
+	if (player.getCurrentBalance() < CARD_COST) {
 	    cardsToPurchaseLabel.setText("0");
 	}
 	else {
@@ -193,13 +194,13 @@ public final class Shop extends JFrame {
     }
     
     public void resetTicketLabels() {
-	if (Bingo.player.getCurrentBalance() < CARD_COST) {
+	if (player.getCurrentBalance() < CARD_COST) {
 	    //JOptionPane.showMessageDialog(null, "You do not have enough tickets to keep playing.\nHere's 20 more tickets!", "Insufficient Funds", JOptionPane.OK_OPTION);
 	    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
-	    Bingo.player.setTicketBank(20);
+	    player.setTicketBank(20);
 	}
 	
-	ticketBankLabel.setText(String.valueOf(Bingo.player.getCurrentBalance() - CARD_COST));
+	ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
 	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
     }
     
@@ -208,7 +209,7 @@ public final class Shop extends JFrame {
         this.setVisible(false);
         
         /*Sends the amount of cards to purchase to static human player in Bingo Class.*/
-	Bingo.player.purchaseCards(cardsToPurchase, CARD_COST);
+	player.purchaseCards(cardsToPurchase, CARD_COST);
         
         /*Create a new Bingo game instance still in the main thread.*/
         newGame = new Bingo();

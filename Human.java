@@ -15,6 +15,7 @@ import java.util.Properties;
 public class Human {
     private int numberOfCards = 0;
     private final ArrayList<Integer> bankHistory= new ArrayList<>();
+    private int ticketsWonInLatestRound = 0;
     final String name = null;
     
     public Human() {
@@ -67,6 +68,18 @@ public class Human {
     
     public int getNumberOfCards() {
 	return numberOfCards;
+    }
+    
+    public void addTicketsWonInLatestRound(int t) {
+	ticketsWonInLatestRound += t;
+    }
+    
+    public void resetTicketsWonInLatestRound() {
+	ticketsWonInLatestRound = 0;
+    }
+    
+    public int getTicketsWonInLatestRound() {
+	return ticketsWonInLatestRound;
     }
    
 }

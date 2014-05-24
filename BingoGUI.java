@@ -18,10 +18,11 @@ public class BingoGUI extends JFrame {
     private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
+    public int totalPlayerCards = 0;
     final StatusWindow sw;
-    final NewBingoNotification newBingo = new NewBingoNotification();
+    final NewBingoNotification newNotification = new NewBingoNotification();
     
-    public BingoGUI(Bingo b) {	
+    public BingoGUI(Bingo bingo) {	
 	backgroundJL.setLayout(new GridBagLayout());
 	GridBagConstraints mainFrameConstraint = new GridBagConstraints();
 	
@@ -64,16 +65,16 @@ public class BingoGUI extends JFrame {
 	pcLowerRight.gridy = 1;
 	pcLowerRight.insets = new Insets(5, 5, 5, 5);
 	
-	if (Bingo.player.getNumberOfCards() == 1) {
-	    PlayerCard bigCard = new PlayerCard(b);
+	if (Shop.player.getNumberOfCards() == 1) {
+	    PlayerCard bigCard = new PlayerCard(bingo, newNotification, this);
 	    bigCard.convertToLargeCard();
 	    cardPanel.add(bigCard);
 	}
 	else {
 	    GridBagConstraints[] orderOfCardInsertion = {pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight};
 	
-	    for (int i = 0; i < Bingo.player.getNumberOfCards(); i++) {
-		cardPanel.add(new PlayerCard(b), orderOfCardInsertion[i]);
+	    for (int i = 0; i < Shop.player.getNumberOfCards(); i++) {
+		cardPanel.add(new PlayerCard(bingo, newNotification, this), orderOfCardInsertion[i]);
 	    }
 	}
 	
@@ -97,11 +98,11 @@ public class BingoGUI extends JFrame {
 	statusPanel.add(bt, statusTop);
 	
 	// Add StatusWindow to statusPanel
-	sw = new StatusWindow(b);
+	sw = new StatusWindow(bingo);
 	statusPanel.add(sw, statusMiddle);
 	
 	// Add NewBingoNotification to statusPanel
-	statusPanel.add(newBingo, statusBottom);
+	statusPanel.add(newNotification, statusBottom);
 	
 	// Add everything to Jframe and set static size
 	this.add(backgroundJL);
