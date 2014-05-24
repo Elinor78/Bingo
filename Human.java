@@ -22,8 +22,8 @@ public class Human {
     private final ArrayList<Integer> bankHistory= new ArrayList<>();
     private int ticketsWonInLatestRound = 0;
     private Set<String> playerNames;
+    private ChoosePlayer choosePlayer;
     private String name = null;
-    //public ChoosePlayer choosePlayer;
     private Exception Exception;
     
     public Human() {
@@ -86,19 +86,22 @@ public class Human {
 
     private void initiatePlayer() {
 	
-	/*If a properties file exists in the user's home directory, use it. If not, just start off with 20 tickets.*/
+	/*Locate the properties file and prepare streams.*/
 	File propertiesFile = new File(System.getProperty("user.home") + "/bingo.properties");
 	Properties ticketProperties = new Properties();
 	InputStream ticketInputStream = null;
 	OutputStream ticketOutputStream = null;
 	
 	try {
+	    /*Load the properties.*/
 	    ticketInputStream = new FileInputStream(propertiesFile);
 	    ticketProperties.load(ticketInputStream);
-
+	    
+	    /*If there are no properties, head on to the Catch where a brand new properties file is created.*/
 	    if (ticketProperties.isEmpty()) {
 		throw Exception;
 	    }
+	    /*If there is one property and it's name is "Default", create a new player with 20 tickets.*/
 	    else if (ticketProperties.size() == 1) {
 		playerNames = ticketProperties.stringPropertyNames();
 		for (String tempName : playerNames) {
@@ -106,22 +109,35 @@ public class Human {
 			new NewPlayer(this);
 			bankHistory.add(20);
 		    }
+		    /*If it's name is something else, use that name and retrieve its tickets.*/
 		    else {
 			name = tempName;
 			bankHistory.add(Integer.parseInt(ticketProperties.getProperty(tempName)));
 		    }
 		}
 	    }
+	    /*If there is more than 1 property, open the choose player dialog and if the chosen name had no ticket value, give them 20.*/
 	    else if (ticketProperties.size() > 1) {
 		playerNames = ticketProperties.stringPropertyNames();
-		new ChoosePlayer(this);
+		choosePlayer = new ChoosePlayer(this);
 		if (ticketProperties.getProperty(name) == null) {
 		    bankHistory.add(20);
 		}
+		/*Otherwise give them what they had in the properties file.*/
 		else {
 		    bankHistory.add(Integer.parseInt(ticketProperties.getProperty(name)));
 		}
+		/*If a few different new players were created but not used in the game, keep the names anyway.*/
+		if (!choosePlayer.getNewPlayers().isEmpty()) {
+		    ticketOutputStream = new FileOutputStream(propertiesFile);
+		    for (String newName : choosePlayer.getNewPlayers()) {
+			ticketProperties.setProperty(newName, String.valueOf(20));
+		    }
+		    ticketProperties.store(ticketOutputStream, null);
+		    ticketOutputStream.close();
+		}
 	    }
+	    /*Create a new properties file from scratch.*/
 	} catch (Exception e) {
 	    try {
 		ticketOutputStream = new FileOutputStream(propertiesFile);
@@ -140,6 +156,7 @@ public class Human {
 	}
 	finally {
 	    try {
+		/*Close the streams.*/
 		if (ticketInputStream != null) {
 		   ticketInputStream.close(); 
 		}

@@ -191,16 +191,18 @@ public class Bingo {
 	
 	Shop newShop = new Shop();
 	
+	/*Runs when the program is quit under almost all circumstances except crashes.*/
 	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	    
 	    @Override
 	    public void run() {
-		/*Write the current balance to the user's home directory when the program is exited in any way.*/
+		/*Locate the properties file and prepare streams.*/
 		File propertiesFile = new File(System.getProperty("user.home") + "/bingo.properties");
 		Properties ticketProperties = new Properties();
 		InputStream ticketInputStream = null;
 		OutputStream ticketOutputStream = null;
-
+		
+		/*Write the user's current balance to the associated property.*/
 		try {
 		    ticketInputStream = new FileInputStream(propertiesFile);
 		    ticketProperties.load(ticketInputStream);
@@ -214,6 +216,7 @@ public class Bingo {
 		}
 		finally {
 		    try {
+			/*Close Streams.*/
 			if (ticketOutputStream != null) {
 			    ticketOutputStream.close(); 
 			}

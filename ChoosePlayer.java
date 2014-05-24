@@ -8,6 +8,7 @@ import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class ChoosePlayer extends JDialog {
@@ -15,6 +16,7 @@ public class ChoosePlayer extends JDialog {
     private final JList<String> playersList = new JList<>();
     private final DefaultListModel<String> playersListModel = new DefaultListModel<>();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(30f);
+    private ArrayList<String> newPlayers = new ArrayList<>();
     private final Human player;
     
     public ChoosePlayer(Human p) {
@@ -48,6 +50,7 @@ public class ChoosePlayer extends JDialog {
         startButton.setLocation(100, 380);
         startButton.addMouseListener(new MouseAdapter() {
             @Override
+	    /*Retrieve the value from the list and set static player's name.*/
             public void mouseReleased(MouseEvent e) {
 		if (playersList.getSelectedValue() == null) {
 		    playersList.setSelectedIndex(0);
@@ -88,17 +91,24 @@ public class ChoosePlayer extends JDialog {
             @Override
             public void mouseReleased(MouseEvent e) {
 		NewPlayer newPlayerDialog = new NewPlayer(player);
-		playersListModel.addElement(newPlayerDialog.getNewPlayer());
+		String newPlayer = newPlayerDialog.getNewPlayer();
+		playersListModel.addElement(newPlayer);
+		ChoosePlayer.this.newPlayers.add(newPlayer);
             }
         });
         backgroundJL.add(newPlayerButton);
     }
     
+    /*Iterate through Set of player names and add to listmodel.*/
     private void updatePlayersList() {
 	for (String name : player.getPlayerNames()) {
 	    if (!name.equals("Default")) {
 		playersListModel.addElement(name);
 	    }
 	}
+    }
+    
+    public ArrayList<String> getNewPlayers() {
+	return newPlayers;
     }
 }
