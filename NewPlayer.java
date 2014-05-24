@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
+import javax.swing.text.*;
 
 public class NewPlayer extends JDialog {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/NewPlayer/background.png")));
@@ -60,6 +61,31 @@ public class NewPlayer extends JDialog {
 	textField.setSize(200, 40);
         textField.setLocation(50, 220);
         textField.setFont(shopFont);
+	
+	/*This class prevents the field from being typed in longer than a specified length. 
+	This is done to prevent really long user names which would make other interface
+	elements look ugly or not fit. */
+	class JTextFieldLimit extends PlainDocument {
+	    private int limit;
+	    
+	    JTextFieldLimit(int limit) {
+		super();
+		this.limit = limit;
+	    }
+
+	    @Override
+	    public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		if (str == null) {
+		    return;		    
+		}
+
+		if ((getLength() + str.length()) <= limit) {
+		    super.insertString(offset, str, attr);
+		}
+	    }
+	}
+	
+	textField.setDocument(new JTextFieldLimit(10));
 	
 	this.add(textField);
     }
