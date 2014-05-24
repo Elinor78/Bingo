@@ -7,9 +7,11 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
 import java.util.concurrent.locks.*;
@@ -259,7 +261,7 @@ public class Bingo {
 		    bgMusic = new AudioPlayer();
 		    bgMusic.loop();
 		} catch (Exception ex) {
-		    System.out.println("Something went wrong with audio.");
+		    System.out.println("Something went wrong with the background music.");
 		    System.out.println(ex.getMessage());
 		}
 	    }
@@ -273,11 +275,16 @@ public class Bingo {
 	    @Override
 	    public void run() {
 		/*Write the current balance to the user's home directory when the program is exited in any way.*/
+		File propertiesFile = new File(System.getProperty("user.home") + "/bingo.properties");
 		Properties ticketProperties = new Properties();
+		InputStream ticketInputStream = null;
 		OutputStream ticketOutputStream = null;
+
 		try {
-		    ticketOutputStream = new FileOutputStream(new File(System.getProperty("user.home") + "/bingo.properties"));
-		    ticketProperties.setProperty("Tickets", String.valueOf(Shop.player.getCurrentBalance()));
+		    ticketInputStream = new FileInputStream(propertiesFile);
+		    ticketProperties.load(ticketInputStream);
+		    ticketProperties.setProperty(Shop.player.getName(), String.valueOf(Shop.player.getCurrentBalance()));
+		    ticketOutputStream = new FileOutputStream(propertiesFile);
 		    ticketProperties.store(ticketOutputStream, null);
 		} catch (FileNotFoundException e) {
 		    System.out.println("Could not write ticket balance. File Not Found");
@@ -288,6 +295,9 @@ public class Bingo {
 		    try {
 			if (ticketOutputStream != null) {
 			    ticketOutputStream.close(); 
+			}
+			if (ticketInputStream != null) {
+			    ticketInputStream.close();
 			}
 		    } catch (IOException ex) {
 			System.out.println("Could not close output stream.");
