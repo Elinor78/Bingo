@@ -16,7 +16,7 @@ public class ChoosePlayer extends JDialog {
     private final JList<String> playersList = new JList<>();
     private final DefaultListModel<String> playersListModel = new DefaultListModel<>();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(30f);
-    private ArrayList<String> newPlayers = new ArrayList<>();
+    private final ArrayList<String> newPlayers = new ArrayList<>();
     private final Human player;
     
     public ChoosePlayer(Human p) {

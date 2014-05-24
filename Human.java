@@ -27,7 +27,6 @@ public class Human {
     private Exception Exception;
     
     public Human() {
-	
 	initiatePlayer();
     }
     

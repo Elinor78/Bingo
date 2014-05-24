@@ -190,6 +190,7 @@ public class Bingo {
 	backgroundMusic.start();
 	
 	Shop newShop = new Shop();
+	newShop.setVisible(true);
 	
 	/*Runs when the program is quit under almost all circumstances except crashes.*/
 	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {

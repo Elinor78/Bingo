@@ -44,7 +44,6 @@ public final class Shop extends JFrame {
 	this.setLocationRelativeTo(null);
 	this.setResizable(false);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setVisible(true);
 	
 	// This allows the 20-ticket freebie to appear when the program launches if tickets == 0, but maybe we just want to create a new player in that case...
 	resetTicketLabels(); 
