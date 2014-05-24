@@ -46,11 +46,7 @@ public class RoundSummary extends JDialog {
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
 		RoundSummary.this.dispose();
-		if (Shop.player.getCurrentBalance() < 2) {
-		    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", 
-			    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
-		    Shop.player.setTicketBank(20);
-		}
+		
 		Shop.player.resetTicketsWonInLatestRound();
 		shop.resetTicketLabels();
 		shop.setVisible(true);
