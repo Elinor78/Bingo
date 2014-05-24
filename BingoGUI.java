@@ -112,8 +112,6 @@ public class BingoGUI extends JFrame {
 	this.setLocationRelativeTo(null);
 	this.setResizable(false);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	
-	backgroundJL.setCursor(new Cursor(Cursor.HAND_CURSOR));
     } // end constructor
     
     // Updates all necessary GUI objects to display newly-called numbers.

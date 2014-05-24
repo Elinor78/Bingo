@@ -8,7 +8,7 @@ import javax.sound.sampled.*;
 
 public class AudioPlayer {
 
-	private Clip clip;
+	private final Clip clip;
 
 	public AudioPlayer() throws Exception {
 	    clip = AudioSystem.getClip();

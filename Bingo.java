@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
 import java.util.concurrent.locks.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.*;
 
 public class Bingo {
     
@@ -38,6 +41,8 @@ public class Bingo {
 	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
 	    bGUI.showNewNumber(nextNumber);
 	    setNumberCalled(nextNumber);
+	    speakNumber(nextNumber);
+	    
 	    for (Computer computer : computerPlayers) {
 		computer.receiveNewNumber(nextNumber);
 	    }
@@ -161,7 +166,81 @@ public class Bingo {
     
     /*Speaks called number aloud.*/
     public void speakNumber(int numberToSpeak) {
-        
+        Thread sayNumber = new Thread(new SayNumberTask(numberToSpeak));
+	sayNumber.start();
+    }
+    
+    private class SayNumberTask implements Runnable {
+	char letter;
+	int number;
+	boolean okayToProceed = false;
+	Clip letterClip;
+	Clip numberClip;
+	
+	public SayNumberTask(int numberToSpeak) {
+	    number = numberToSpeak;
+	}
+	
+	@Override
+	public void run() {
+	    try {
+		if (number <= 15) {
+		    letter = 'B';
+		}
+		else if (number <= 30) {
+		    letter = 'I';
+		}
+		else if (number <= 45) {
+		    letter = 'N';
+		}
+		else if (number <= 60) {
+		    letter = 'G';
+		}
+		else {
+		    letter = 'O';
+		}
+		
+		letterClip = AudioSystem.getClip();
+		AudioInputStream letterAIS = AudioSystem.getAudioInputStream(getClass().getResource("/Audio/Bingo Voice/" + letter + ".aif"));
+		
+		numberClip = AudioSystem.getClip();
+		AudioInputStream numberAIS = AudioSystem.getAudioInputStream(getClass().getResource("/Audio/Bingo Voice/" + number + ".aif"));
+		
+		LineListener listener = new LineListener() {
+		    @Override
+		    public void update(LineEvent event) {
+			LineEvent.Type type = event.getType();
+
+			if (type == LineEvent.Type.STOP) {
+			    okayToProceed = true;
+			    if (event.getSource() == letterClip) {
+				letterClip.close();
+			    }
+			    else {
+				numberClip.close();
+			    }
+			}
+		    }
+		};
+		letterClip.addLineListener(listener);
+		numberClip.addLineListener(listener);
+
+		letterClip.open(letterAIS);
+		letterClip.start();
+		
+		Thread.sleep(500);
+		
+		numberClip.open(numberAIS);
+		numberClip.start();
+	    }
+	    catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
+		System.out.println("Something went wrong with saying the number.");
+		System.out.println(ex.getMessage());
+	    }
+	    catch (InterruptedException ex) {
+		Logger.getLogger(Bingo.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
     }
     
     /*Plays background music.*/ 

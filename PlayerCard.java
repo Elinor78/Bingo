@@ -92,6 +92,7 @@ public class PlayerCard extends Card {
     private void addCallButton() {
 	callButton.setContentAreaFilled(false);
 	callButton.setBorder(null);
+	callButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	callButton.addMouseListener(buttonListener);
 	
 	JPanel callButtonPanel = new JPanel();
