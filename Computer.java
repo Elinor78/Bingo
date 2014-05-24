@@ -62,6 +62,20 @@ public class Computer {
 	callNumberTimer.start();
     }
     
+    private int calculateChanceOfPatternMiss(ComputerCard c) {
+	int chanceOfMiss = 0;
+	
+	// Add 5% for each additional ComputerCard.
+	chanceOfMiss += (cards.length - 1) * 5;
+	
+	// After 11 marks on a card, add 3% for each mark.
+	if (c.getNumberOfMarks() > 11) {
+	    chanceOfMiss += (c.getNumberOfMarks() - 11) * 3;
+	}
+	
+	return chanceOfMiss;
+    }
+    
     
     private class numberReader implements ActionListener {
 	@Override
@@ -72,8 +86,8 @@ public class Computer {
 		if (card != null && !card.isBingo()) {
 		    card.markCard(numberBeingRead);
 		    
-		    // if some dice roll based on the number of marks and cards is satisfied...
-		    card.checkValidBingo();
+		    int chanceOfNotNoticingPattern = calculateChanceOfPatternMiss(card);
+		    card.checkValidBingo(chanceOfNotNoticingPattern);
 		}
 		else {
 		    card = null;
@@ -185,69 +199,73 @@ public class Computer {
 	    
 	}
 	
-	private void checkValidBingo() {
-	    boolean validPatternFound = true;
-	
-	    //////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
-	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
-		validPatternFound = true;	// Reset optimistic assumption for each column
-		for (int row = 0; row < NUMBER_OF_ROWS; row++) {		// Iterate rows
-		    if (card[column][row][CELL_MARKED] == FALSE) {
-			validPatternFound = false;
-			break;
-                }
-            }
-	    // This line executes after each bottom Cell has been checked AND after any row break.
-		if (validPatternFound) {
-		    callBingo();
-		    break;
-		}
-	    }
-	
-	    if (!validPatternFound) {
-		validPatternFound = true; // Reset optimistic valid pattern assumption
-		//////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
-		for (int row = 0 ; row < NUMBER_OF_ROWS; row++) {			// Iterate rows
-		    validPatternFound = true;   // Reset optimistic assumption for each row
-		    for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
+	private void checkValidBingo(int chanceOfNotNoticingPattern) {
+	    int diceRoll = numberGenerator.nextInt(100) + 1;
+	    
+	    if (diceRoll > chanceOfNotNoticingPattern) {
+		boolean validPatternFound = true;
+
+		//////////////////////// CHECKS VERTICAL BINGO ////////////////////////////
+		for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
+		    validPatternFound = true;	// Reset optimistic assumption for each column
+		    for (int row = 0; row < NUMBER_OF_ROWS; row++) {		// Iterate rows
 			if (card[column][row][CELL_MARKED] == FALSE) {
 			    validPatternFound = false;
 			    break;
-			}
 		    }
-		    // This line executes after each right-most Cell has been checked AND after any column break.
+		}
+		// This line executes after each bottom Cell has been checked AND after any row break.
 		    if (validPatternFound) {
 			callBingo();
 			break;
 		    }
-		}	
-	    }   
+		}
 
-	    if (!validPatternFound) {
-		/*Check Diagonal and Four Corners Bingos*/
-		/*Diagonal left to right.*/
-		if( 
-		    (card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
-		    (card[I_COLUMN][1][CELL_MARKED] == TRUE) && 
-		    (card[G_COLUMN][3][CELL_MARKED] == TRUE) && 
-		    (card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
-		    callBingo();
-		}
-		/*Diagonal right to left.*/
-		else if(
-		    (card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
-		    (card[G_COLUMN][1][CELL_MARKED] == TRUE) && 
-		    (card[I_COLUMN][3][CELL_MARKED] == TRUE) && 
-		    (card[B_COLUMN][4][CELL_MARKED] == TRUE)) {
-		    callBingo();
-		}
-		/*Four corners.*/
-		else if( 
-		    (card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
-		    (card[B_COLUMN][4][CELL_MARKED] == TRUE) && 
-		    (card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
-		    (card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
-		    callBingo();
+		if (!validPatternFound) {
+		    validPatternFound = true; // Reset optimistic valid pattern assumption
+		    //////////////////////// CHECKS HORIZONTAL BINGO ////////////////////////////
+		    for (int row = 0 ; row < NUMBER_OF_ROWS; row++) {			// Iterate rows
+			validPatternFound = true;   // Reset optimistic assumption for each row
+			for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {	// Iterate columns
+			    if (card[column][row][CELL_MARKED] == FALSE) {
+				validPatternFound = false;
+				break;
+			    }
+			}
+			// This line executes after each right-most Cell has been checked AND after any column break.
+			if (validPatternFound) {
+			    callBingo();
+			    break;
+			}
+		    }	
+		}   
+
+		if (!validPatternFound) {
+		    /*Check Diagonal and Four Corners Bingos*/
+		    /*Diagonal left to right.*/
+		    if( 
+			(card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
+			(card[I_COLUMN][1][CELL_MARKED] == TRUE) && 
+			(card[G_COLUMN][3][CELL_MARKED] == TRUE) && 
+			(card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
+			callBingo();
+		    }
+		    /*Diagonal right to left.*/
+		    else if(
+			(card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
+			(card[G_COLUMN][1][CELL_MARKED] == TRUE) && 
+			(card[I_COLUMN][3][CELL_MARKED] == TRUE) && 
+			(card[B_COLUMN][4][CELL_MARKED] == TRUE)) {
+			callBingo();
+		    }
+		    /*Four corners.*/
+		    else if( 
+			(card[B_COLUMN][0][CELL_MARKED] == TRUE) && 
+			(card[B_COLUMN][4][CELL_MARKED] == TRUE) && 
+			(card[O_COLUMN][0][CELL_MARKED] == TRUE) && 
+			(card[O_COLUMN][4][CELL_MARKED] == TRUE)) {
+			callBingo();
+		    }
 		}
 	    }
 	}
@@ -266,20 +284,25 @@ public class Computer {
 	    return numberOfMarks;
 	}
 	
-	private void printWinningCard() {
-	    System.out.println("Response time: " + responseTime);
-	    System.out.println("B\tI\tN\tG\tO");
+	@Override
+	public String toString() {
+	    String output = "";
+	    
+	    output += "B\tI\tN\tG\tO\n";
+
 	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {
 		for (int row = 0; row < NUMBER_OF_ROWS; row++) {
-		    System.out.print(card[column][row][CELL_VALUE] + " ");
+		    output += card[column][row][CELL_VALUE] + " ";
 		    String marked = (card[column][row][CELL_MARKED] == 1) ? "*" : "";
-		    System.out.print(marked + "\t");
+		    output += marked + "\t";
 		}
-		System.out.println();
-		System.out.println("-----------------------------------");
+		output += "\n";
+		output+= "-----------------------------------\n";
 		
 	    }
-	    System.out.println();
+	    output += "\n";
+	    
+	    return output;
 	}
 	
     } // end ComputerCard
