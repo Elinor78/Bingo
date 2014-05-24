@@ -114,7 +114,7 @@ public class PlayerCard extends Card {
                 bingo.decrementBingos(this);
 		
 		int ticketsToAward;
-		if (bingo.getBonusTicketsLeft() >= 0) {
+		if (bingo.getBonusTicketsLeft() > 0) {
 		    ticketsToAward = 3;
 		}
 		else {
