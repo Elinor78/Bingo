@@ -200,6 +200,8 @@ public final class Shop extends JFrame {
 	
 	ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
 	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+	revalidate();
+	repaint();
     }
     
     private void startBingo() {

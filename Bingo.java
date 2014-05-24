@@ -31,9 +31,6 @@ public class Bingo {
     private static final Lock lock = new ReentrantLock();
     private static final Condition noBingosLeft = lock.newCondition();
     
-    /*Audio objects*/
-    private static AudioPlayer bgMusic;
-    
     // Number calls
     private final Random randomGen = new Random();
     private final ActionListener callNewNumber = new ActionListener() {
@@ -242,12 +239,6 @@ public class Bingo {
 		Logger.getLogger(Bingo.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
-    }
-    
-    /*Plays background music.*/ 
-    public void playBackgroundMusic() throws Exception {
-        bgMusic = new AudioPlayer();
-        bgMusic.loop();
     }
     
     public static void main(String[] args) {

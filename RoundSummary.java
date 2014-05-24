@@ -48,8 +48,8 @@ public class RoundSummary extends JDialog {
 		RoundSummary.this.dispose();
 		
 		Shop.player.resetTicketsWonInLatestRound();
-		shop.resetTicketLabels();
 		shop.setVisible(true);
+		shop.resetTicketLabels();
             }
         });
         backgroundJL.add(shopButton);
@@ -60,7 +60,7 @@ public class RoundSummary extends JDialog {
 	youWonLabel.setSize(250, 250);
         youWonLabel.setLocation(25, 5);
         youWonLabel.setFont(shopFont);
-	youWonLabel.setText("<html><div style=\"text-align: center;\">" + "You won " + String.valueOf(Shop.player.getTicketsWonInLatestRound()) + " tickets" + "</html>");
+	youWonLabel.setText("<html><div style=\"text-align: center;\">" + "You won " + String.valueOf(Shop.player.getTicketsWonInLatestRound()) + " tickets," + Shop.player.getName() + "!" + "</html>");
         this.add(youWonLabel);
     }
 }
