@@ -76,7 +76,6 @@ public class Bingo {
     
     /*Sets number of Bingos.EAH*/
     private void setInitialBingos() {
-	System.out.println("Total Computer Cards: " + Computer.totalComputerCards);
         numberOfBingos = ((Computer.totalComputerCards + Shop.player.getNumberOfCards()) / 2);
     }
     
@@ -173,7 +172,6 @@ public class Bingo {
     
     public static void main(String[] args) {
         /*Load the shop interface with which to launch the game.*/
-	Shop newShop = new Shop();
 	Thread backgroundMusic = new Thread(new Runnable() {
 	    AudioPlayer bgMusic;
 	    @Override
@@ -188,6 +186,8 @@ public class Bingo {
 	    }
 	});
 	backgroundMusic.start();
+	
+	Shop newShop = new Shop();
 	
 	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 	    

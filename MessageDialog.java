@@ -6,43 +6,24 @@
 
 import java.awt.Dialog;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.text.*;
 
 public final class MessageDialog extends JDialog {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/RoundSummary/background.png")));
     private final JButton dialogButton = new JButton();
-    private final JLabel dialogLabel = new JLabel();
     private String dialogMessage = null;
-    private final Font dialogFont;
     
     public MessageDialog(String message, ImageIcon buttonImage) {
 	this.dialogMessage = message;
 	this.dialogButton.setIcon(buttonImage);
-	int messageLength = message.length();
-	
-	/*I understand this is a pretty terrible way to do this. I plan on making it so that the text area
-	fits into a certain bounding box and changes the font size based on getFontMetrics. */
-	if (messageLength <= 18) {
-	    dialogFont = BingoGUI.getGameFont().deriveFont(55f);
-	}
-	else if (messageLength <= 40) {
-	    dialogFont = BingoGUI.getGameFont().deriveFont(45f);
-	}
-	else if (messageLength <= 80) {
-	    dialogFont = BingoGUI.getGameFont().deriveFont(35f);
-	}
-	else
-	    dialogFont = BingoGUI.getGameFont().deriveFont(20f);
 	
 	configureBackground();
 	configureButton();
-	configureLabel();
+	configureTextArea();
 	
 	this.add(backgroundJL);
 	this.setSize(300, 400);
@@ -73,15 +54,37 @@ public final class MessageDialog extends JDialog {
 	});
 	backgroundJL.add(dialogButton);
     }
-    
-    public void configureLabel() {
-	dialogLabel.setSize(250, 250);
-        dialogLabel.setLocation(25, 5);
-        dialogLabel.setFont(dialogFont);
-	dialogLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	dialogLabel.setVerticalAlignment(SwingConstants.CENTER);
-	dialogLabel.setText("<html><div style=\"text-align: center;\">" + dialogMessage + "</html>");
-        this.add(dialogLabel);
+
+    private void configureTextArea() {
+	final JTextPane dialogText = new JTextPane();
+	Font dialogFont = BingoGUI.getGameFont().deriveFont(65f);
+	FontMetrics fontMetrics;
+	
+	/*This loops down from a font size of 65 and compares the string's measured width to a predefined width that is known to fit properly.
+	Unfortunately It works down to that width (which is about 71 characters long in Cooper 35f) and then after that it makes text much smaller
+	than I would anticipate. Would appreciate it if someone could take a stab at it. Otherwise, it works decently. It at least ensures that any 
+	text passed will fit just that longer messages will be smaller than anticipated.*/
+	for (float fontSize = 65; fontSize > 12; fontSize -= 0.5) {
+	    dialogFont = BingoGUI.getGameFont().deriveFont(fontSize);
+	    fontMetrics = dialogText.getFontMetrics(dialogFont);
+	    if (fontMetrics.stringWidth(dialogMessage) <= 1271) {
+		break;
+	    }
+	}
+	
+	dialogText.setSize(250, 250);
+        dialogText.setLocation(25, 20);
+        dialogText.setFont(dialogFont);
+	dialogText.setText(dialogMessage);
+	dialogText.setOpaque(false);
+	
+	/*Creates a style with which to align the text centered.*/
+	StyledDocument document = dialogText.getStyledDocument();
+	SimpleAttributeSet attributes = new SimpleAttributeSet();
+	StyleConstants.setAlignment(attributes, StyleConstants.ALIGN_CENTER);
+	document.setParagraphAttributes(0, document.getLength(), attributes, false);
+	
+	this.add(dialogText);
     }
     
 }

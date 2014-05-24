@@ -19,7 +19,7 @@ public class Computer {
     private int responseTime;
     private final ComputerCard[] cards;
     private final Bingo b;
-    private final LimitedQueue numberQueue = new LimitedQueue(7);
+    private final LimitedQueue<Integer> numberQueue = new LimitedQueue<>(7);
     private final Timer callNumberTimer;
     private final numberReader readNumber = new numberReader();
     
