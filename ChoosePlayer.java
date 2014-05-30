@@ -48,6 +48,7 @@ public class ChoosePlayer extends JDialog {
     private void configureStartButton() {
 	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/startButton.png")));
 	startButton.setContentAreaFilled(false);
+	startButton.setFocusPainted(false);
 	startButton.setBorder(null);
         startButton.setSize(200, 70);
         startButton.setLocation(100, 425);
@@ -87,6 +88,7 @@ public class ChoosePlayer extends JDialog {
     private void configureNewPlayerButton() {
 	final JButton newPlayerButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/addButton.png")));
 	newPlayerButton.setContentAreaFilled(false);
+	newPlayerButton.setFocusPainted(false);
 	newPlayerButton.setBorder(null);
         newPlayerButton.setSize(150, 75);
         newPlayerButton.setLocation(45, 355);
@@ -108,6 +110,7 @@ public class ChoosePlayer extends JDialog {
     private void configureDeletePlayerButton() {
 	final JButton deletePlayerButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/deleteButton.png")));
 	deletePlayerButton.setContentAreaFilled(false);
+	deletePlayerButton.setFocusPainted(false);
 	deletePlayerButton.setBorder(null);
         deletePlayerButton.setSize(150, 75);
         deletePlayerButton.setLocation(205, 355);
@@ -149,6 +152,7 @@ public class ChoosePlayer extends JDialog {
     private void configureQuitButton() {
 	final JButton quitButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/quitButton.png")));
 	quitButton.setContentAreaFilled(false);
+	quitButton.setFocusPainted(false);
 	quitButton.setBorder(null);
         quitButton.setSize(31, 30);
         quitButton.setLocation(6, 4);

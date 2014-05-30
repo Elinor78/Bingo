@@ -10,7 +10,6 @@ import java.util.Properties;
 public class ShutDownTask {
 
     public ShutDownTask() {
-	System.out.println("In shutdown hook.");
 	/*Locate the properties file and prepare streams.*/
 	File propertiesFile = new File(System.getProperty("user.home") + "/bingo.properties");
 	Properties ticketProperties = new Properties();

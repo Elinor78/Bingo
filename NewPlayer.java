@@ -38,6 +38,7 @@ public class NewPlayer extends JDialog {
     private void configureStartButton() {
 	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/NewPlayer/addButton.png")));
 	startButton.setContentAreaFilled(false);
+	startButton.setFocusPainted(false);
 	startButton.setBorder(null);
         startButton.setSize(200, 100);
         startButton.setLocation(50, 280);
@@ -95,6 +96,7 @@ public class NewPlayer extends JDialog {
     private void configureCloseButton() {
 	final JButton closeButton = new JButton(new ImageIcon(getClass().getResource("/img/NewPlayer/closeButton.png")));
 	closeButton.setContentAreaFilled(false);
+	closeButton.setFocusPainted(false);
 	closeButton.setBorder(null);
         closeButton.setSize(31, 30);
         closeButton.setLocation(6, 4);
