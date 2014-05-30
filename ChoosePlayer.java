@@ -98,9 +98,10 @@ public class ChoosePlayer extends JDialog {
 		NewPlayer newPlayerDialog = new NewPlayer();
 		if (newPlayerDialog.getNewPlayer() != null) {
 		    String newPlayer = newPlayerDialog.getNewPlayer();
-		playersListModel.addElement(newPlayer);
-		playersList.setSelectedIndex(playersListModel.size() - 1);
-		newPlayers.add(newPlayer);
+		    System.out.println("Name of newPlayer: " + newPlayer);
+		    playersListModel.addElement(newPlayer);
+		    playersList.setSelectedIndex(playersListModel.size() - 1);
+		    newPlayers.add(newPlayer);
 		}
             }
         });

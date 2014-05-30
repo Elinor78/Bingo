@@ -38,6 +38,7 @@ public final class Shop extends JFrame {
         configureArrowDownButton();
         configureTicketBank();
         configureCardsToPurchase();
+	configureName();
 
         this.add(backgroundJL);
 	this.setSize(700, 450);
@@ -167,7 +168,7 @@ public final class Shop extends JFrame {
 
     private void configureTicketBank() {
         ticketBankLabel.setSize(155, 110);
-        ticketBankLabel.setLocation(190, 190);
+        ticketBankLabel.setLocation(228, 186);
         ticketBankLabel.setFont(shopFont);
 	if (player.getCurrentBalance() < CARD_COST) {
 	    ticketBankLabel.setText("0");
@@ -193,9 +194,19 @@ public final class Shop extends JFrame {
         backgroundJL.add(cardsToPurchaseLabel);
     }
     
+    private void configureName() {
+	final JLabel nameLabel = new JLabel();
+	nameLabel.setSize(250, 50);
+        nameLabel.setLocation(420, 1);
+        nameLabel.setFont(shopFont.deriveFont(22f));
+	nameLabel.setText("Hi, " + Human.name + "!");
+	nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        backgroundJL.add(nameLabel);
+    }
+    
     public void resetTicketLabels() {
 	if (player.getCurrentBalance() < CARD_COST) {
-	    MessageDialog noTickets = new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
+	    new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 	    player.setTicketBank(20);
 	}
 	
@@ -235,7 +246,7 @@ public final class Shop extends JFrame {
 	    
 	    /*Open a new Round Summary.*/
 	    //new RoundSummary(Shop.this);
-	    new MessageDialog("You won " + String.valueOf(Shop.player.getTicketsWonInLatestRound()) + " tickets, " + Human.name + "!", 
+	    new MessageDialog("You won " + String.valueOf(player.getTicketsWonInLatestRound()) + " tickets, " + Human.name + "!", 
 		    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 	    
 	    player.resetTicketsWonInLatestRound();

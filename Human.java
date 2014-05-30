@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class Human {
     private int numberOfCards = 0;
-    private final ArrayList<Integer> bankHistory= new ArrayList<>();
+    public static ArrayList<Integer> bankHistory= new ArrayList<>();
     private int ticketsWonInLatestRound = 0;
     private Set<String> playerNames;
     private ChoosePlayer choosePlayer;
@@ -38,6 +38,10 @@ public class Human {
     /*Retrieve value of ticketBank.*/
     public int getCurrentBalance() {
         return bankHistory.get(bankHistory.size() - 1);
+    }
+    
+    public int getBankHistorySize() {
+	return bankHistory.size();
     }
     
     public int getLatestWinnings() {
@@ -98,6 +102,10 @@ public class Human {
 		for (String tempName : playerNames) {
 		    if (tempName.equals("Default")) {
 			new NewPlayer();
+			if (name == null) {
+			    System.out.println("Game will exit.");
+			    System.exit(0);
+			}
 			bankHistory.add(20);
 		    }
 		    /*If it's name is something else, use that name and retrieve its tickets.*/

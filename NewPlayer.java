@@ -19,7 +19,7 @@ public class NewPlayer extends JDialog {
 
     public NewPlayer() {
 	
-	configureStartButton();
+	configureAddPlayerButton();
 	configureTextField();
 	configureCloseButton();
 	
@@ -33,14 +33,14 @@ public class NewPlayer extends JDialog {
         this.setVisible(true);
     }
 
-    private void configureStartButton() {
-	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/NewPlayer/addButton.png")));
-	startButton.setContentAreaFilled(false);
-	startButton.setFocusPainted(false);
-	startButton.setBorder(null);
-        startButton.setSize(200, 100);
-        startButton.setLocation(50, 280);
-        startButton.addMouseListener(new MouseAdapter() {
+    private void configureAddPlayerButton() {
+	final JButton addPlayerButton = new JButton(new ImageIcon(getClass().getResource("/img/NewPlayer/addButton.png")));
+	addPlayerButton.setContentAreaFilled(false);
+	addPlayerButton.setFocusPainted(false);
+	addPlayerButton.setBorder(null);
+        addPlayerButton.setSize(200, 100);
+        addPlayerButton.setLocation(50, 280);
+        addPlayerButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
 		if (!textField.getText().equals("")) {
@@ -51,7 +51,7 @@ public class NewPlayer extends JDialog {
 		}
             }
         });
-        backgroundJL.add(startButton);
+        backgroundJL.add(addPlayerButton);
     }
 
     private void configureTextField() {
@@ -82,7 +82,7 @@ public class NewPlayer extends JDialog {
 	    }
 	}
 	
-	textField.setDocument(new JTextFieldLimit(12));
+	textField.setDocument(new JTextFieldLimit(11));
 	
 	this.add(textField);
     }
