@@ -45,7 +45,7 @@ public class NewPlayer extends JDialog {
             @Override
             public void mouseReleased(MouseEvent e) {
 		if (!textField.getText().equals("")) {
-		    player.setName(textField.getText());
+		    Human.name = textField.getText();
 		    /*This part seems redundant but its necessary for if you make a new player FROM the Choose Player dialog.*/
 		    newPlayer = textField.getText();
 		    NewPlayer.this.dispose();

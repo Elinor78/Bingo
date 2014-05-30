@@ -23,7 +23,7 @@ public class Human {
     private int ticketsWonInLatestRound = 0;
     private Set<String> playerNames;
     private ChoosePlayer choosePlayer;
-    private String name = null;
+    public static String name = null;
     private Exception Exception;
     
     public Human() {
@@ -69,14 +69,6 @@ public class Human {
     
     public int getTicketsWonInLatestRound() {
 	return ticketsWonInLatestRound;
-    }
-    
-    public void setName(String n) {
-	this.name = n;
-    }
-    
-    public String getName() {
-	return name;
     }
     
     public Set<String> getPlayerNames() {

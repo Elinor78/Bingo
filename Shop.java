@@ -82,7 +82,8 @@ public final class Shop extends JFrame {
             @Override
             /*Close the app if the Quit button is clicked.*/
             public void mouseReleased(MouseEvent e) {
-                System.exit(0);
+                new ShutDownTask();
+		System.exit(0);
             }
         });
         backgroundJL.add(quitButton);
@@ -234,7 +235,7 @@ public final class Shop extends JFrame {
 	    
 	    /*Open a new Round Summary.*/
 	    //new RoundSummary(Shop.this);
-	    new MessageDialog("You won " + String.valueOf(Shop.player.getTicketsWonInLatestRound()) + " tickets, " + Shop.player.getName() + "!", 
+	    new MessageDialog("You won " + String.valueOf(Shop.player.getTicketsWonInLatestRound()) + " tickets, " + Human.name + "!", 
 		    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 	    
 	    player.resetTicketsWonInLatestRound();

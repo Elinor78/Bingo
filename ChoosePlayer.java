@@ -57,10 +57,10 @@ public class ChoosePlayer extends JDialog {
             public void mouseReleased(MouseEvent e) {
 		if (playersList.getSelectedValue() == null) {
 		    playersList.setSelectedIndex(0);
-		    player.setName(playersList.getSelectedValue());
+		    Human.name = playersList.getSelectedValue();
 		}
 		else {
-		    player.setName(playersList.getSelectedValue());
+		    Human.name = playersList.getSelectedValue();
 		}
 		ChoosePlayer.this.dispose();
             }
@@ -125,6 +125,7 @@ public class ChoosePlayer extends JDialog {
 		/*If it is an existing player, add it to the deletedPlayers list.*/
 		else {
 		    deletedPlayers.add(playerToDelete);
+		    System.out.println("Added player to deletedPlayers ArrayList.");
 		}
 		playersList.setSelectedIndex(0);
             }
@@ -154,6 +155,7 @@ public class ChoosePlayer extends JDialog {
         quitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
+		new ShutDownTask();
 		System.exit(0);
             }
         });
