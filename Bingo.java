@@ -6,13 +6,7 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.*;
 import java.util.concurrent.locks.*;
 import java.util.logging.Level;
@@ -27,7 +21,6 @@ public class Bingo {
     private int numberOfBingos;
     private final ArrayList<Integer> availableNumbers = populateNumberArray();
     private BingoGUI bGUI;
-    private int nextNumber;
     private static final Lock lock = new ReentrantLock();
     private static final Condition noBingosLeft = lock.newCondition();
     
@@ -36,6 +29,7 @@ public class Bingo {
     private final ActionListener callNewNumber = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+	    int nextNumber;
 	    nextNumber = availableNumbers.get( randomGen.nextInt(availableNumbers.size()) );
 	    bGUI.showNewNumber(nextNumber);
 	    setNumberCalled(nextNumber);

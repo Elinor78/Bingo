@@ -12,10 +12,6 @@ import javax.swing.*;
 public class BingoGUI extends JFrame {
 
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif")));
-    private final JPanel masterCardPanel = new JPanel(new BorderLayout());
-    private final JPanel cardPanel = new JPanel();
-    private final GridBagConstraints pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight;
-    private final JPanel statusPanel = new JPanel();
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
     public int totalPlayerCards = 0;
@@ -23,6 +19,11 @@ public class BingoGUI extends JFrame {
     final NewBingoNotification newNotification = new NewBingoNotification();
     
     public BingoGUI(Bingo bingo) {	
+	final JPanel masterCardPanel = new JPanel(new BorderLayout());
+	final JPanel cardPanel = new JPanel();
+	final JPanel statusPanel = new JPanel();
+	final GridBagConstraints pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight;
+	
 	backgroundJL.setLayout(new GridBagLayout());
 	GridBagConstraints mainFrameConstraint = new GridBagConstraints();
 	

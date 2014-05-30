@@ -95,7 +95,7 @@ public class ChoosePlayer extends JDialog {
         newPlayerButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-		NewPlayer newPlayerDialog = new NewPlayer(player);
+		NewPlayer newPlayerDialog = new NewPlayer();
 		if (newPlayerDialog.getNewPlayer() != null) {
 		    String newPlayer = newPlayerDialog.getNewPlayer();
 		playersListModel.addElement(newPlayer);
@@ -143,10 +143,6 @@ public class ChoosePlayer extends JDialog {
 		playersListModel.addElement(name);
 	    }
 	}
-    }
-    
-    public ArrayList<String> getNewPlayers() {
-	return newPlayers;
     }
 
     private void configureQuitButton() {

@@ -16,10 +16,8 @@ public class NewPlayer extends JDialog {
     private final JTextField textField = new JTextField();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(30f);
     private String newPlayer;
-    private final Human player;
 
-    public NewPlayer(Human p) {
-	this.player = p;
+    public NewPlayer() {
 	
 	configureStartButton();
 	configureTextField();
