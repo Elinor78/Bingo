@@ -126,15 +126,6 @@ public class Human {
 		else {
 		    bankHistory.add(Integer.parseInt(ticketProperties.getProperty(name)));
 		}
-		/*If a few different new players were created but not used in the game, keep the names anyway.*/
-		if (!choosePlayer.getNewPlayers().isEmpty()) {
-		    ticketOutputStream = new FileOutputStream(propertiesFile);
-		    for (String newName : choosePlayer.getNewPlayers()) {
-			ticketProperties.setProperty(newName, String.valueOf(20));
-		    }
-		    ticketProperties.store(ticketOutputStream, null);
-		    ticketOutputStream.close();
-		}
 	    }
 	    /*Create a new properties file from scratch.*/
 	} catch (Exception e) {

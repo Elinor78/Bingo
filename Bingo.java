@@ -271,12 +271,26 @@ public class Bingo {
 		Properties ticketProperties = new Properties();
 		InputStream ticketInputStream = null;
 		OutputStream ticketOutputStream = null;
-		
 		/*Write the user's current balance to the associated property.*/
 		try {
 		    ticketInputStream = new FileInputStream(propertiesFile);
 		    ticketProperties.load(ticketInputStream);
 		    ticketProperties.setProperty(Shop.player.getName(), String.valueOf(Shop.player.getCurrentBalance()));
+		    /*If there are new players, write them to the file.*/
+		    if (!ChoosePlayer.newPlayers.isEmpty()) {
+			for (String newName : ChoosePlayer.newPlayers) {
+			    /*Only add the name if it isn't the player that was actually used.*/
+			    if (!newName.equals(Shop.player.getName())) {
+				ticketProperties.setProperty(newName, String.valueOf(20));
+			    }
+			}
+		    }
+		    /*If there are deleted players, remove them from the file.*/
+		    if (!ChoosePlayer.deletedPlayers.isEmpty()) {
+			for (String deletedName : ChoosePlayer.deletedPlayers) {
+			    ticketProperties.remove(deletedName);
+			}
+		    }
 		    ticketOutputStream = new FileOutputStream(propertiesFile);
 		    ticketProperties.store(ticketOutputStream, null);
 		} catch (FileNotFoundException e) {

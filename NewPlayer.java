@@ -23,6 +23,7 @@ public class NewPlayer extends JDialog {
 	
 	configureStartButton();
 	configureTextField();
+	configureCloseButton();
 	
 	this.add(backgroundJL);
 	this.setSize(300, 400);
@@ -35,7 +36,7 @@ public class NewPlayer extends JDialog {
     }
 
     private void configureStartButton() {
-	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/startButton.png")));
+	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/NewPlayer/addButton.png")));
 	startButton.setContentAreaFilled(false);
 	startButton.setBorder(null);
         startButton.setSize(200, 100);
@@ -43,10 +44,7 @@ public class NewPlayer extends JDialog {
         startButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-		if (textField.getText().equals("")) {
-		    ;
-		}
-		else {
+		if (!textField.getText().equals("")) {
 		    player.setName(textField.getText());
 		    /*This part seems redundant but its necessary for if you make a new player FROM the Choose Player dialog.*/
 		    newPlayer = textField.getText();
@@ -85,13 +83,28 @@ public class NewPlayer extends JDialog {
 	    }
 	}
 	
-	textField.setDocument(new JTextFieldLimit(10));
+	textField.setDocument(new JTextFieldLimit(12));
 	
 	this.add(textField);
     }
     
     public String getNewPlayer() {
 	return newPlayer;
+    }
+
+    private void configureCloseButton() {
+	final JButton closeButton = new JButton(new ImageIcon(getClass().getResource("/img/NewPlayer/closeButton.png")));
+	closeButton.setContentAreaFilled(false);
+	closeButton.setBorder(null);
+        closeButton.setSize(31, 30);
+        closeButton.setLocation(6, 4);
+        closeButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+		NewPlayer.this.dispose();
+            }
+        });
+        backgroundJL.add(closeButton);
     }
     
 }

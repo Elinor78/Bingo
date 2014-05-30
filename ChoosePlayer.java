@@ -16,16 +16,19 @@ public class ChoosePlayer extends JDialog {
     private final JList<String> playersList = new JList<>();
     private final DefaultListModel<String> playersListModel = new DefaultListModel<>();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(30f);
-    private final ArrayList<String> newPlayers = new ArrayList<>();
+    static final ArrayList<String> newPlayers = new ArrayList<>();
+    static final ArrayList<String> deletedPlayers = new ArrayList<>();
     private final Human player;
     
     public ChoosePlayer(Human p) {
 	this.player = p;
 	
 	configureBackground();
-        configureStoreButton();
+        configureStartButton();
 	configurePlayersList();
 	configureNewPlayerButton();
+	configureDeletePlayerButton();
+	configureQuitButton();
 	
 	this.add(backgroundJL);
 	this.setSize(400, 500);
@@ -42,12 +45,12 @@ public class ChoosePlayer extends JDialog {
         backgroundJL.setLocation(0, 0);
     }
 
-    private void configureStoreButton() {
+    private void configureStartButton() {
 	final JButton startButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/startButton.png")));
 	startButton.setContentAreaFilled(false);
 	startButton.setBorder(null);
-        startButton.setSize(200, 100);
-        startButton.setLocation(100, 380);
+        startButton.setSize(200, 70);
+        startButton.setLocation(100, 425);
         startButton.addMouseListener(new MouseAdapter() {
             @Override
 	    /*Retrieve the value from the list and set static player's name.*/
@@ -72,7 +75,7 @@ public class ChoosePlayer extends JDialog {
 	
 	playersScrollPane.setViewportView(playersList);
 	playersScrollPane.setSize(220, 180);
-	playersScrollPane.setLocation(90, 190);
+	playersScrollPane.setLocation(90, 175);
 	
 	playersList.setModel(playersListModel);
 	playersList.setFont(shopFont);
@@ -82,21 +85,51 @@ public class ChoosePlayer extends JDialog {
     }
 
     private void configureNewPlayerButton() {
-	final JButton newPlayerButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/newPlayerButton.png")));
+	final JButton newPlayerButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/addButton.png")));
 	newPlayerButton.setContentAreaFilled(false);
 	newPlayerButton.setBorder(null);
-        newPlayerButton.setSize(40, 36);
-        newPlayerButton.setLocation(5, 6);
+        newPlayerButton.setSize(150, 75);
+        newPlayerButton.setLocation(45, 355);
         newPlayerButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
 		NewPlayer newPlayerDialog = new NewPlayer(player);
-		String newPlayer = newPlayerDialog.getNewPlayer();
+		if (newPlayerDialog.getNewPlayer() != null) {
+		    String newPlayer = newPlayerDialog.getNewPlayer();
 		playersListModel.addElement(newPlayer);
-		ChoosePlayer.this.newPlayers.add(newPlayer);
+		playersList.setSelectedIndex(playersListModel.size() - 1);
+		newPlayers.add(newPlayer);
+		}
             }
         });
         backgroundJL.add(newPlayerButton);
+    }
+    
+    private void configureDeletePlayerButton() {
+	final JButton deletePlayerButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/deleteButton.png")));
+	deletePlayerButton.setContentAreaFilled(false);
+	deletePlayerButton.setBorder(null);
+        deletePlayerButton.setSize(150, 75);
+        deletePlayerButton.setLocation(205, 355);
+        deletePlayerButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+		/*Save the name of the player to delete.*/
+		String playerToDelete = playersList.getSelectedValue();
+		/*Remove that player from the visual list.*/
+		playersListModel.removeElement(playerToDelete);
+		/*If that player had not been played before, just prevent adding it to the list.*/
+		if (newPlayers.contains(playerToDelete)) {
+		    newPlayers.remove(playerToDelete);
+		}
+		/*If it is an existing player, add it to the deletedPlayers list.*/
+		else {
+		    deletedPlayers.add(playerToDelete);
+		}
+		playersList.setSelectedIndex(0);
+            }
+        });
+        backgroundJL.add(deletePlayerButton);
     }
     
     /*Iterate through Set of player names and add to listmodel.*/
@@ -111,4 +144,20 @@ public class ChoosePlayer extends JDialog {
     public ArrayList<String> getNewPlayers() {
 	return newPlayers;
     }
+
+    private void configureQuitButton() {
+	final JButton quitButton = new JButton(new ImageIcon(getClass().getResource("/img/ChoosePlayer/quitButton.png")));
+	quitButton.setContentAreaFilled(false);
+	quitButton.setBorder(null);
+        quitButton.setSize(31, 30);
+        quitButton.setLocation(6, 4);
+        quitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+		System.exit(0);
+            }
+        });
+        backgroundJL.add(quitButton);
+    }
+
 }
