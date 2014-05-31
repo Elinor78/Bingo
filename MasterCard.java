@@ -37,26 +37,23 @@ public class MasterCard extends Card {
     
     // Given a bingo number, mark the appropriate Cell in MasterCard.
     public void toggleToken(int number) {
-		int column = 0;
-		int row;
-	
-		if(number >= 1 && number <= 15)
-			column = 0;
-		else if(number <= 30)
-			column = 1;
-		else if(number <= 45)
-			column = 2;
-		else if(number <= 60)
-			column = 3;
-		else if(number <= 75)
-			column = 4;
-		else
-			System.out.println("Something is really wrong");
-		
-		number = number - 1;
-		row = number % 15;
-		
-		//calling Cell's toggleToken method
-		cardLayout[row][column].toggleToken();
+	int column, row;
+
+	if(number >= 1 && number <= 15)
+	    column = 0;
+	else if(number <= 30)
+	    column = 1;
+	else if(number <= 45)
+	    column = 2;
+	else if(number <= 60)
+	    column = 3;
+	else
+	    column = 4;
+
+	number = number - 1;
+	row = number % 15;
+
+	//calling Cell's toggleToken method
+	cardLayout[row][column].toggleToken();
     }
 }

@@ -15,6 +15,7 @@ public class AudioPlayer {
 	    clip = AudioSystem.getClip();
 	    clip.open(ais);
 	    
+	    // Set volume of music
 	    FloatControl volume = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
 	    volume.setValue(-15.0f);
 	}

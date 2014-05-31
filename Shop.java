@@ -23,7 +23,7 @@ public final class Shop extends JFrame {
     private int cardsToPurchase = 1;
     private final int CARD_COST;
     public static Human player = new Human();
-    public Bingo newGame;
+    Bingo newGame;
     
     // Creates Shop with default card price of 2.
     public Shop() {

@@ -22,7 +22,6 @@ public class Human {
     public static ArrayList<Integer> bankHistory= new ArrayList<>();
     private int ticketsWonInLatestRound = 0;
     private Set<String> playerNames;
-    private ChoosePlayer choosePlayer;
     public static String name = null;
     private Exception Exception;
     
@@ -118,7 +117,7 @@ public class Human {
 	    /*If there is more than 1 property, open the choose player dialog and if the chosen name had no ticket value, give them 20.*/
 	    else if (ticketProperties.size() > 1) {
 		playerNames = ticketProperties.stringPropertyNames();
-		choosePlayer = new ChoosePlayer(this);
+		new ChoosePlayer(this);
 		if (ticketProperties.getProperty(name) == null) {
 		    bankHistory.add(20);
 		}
@@ -158,5 +157,4 @@ public class Human {
 	    }
 	}
     }
-   
 }

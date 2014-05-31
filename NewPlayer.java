@@ -5,7 +5,6 @@
  */
 
 import java.awt.Dialog;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
@@ -14,7 +13,6 @@ import javax.swing.text.*;
 public class NewPlayer extends JDialog {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/NewPlayer/background.png")));
     private final JTextField textField = new JTextField();
-    private final Font shopFont = BingoGUI.getGameFont().deriveFont(30f);
     private String newPlayer;
 
     public NewPlayer() {
@@ -57,7 +55,7 @@ public class NewPlayer extends JDialog {
     private void configureTextField() {
 	textField.setSize(200, 40);
         textField.setLocation(50, 220);
-        textField.setFont(shopFont);
+        textField.setFont(BingoGUI.getGameFont().deriveFont(30f));
 	
 	/*This class prevents the field from being typed in longer than a specified length. 
 	This is done to prevent really long user names which would make other interface
@@ -106,5 +104,4 @@ public class NewPlayer extends JDialog {
         });
         backgroundJL.add(closeButton);
     }
-    
 }
