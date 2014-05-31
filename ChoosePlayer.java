@@ -96,6 +96,7 @@ public class ChoosePlayer extends JDialog {
         newPlayerButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
+		ChoosePlayer.this.setOpacity(0.75f);
 		NewPlayer newPlayerDialog = new NewPlayer();
 		if (newPlayerDialog.getNewPlayer() != null) {
 		    String newPlayer = newPlayerDialog.getNewPlayer();
@@ -103,6 +104,7 @@ public class ChoosePlayer extends JDialog {
 		    playersList.setSelectedIndex(playersListModel.size() - 1);
 		    newPlayers.add(newPlayer);
 		}
+		ChoosePlayer.this.setOpacity(1f);
             }
         });
         backgroundJL.add(newPlayerButton);
