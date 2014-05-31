@@ -7,6 +7,10 @@
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 public final class Shop extends JFrame {
@@ -269,10 +273,25 @@ public final class Shop extends JFrame {
             newGame.closeBingo();
             newGame = null;
 	    
+	    AudioInputStream ais;
+	    Clip airhorn = null;
+	    try {
+		ais = AudioSystem.getAudioInputStream(getClass().getResource("/Audio/Air Horn.wav"));
+		airhorn = AudioSystem.getClip();
+		airhorn.open(ais);
+		airhorn.start();
+	    }
+	    catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+		Logger.getLogger(Shop.class.getName()).log(Level.SEVERE, null, ex);
+		System.out.println(ex.getMessage());
+	    }
+	    
 	    /*Open a new Round Summary.*/
 	    //new RoundSummary(Shop.this);
 	    new MessageDialog("You won " + String.valueOf(player.getTicketsWonInLatestRound()) + " tickets, " + Human.name + "!", 
 		    new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
+	    
+	    airhorn.close();
 	    
 	    player.resetTicketsWonInLatestRound();
 	    
@@ -286,6 +305,4 @@ public final class Shop extends JFrame {
 	    Shop.this.setVisible(true);
         }  
     }
-   
-
 }
