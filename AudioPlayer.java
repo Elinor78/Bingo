@@ -11,9 +11,12 @@ public class AudioPlayer {
 	private final Clip clip;
 
 	public AudioPlayer() throws Exception {
-	    clip = AudioSystem.getClip();
 	    AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResource("/Audio/backgroundMusic.wav"));
+	    clip = AudioSystem.getClip();
 	    clip.open(ais);
+	    
+	    FloatControl volume = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+	    volume.setValue(-15.0f);
 	}
 
 	public void play() {
