@@ -6,10 +6,11 @@
 
 import java.awt.Dialog;
 import java.awt.Dimension;
-import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import javax.swing.text.*;
 
@@ -24,9 +25,19 @@ public class NewPlayer extends JDialog {
 	configureTextField();
 	configureCloseButton();
 	
+	/*Places focus in text field. Requesting focus normal way was unsuccessful*/
+	this.addWindowListener(new WindowAdapter() {
+	    @Override
+	    public void windowOpened(WindowEvent e) {
+		textField.requestFocus();
+	    }
+	});
+	
 	this.add(backgroundJL);
 	this.setSize(300, 400);
 	
+	/*Places the window adjacent to the ChoosePlayer Dialog because on certain systems 
+	the background would turn invisible if it was sitting on top. */
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	Dimension windowSize = this.getSize();
 	
