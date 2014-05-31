@@ -234,11 +234,6 @@ public final class Shop extends JFrame {
     }
     
     public void resetTicketLabels() {
-	if (player.getCurrentBalance() < CARD_COST) {
-	    new MessageDialog("You do not have enough tickets to keep playing. Here's 20 more tickets!", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
-	    player.setTicketBank(20);
-	}
-	
 	ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
 	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
 	revalidate();
