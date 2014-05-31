@@ -31,7 +31,7 @@ public abstract class Card extends JPanel {
 	this.add(headerLabel, BorderLayout.NORTH);
 	
 	// Add panel for Cells, undefined number of rows.
-	cellLayout.setColumns(5);
+	cellLayout.setColumns(NUMBER_OF_COLUMNS);
 	this.add(cellPanel);
 	
 	this.setOpaque(false);
