@@ -56,14 +56,17 @@ public class ChoosePlayer extends JDialog {
             @Override
 	    /*Retrieve the value from the list and set static player's name.*/
             public void mouseReleased(MouseEvent e) {
-		if (playersList.getSelectedValue() == null) {
-		    playersList.setSelectedIndex(0);
-		    Human.name = playersList.getSelectedValue();
+		if (!playersListModel.isEmpty()) {
+		    if (playersList.getSelectedValue() == null) {
+			System.out.println("Selected value was null");
+			playersList.setSelectedIndex(0);
+			Human.name = playersList.getSelectedValue();
+		    }
+		    else {
+			Human.name = playersList.getSelectedValue();
+		    }
+		    ChoosePlayer.this.dispose();
 		}
-		else {
-		    Human.name = playersList.getSelectedValue();
-		}
-		ChoosePlayer.this.dispose();
             }
         });
         backgroundJL.add(startButton);
