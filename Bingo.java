@@ -256,14 +256,10 @@ public class Bingo {
 	newShop.setVisible(true);
 	
 	Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-	    
 	    @Override
 	    public void run() {
 		new ShutDownTask();
 	    }
 	}));
-		
-	
     }
-
 }

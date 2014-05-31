@@ -96,7 +96,7 @@ public class Computer {
 
 	    callNumberTimer.stop();
 	}
-    }
+    } // end numberReader
     
     private static class LimitedQueue<E> extends LinkedList<E> {
 	private final int limit;
@@ -115,24 +115,25 @@ public class Computer {
 	    
 	    return true;
 	}
-    }
+    } // end LimitedQueue
     
     final class ComputerCard {
-	private final int NUMBER_OF_COLUMNS = 5;
-	private final int NUMBER_OF_ROWS = 5;
-	private final int CELL_VALUE = 0;
-	private final int CELL_MARKED = 1;
-	private final int FALSE = 0;
-	private final int TRUE = 1;
-	private final int B_COLUMN = 0;
-	private final int I_COLUMN = 1;
-	private final int N_COLUMN = 2;
-	private final int G_COLUMN = 3;
-	private final int O_COLUMN = 4;
-	private final int B_COLUMN_END = 15;
-	private final int I_COLUMN_END = 30;
-	private final int N_COLUMN_END = 45;
-	private final int G_COLUMN_END = 60;
+	private final int
+		NUMBER_OF_COLUMNS = 5,
+		NUMBER_OF_ROWS = 5,
+		CELL_VALUE = 0,
+		CELL_MARKED = 1,
+		FALSE = 0,
+		TRUE = 1,
+		B_COLUMN = 0,
+		I_COLUMN = 1,
+		N_COLUMN = 2,
+		G_COLUMN = 3,
+		O_COLUMN = 4,
+		B_COLUMN_END = 15,
+		I_COLUMN_END = 30,
+		N_COLUMN_END = 45,
+		G_COLUMN_END = 60;
 	private int numberOfMarks = 0;
 	private final Random numberGenerator = new Random();
 	private boolean isBingo = false;
@@ -167,7 +168,6 @@ public class Computer {
 		}
 	    }
 	    card[N_COLUMN][2][CELL_MARKED] = TRUE;
-	    
 	}
 	
 	private void markCard(int n) {

@@ -5,7 +5,6 @@
  */
 
 import java.awt.Dialog;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ public class ChoosePlayer extends JDialog {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/ChoosePlayer/background.png")));
     private final JList<String> playersList = new JList<>();
     private final DefaultListModel<String> playersListModel = new DefaultListModel<>();
-    private final Font shopFont = BingoGUI.getGameFont().deriveFont(30f);
     static final ArrayList<String> newPlayers = new ArrayList<>();
     static final ArrayList<String> deletedPlayers = new ArrayList<>();
     private final Human player;
@@ -79,7 +77,7 @@ public class ChoosePlayer extends JDialog {
 	playersScrollPane.setLocation(90, 175);
 	
 	playersList.setModel(playersListModel);
-	playersList.setFont(shopFont);
+	playersList.setFont(BingoGUI.getGameFont().deriveFont(30f));
 	playersList.setSelectedIndex(0);
 	
 	this.add(playersScrollPane);

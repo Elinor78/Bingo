@@ -15,7 +15,7 @@ public class MasterCard extends Card {
 	Image scaledImg = headerImg.getImage().getScaledInstance(161, 30, java.awt.Image.SCALE_SMOOTH);  
 	headerImg = new ImageIcon(scaledImg);  
 	
-	header.setIcon(headerImg);
+	headerLabel.setIcon(headerImg);
 	cellLayout.setRows(NUMBER_OF_ROWS);
 	
 	generateCardLayout();

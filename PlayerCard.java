@@ -30,13 +30,12 @@ public class PlayerCard extends Card {
 	this.bingo = b;
 	this.newBingo = n;
 	this.gui = g;
-	gui.totalPlayerCards++;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
 	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
 	headerImg = new ImageIcon(scaledImg);
 	
-	header.setIcon(headerImg);
+	headerLabel.setIcon(headerImg);
 	cellLayout.setRows(NUMBER_OF_ROWS);
 	
 	generateCardLayout();
@@ -114,6 +113,7 @@ public class PlayerCard extends Card {
 	    if ( isValidBingo() ) {
                 bingo.decrementBingos(this);
 		
+		// Determine if bonus ticket should be awarded
 		int ticketsToAward;
 		if (bingo.getBonusTicketsLeft() > 0) {
 		    ticketsToAward = 3;
@@ -127,24 +127,22 @@ public class PlayerCard extends Card {
 		
 		newBingo.currentBingoNumber++;
 		
-		gui.totalPlayerCards--;
+		gui.decrementNumberOfCards();
 	
-		if (gui.totalPlayerCards == 0) {
-		    
+		if (gui.getNumberOfPlayerCards() == 0) {
 		    bingo.signalNoBingosLeft();
 		}
 
                 cardWin();
             }
             else {
-		System.out.println("Total Player Cards = " + gui.totalPlayerCards);
                 cardFreeze();
             }
 	}
     }
     
     public void convertToLargeCard() {
-	header.setIcon(new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg")));
+	headerLabel.setIcon(new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg")));
 	for (int row = 0; row < NUMBER_OF_ROWS; row++) {
 	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++) {
 		cardLayout[row][column].convertToLargeCell();

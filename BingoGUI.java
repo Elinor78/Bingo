@@ -10,15 +10,14 @@ import java.io.InputStream;
 import javax.swing.*;
 
 public class BingoGUI extends JFrame {
-
-    private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif")));
     private final MasterCard mc = new MasterCard();
     private final BallTicker bt = new BallTicker();
-    public int totalPlayerCards = 0;
     final StatusWindow sw;
     final NewBingoNotification newNotification = new NewBingoNotification();
+    private int totalPlayerCards = 0;
     
     public BingoGUI(Bingo bingo) {	
+	final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/BingoGUI/Background.gif")));
 	final JPanel masterCardPanel = new JPanel(new BorderLayout());
 	final JPanel cardPanel = new JPanel();
 	final JPanel statusPanel = new JPanel();
@@ -70,12 +69,14 @@ public class BingoGUI extends JFrame {
 	    PlayerCard bigCard = new PlayerCard(bingo, newNotification, this);
 	    bigCard.convertToLargeCard();
 	    cardPanel.add(bigCard);
+	    totalPlayerCards++;
 	}
 	else {
 	    GridBagConstraints[] orderOfCardInsertion = {pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight};
 	
 	    for (int i = 0; i < Shop.player.getNumberOfCards(); i++) {
 		cardPanel.add(new PlayerCard(bingo, newNotification, this), orderOfCardInsertion[i]);
+		totalPlayerCards++;
 	    }
 	}
 	
@@ -120,6 +121,14 @@ public class BingoGUI extends JFrame {
 	//executor.execute(new BallTickerNewNumberTask(n));
 	bt.addBall(n);
 	mc.toggleToken(n);
+    }
+    
+    public void decrementNumberOfCards() {
+	totalPlayerCards--;
+    }
+    
+    public int getNumberOfPlayerCards() {
+	return totalPlayerCards;
     }
     
     /*
