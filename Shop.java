@@ -72,7 +72,9 @@ public final class Shop extends JFrame {
             @Override
             /*When the start button is clicked a new Bingo game instance is created.*/
             public void mouseReleased(MouseEvent e) {
+		if (player.getCurrentBalance() > 0) {
 		    startBingo();
+		}
             }
         });
         backgroundJL.add(startButton);
@@ -234,9 +236,15 @@ public final class Shop extends JFrame {
     }
     
     public void resetTicketLabels() {
-	ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
-	cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
-	revalidate();
+	if (player.getCurrentBalance() > 0) {
+	    ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
+	    cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
+	}
+	else {
+	    ticketBankLabel.setText("0");
+	    cardsToPurchaseLabel.setText("0");
+	}
+	
 	repaint();
     }
     
