@@ -100,7 +100,7 @@ public class Human {
 		playerNames = ticketProperties.stringPropertyNames();
 		for (String tempName : playerNames) {
 		    if (tempName.equals("Default")) {
-			new NewPlayer();
+			new NewPlayer(true);
 			if (name == null) {
 			    System.out.println("Game will exit.");
 			    System.exit(0);
@@ -135,7 +135,7 @@ public class Human {
 		ticketInputStream = new FileInputStream(propertiesFile);
 		ticketProperties.load(ticketInputStream);
 		playerNames = ticketProperties.stringPropertyNames();
-		new NewPlayer();
+		new NewPlayer(true);
 		bankHistory.add(20);
 	    } catch (FileNotFoundException ex) {
 		Logger.getLogger(Human.class.getName()).log(Level.SEVERE, null, ex);

@@ -97,7 +97,7 @@ public class ChoosePlayer extends JDialog {
             @Override
             public void mouseReleased(MouseEvent e) {
 		ChoosePlayer.this.setOpacity(0.75f);
-		NewPlayer newPlayerDialog = new NewPlayer();
+		NewPlayer newPlayerDialog = new NewPlayer(false);
 		if (newPlayerDialog.getNewPlayer() != null) {
 		    String newPlayer = newPlayerDialog.getNewPlayer();
 		    playersListModel.addElement(newPlayer);

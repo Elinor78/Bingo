@@ -19,7 +19,7 @@ public class NewPlayer extends JDialog {
     private final JTextField textField = new JTextField();
     private String newPlayer;
 
-    public NewPlayer() {
+    public NewPlayer(Boolean isFirstWindow) {
 	
 	configureAddPlayerButton();
 	configureTextField();
@@ -36,15 +36,20 @@ public class NewPlayer extends JDialog {
 	this.add(backgroundJL);
 	this.setSize(300, 400);
 	
-	/*Places the window adjacent to the ChoosePlayer Dialog because on certain systems 
-	the background would turn invisible if it was sitting on top. */
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	Dimension windowSize = this.getSize();
+	if (!isFirstWindow) {
+	    /*Places the window adjacent to the ChoosePlayer Dialog because on certain systems 
+	    the background would turn invisible if it was sitting on top. */
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	    Dimension windowSize = this.getSize();
 	
-	int windowX = Math.max(0, (screenSize.width  + 400 ) / 2);
-	int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
+	    int windowX = Math.max(0, (screenSize.width  + 400 ) / 2);
+	    int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
 	
-	this.setLocation(windowX, windowY);
+	    this.setLocation(windowX, windowY);
+	} else {
+	    this.setLocationRelativeTo(null);
+	}
+	
 	this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 	this.setAlwaysOnTop(true);
 	this.setResizable(false);
