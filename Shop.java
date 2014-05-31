@@ -4,7 +4,10 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -19,11 +22,23 @@ public final class Shop extends JFrame {
     private final JLabel ticketBankLabel = new JLabel();
     private final JLabel cardsToPurchaseLabel = new JLabel();
     private final JButton resetTicketBankButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/resetTickets.png")));
+    private final JLabel resetTicketBankGlow = new JLabel(new ImageIcon(getClass().getResource("/img/Shop/resetTicketsGlow.png")));
+    private final JLayeredPane resetTicketBankPanel = new JLayeredPane();
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
     private int cardsToPurchase = 1;
     private final int CARD_COST;
     public static Human player = new Human();
     Bingo newGame;
+    private boolean visible = true;
+    
+    private final ActionListener resetTicketsVisibility = new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+	    resetTicketBankGlow.setVisible(visible);
+	    visible = !visible;
+	}
+     };
+    private final javax.swing.Timer resetTicketsVisibilityTimer = new javax.swing.Timer(200, resetTicketsVisibility);
     
     // Creates Shop with default card price of 2.
     public Shop() {
@@ -44,7 +59,7 @@ public final class Shop extends JFrame {
         configureTicketBank();
         configureCardsToPurchase();
 	configureName();
-	configureResetTicketBankButton();
+	configureResetTicketBankPanel();
 
         this.add(backgroundJL);
 	this.setSize(700, 450);
@@ -212,15 +227,26 @@ public final class Shop extends JFrame {
         backgroundJL.add(nameLabel);
     }
     
-    private void configureResetTicketBankButton () {
-        resetTicketBankButton.setContentAreaFilled(false);
+    private void configureResetTicketBankPanel () {
+        resetTicketBankPanel.setSize(128,66);
+	resetTicketBankPanel.setLocation(318, 39);
+	resetTicketBankPanel.setVisible(false);
+	
+	resetTicketBankGlow.setSize(128, 66);
+	resetTicketBankGlow.setLocation(0, 0);
+	resetTicketBankPanel.add(resetTicketBankGlow, 1, 0);
+	
+	resetTicketBankButton.setContentAreaFilled(false);
         resetTicketBankButton.setBorder(null);
 	resetTicketBankButton.setFocusPainted(false);
         resetTicketBankButton.setSize(125, 63);
-        resetTicketBankButton.setLocation(320, 40);
-	resetTicketBankButton.setVisible(false);
+        resetTicketBankButton.setLocation(1, 1);
+	resetTicketBankPanel.add(resetTicketBankButton, 2, 0);
+	
 	if (player.getCurrentBalance() <= 4) {
-		resetTicketBankButton.setVisible(true);
+		resetTicketBankPanel.setVisible(true);
+		resetTicketsVisibilityTimer.start();
+		System.out.println("Set panel to visible.");
 	    }
         resetTicketBankButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -228,10 +254,14 @@ public final class Shop extends JFrame {
             public void mouseReleased(MouseEvent e) {
 		Human.bankHistory.add(20);
 		resetTicketLabels();
-		resetTicketBankButton.setVisible(false);
+		resetTicketBankPanel.setVisible(false);
+		resetTicketsVisibilityTimer.stop();
             }
         });
-        backgroundJL.add(resetTicketBankButton);
+	
+	
+	
+        backgroundJL.add(resetTicketBankPanel);
     }
     
     public void resetTicketLabels() {
