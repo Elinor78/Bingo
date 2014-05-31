@@ -30,7 +30,7 @@ public class NewBingoNotification extends JLabel {
     private final Timer textTimer = new Timer(10, decreaseOpacity);
     
     public NewBingoNotification() {
-	this.setFont(BingoGUI.getGameFont().deriveFont(16f));
+	this.setFont(BingoGUI.getGameFont().deriveFont(25f));
 	this.setHorizontalTextPosition(JLabel.CENTER);
 	this.setHorizontalAlignment(JLabel.CENTER);
 	this.setText("");
@@ -77,6 +77,6 @@ public class NewBingoNotification extends JLabel {
 	}
         
 	this.setForeground(textColor);
-	this.setText( currentBingoNumber + appendix + " Bingo has been called");
+	this.setText( currentBingoNumber + appendix + " Bingo called");
     }
 }
