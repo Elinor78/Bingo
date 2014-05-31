@@ -18,7 +18,7 @@ public final class Shop extends JFrame {
     private final JLabel backgroundJL = new JLabel(new ImageIcon(getClass().getResource("/img/Shop/background.png")));
     private final JLabel ticketBankLabel = new JLabel();
     private final JLabel cardsToPurchaseLabel = new JLabel();
-    private final JButton resetTicketBankButton = new JButton();
+    private final JButton resetTicketBankButton = new JButton(new ImageIcon(getClass().getResource("/img/Shop/resetTickets.png")));
     private final Font shopFont = BingoGUI.getGameFont().deriveFont(75f);
     private int cardsToPurchase = 1;
     private final int CARD_COST;
@@ -45,8 +45,6 @@ public final class Shop extends JFrame {
         configureCardsToPurchase();
 	configureName();
 	configureResetTicketBankButton();
-	
-	new MessageDialog("", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 
         this.add(backgroundJL);
 	this.setSize(700, 450);
@@ -215,12 +213,11 @@ public final class Shop extends JFrame {
     }
     
     private void configureResetTicketBankButton () {
-        resetTicketBankButton.setContentAreaFilled(true);
+        resetTicketBankButton.setContentAreaFilled(false);
         resetTicketBankButton.setBorder(null);
 	resetTicketBankButton.setFocusPainted(false);
-        resetTicketBankButton.setSize(75, 75);
-        resetTicketBankButton.setLocation(350, 40);
-	resetTicketBankButton.setText("Reset");
+        resetTicketBankButton.setSize(125, 63);
+        resetTicketBankButton.setLocation(320, 40);
 	resetTicketBankButton.setVisible(false);
 	if (player.getCurrentBalance() <= 4) {
 		resetTicketBankButton.setVisible(true);

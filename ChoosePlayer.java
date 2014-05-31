@@ -152,7 +152,7 @@ public class ChoosePlayer extends JDialog {
 	quitButton.setContentAreaFilled(false);
 	quitButton.setFocusPainted(false);
 	quitButton.setBorder(null);
-        quitButton.setSize(31, 30);
+        quitButton.setSize(33, 30);
         quitButton.setLocation(6, 4);
         quitButton.addMouseListener(new MouseAdapter() {
             @Override
