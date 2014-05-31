@@ -4,7 +4,6 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +30,7 @@ public final class Shop extends JFrame {
     Bingo newGame;
     private boolean visible = true;
     
+    /*Flashes the glow behind the Reset Tickets button to draw attention to it.*/
     private final ActionListener resetTicketsVisibility = new ActionListener() {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
@@ -228,6 +228,7 @@ public final class Shop extends JFrame {
     }
     
     private void configureResetTicketBankPanel () {
+	/*Uses a layered pane to place the button on top of the glow.*/
         resetTicketBankPanel.setSize(128,66);
 	resetTicketBankPanel.setLocation(318, 39);
 	resetTicketBankPanel.setVisible(false);
@@ -246,7 +247,6 @@ public final class Shop extends JFrame {
 	if (player.getCurrentBalance() <= 4) {
 		resetTicketBankPanel.setVisible(true);
 		resetTicketsVisibilityTimer.start();
-		System.out.println("Set panel to visible.");
 	    }
         resetTicketBankButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -266,7 +266,7 @@ public final class Shop extends JFrame {
     
     public void resetTicketLabels() {
 	if (player.getCurrentBalance() > 0) {
-	    ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - CARD_COST));
+	    ticketBankLabel.setText(String.valueOf(player.getCurrentBalance() - (CARD_COST *  cardsToPurchase)));
 	    cardsToPurchaseLabel.setText(String.valueOf(cardsToPurchase));
 	}
 	else {
