@@ -82,19 +82,19 @@ public final class MessageDialog extends JDialog {
 	} else if (stringWidth <= 800) {
 	    dialogFont = dialogFont.deriveFont(54f);
 	} else if (stringWidth <= 1000) {
-	    dialogFont = dialogFont.deriveFont(51f);
+	    dialogFont = dialogFont.deriveFont(48f); 
 	} else if (stringWidth <= 1200) {
-	    dialogFont = dialogFont.deriveFont(48f);
+	    dialogFont = dialogFont.deriveFont(44f);
 	} else if (stringWidth <= 1600) {
-	    dialogFont = dialogFont.deriveFont(45f);
+	    dialogFont = dialogFont.deriveFont(41f);
 	} else if (stringWidth <= 1800) {
-	    dialogFont = dialogFont.deriveFont(43f);
+	    dialogFont = dialogFont.deriveFont(38f);
 	} else if (stringWidth <= 2000) {
-	    dialogFont = dialogFont.deriveFont(40f);
+	    dialogFont = dialogFont.deriveFont(36f);
 	} else if (stringWidth <= 2200) {
-	    dialogFont = dialogFont.deriveFont(37f);
+	    dialogFont = dialogFont.deriveFont(34f);
 	} else if (stringWidth <= 2400) {
-	    dialogFont = dialogFont.deriveFont(33f);
+	    dialogFont = dialogFont.deriveFont(32f);
 	} else if (stringWidth <= 2600) {
 	    dialogFont = dialogFont.deriveFont(29f);
 	} else if (stringWidth <= 2800) {
@@ -111,8 +111,8 @@ public final class MessageDialog extends JDialog {
 	}
 
 	
-	dialogText.setSize(250, 250);
-        dialogText.setLocation(25, 20);
+	dialogText.setSize(276, 250);
+        dialogText.setLocation(12, 20);
         dialogText.setFont(dialogFont);
 	dialogText.setText(dialogMessage);
 	dialogText.setOpaque(false);

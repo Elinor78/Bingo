@@ -45,6 +45,8 @@ public final class Shop extends JFrame {
         configureCardsToPurchase();
 	configureName();
 	configureResetTicketBankButton();
+	
+	new MessageDialog("", new ImageIcon(getClass().getResource("/img/MessageDialog/storeButton.png")));
 
         this.add(backgroundJL);
 	this.setSize(700, 450);

@@ -118,7 +118,8 @@ public class ChoosePlayer extends JDialog {
         deletePlayerButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-		/*Save the name of the player to delete.*/
+		if (!playersList.isSelectionEmpty()) {
+		    /*Save the name of the player to delete.*/
 		String playerToDelete = playersList.getSelectedValue();
 		/*Remove that player from the visual list.*/
 		playersListModel.removeElement(playerToDelete);
@@ -129,9 +130,9 @@ public class ChoosePlayer extends JDialog {
 		/*If it is an existing player, add it to the deletedPlayers list.*/
 		else {
 		    deletedPlayers.add(playerToDelete);
-		    System.out.println("Added player to deletedPlayers ArrayList.");
 		}
 		playersList.setSelectedIndex(0);
+		}
             }
         });
         backgroundJL.add(deletePlayerButton);

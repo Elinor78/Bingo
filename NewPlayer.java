@@ -80,7 +80,7 @@ public class NewPlayer extends JDialog {
 	    }
 	}
 	
-	textField.setDocument(new JTextFieldLimit(11));
+	textField.setDocument(new JTextFieldLimit(8));
 	
 	this.add(textField);
     }
