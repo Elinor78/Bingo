@@ -61,9 +61,9 @@ public class BallTicker extends JLabel {
 
 	    slideTimer.start();
 
-	    // If a ball just slid out of frame, remove it from the queue
+	    // If a ball just slid out of frame, remove it from the panel and the queue
 	    if (ballQueue.size() > 5) {
-		ballQueue.poll();
+		interiorPanel.remove(ballQueue.poll());
 	    }
     }
     
