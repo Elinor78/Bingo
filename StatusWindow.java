@@ -4,6 +4,7 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -44,11 +45,17 @@ public class StatusWindow extends JLabel {
     }
     
     public void updateAvailableBingos() {
+	
 	if (b.getNumberOfBingos() < 0) {
 	    bingosLeft.setText("0");
 	}
 	else {
 	    bingosLeft.setText(String.valueOf(b.getNumberOfBingos()));
+	    
+	    if ((Integer.parseInt(bingosLeft.getText()) == 10)) {
+		bingosLeft.setForeground(new Color(182, 79, 61));
+	    }
+	    
 	    cardsInPlay.setText(String.valueOf(Computer.totalComputerCards));
 	}
     }
