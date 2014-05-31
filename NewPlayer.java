@@ -27,14 +27,13 @@ public class NewPlayer extends JDialog {
 	this.add(backgroundJL);
 	this.setSize(300, 400);
 	
-	/*Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	Dimension windowSize = this.getSize();
 	
 	int windowX = Math.max(0, (screenSize.width  + 400 ) / 2);
 	int windowY = Math.max(0, (screenSize.height - windowSize.height) / 2);
 	
-	this.setLocation(windowX, windowY);*/
-	this.setLocationRelativeTo(null);
+	this.setLocation(windowX, windowY);
 	this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 	this.setAlwaysOnTop(true);
 	this.setResizable(false);
