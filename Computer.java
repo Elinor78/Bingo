@@ -52,11 +52,6 @@ public class Computer {
         responseTime = (int)((Math.random() * (5000)) + 1000);
     }
     
-    /*Returns the response time.*/
-    public double getResponseTime() {
-        return responseTime;
-    }
-    
     public void receiveNewNumber(int n) {
 	numberQueue.offer(n);
 	callNumberTimer.start();

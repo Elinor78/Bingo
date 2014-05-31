@@ -29,7 +29,6 @@ public class MasterCard extends Card {
 	for (int row = 0, cellNumber = 1; row < NUMBER_OF_ROWS; row++, cellNumber -= 74) { // Iterates rows
 	    for (int column = 0; column < NUMBER_OF_COLUMNS; column++, cellNumber += 15) { // Iterates columns
 		cardLayout[row][column] = new Cell(cellNumber);
-		cardLayout[row][column].setFontSize(16);
 		cellPanel.add(cardLayout[row][column]);
 	    }
 	}

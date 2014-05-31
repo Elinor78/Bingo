@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 
 public class PlayerCard extends Card {
     private final Bingo bingo;
-    private final NewBingoNotification newBingo;
     private final BingoGUI gui;
     private final int NUMBER_OF_ROWS = 5;
     private final JButton callButton = new JButton(new ImageIcon(getClass().getResource("/img/Card/Button.png")));
@@ -26,9 +25,8 @@ public class PlayerCard extends Card {
     private final JLabel freezeLabel = new JLabel();
     private Font freezeFont = getFreezeFont().deriveFont(35f);
     
-    public PlayerCard(Bingo b, NewBingoNotification n, BingoGUI g) {
+    public PlayerCard(Bingo b, BingoGUI g) {
 	this.bingo = b;
-	this.newBingo = n;
 	this.gui = g;
 	
 	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
@@ -75,7 +73,6 @@ public class PlayerCard extends Card {
 	
 		cardLayout[row][column] = new Cell(numberCandidate);
 
-		//cardLayout[row][column].setFontSize(20);
 		cardLayout[row][column].addMouseListener(cellListener);
 		cellPanel.add(cardLayout[row][column]);
 	    }
@@ -125,8 +122,7 @@ public class PlayerCard extends Card {
 		Shop.player.setTicketBank(ticketsToAward);
 		Shop.player.addTicketsWonInLatestRound(ticketsToAward);
 		
-		newBingo.currentBingoNumber++;
-		
+		gui.newNotification.currentBingoNumber++;
 		gui.decrementNumberOfCards();
 	
 		if (gui.getNumberOfPlayerCards() == 0) {
@@ -231,8 +227,8 @@ public class PlayerCard extends Card {
 	JLabel winLabel = new JLabel();
    
         callButton.removeMouseListener( buttonListener );
+	
 	bingoFeedbackPanel.setPreferredSize( new Dimension(cellPanel.getWidth(), cellPanel.getHeight()));
-     
 	winLabel.setPreferredSize( new Dimension( cellPanel.getWidth(), cellPanel.getHeight() ));
         
         ImageIcon winImg;
@@ -285,7 +281,7 @@ public class PlayerCard extends Card {
 	    
 	    do{
 		try {
-		    freezeLabel.setText("<html><center>Card Frozen<br>0:0" + countDown + "</center></html>");
+		    freezeLabel.setText("<html><center>False Bingo<br>0:0" + countDown + "</center></html>");
 		    Thread.sleep( 1000 );
 		    countDown--;
 		} catch (InterruptedException ex) {

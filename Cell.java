@@ -37,14 +37,12 @@ public class Cell extends JLabel {
 	this.setVerticalAlignment(JLabel.CENTER);
     }
     
-    public void setFontSize(int n) {
-	FONT_SIZE = n;
-	this.setFont(Card.cellFont.deriveFont(FONT_SIZE));
-    }
-    
     public void convertToLargeCell() {
 	marker = new ImageIcon(getClass().getResource("/img/Card/marker.png"));
-	setFontSize((int)(marker.getIconHeight() * .9));
+	
+	FONT_SIZE = ((float)(marker.getIconHeight() * .9));
+	setFont(Card.cellFont.deriveFont(FONT_SIZE));
+	
 	repaint();
     }
 

@@ -66,7 +66,7 @@ public class BingoGUI extends JFrame {
 	pcLowerRight.insets = new Insets(5, 5, 5, 5);
 	
 	if (Shop.player.getNumberOfCards() == 1) {
-	    PlayerCard bigCard = new PlayerCard(bingo, newNotification, this);
+	    PlayerCard bigCard = new PlayerCard(bingo, this);
 	    bigCard.convertToLargeCard();
 	    cardPanel.add(bigCard);
 	    totalPlayerCards++;
@@ -75,12 +75,12 @@ public class BingoGUI extends JFrame {
 	    GridBagConstraints[] orderOfCardInsertion = {pcUpperLeft, pcUpperRight, pcLowerLeft, pcLowerRight};
 	
 	    for (int i = 0; i < Shop.player.getNumberOfCards(); i++) {
-		cardPanel.add(new PlayerCard(bingo, newNotification, this), orderOfCardInsertion[i]);
+		cardPanel.add(new PlayerCard(bingo, this), orderOfCardInsertion[i]);
 		totalPlayerCards++;
 	    }
 	}
 	
-	// Place JPanel to hold number ticker & bingo status window
+	// Place JPanel to hold BallTicker & StatusWindow
 	statusPanel.setPreferredSize(new Dimension(268, 295));
 	mainFrameConstraint.insets = new Insets(61, 0, 0, 0);
 	mainFrameConstraint.gridx = 2;
@@ -118,7 +118,6 @@ public class BingoGUI extends JFrame {
     
     // Updates all necessary GUI objects to display newly-called numbers.
     public void showNewNumber(int n) {
-	//executor.execute(new BallTickerNewNumberTask(n));
 	bt.addBall(n);
 	mc.toggleToken(n);
     }
