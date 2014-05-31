@@ -94,7 +94,7 @@ public class NewPlayer extends JDialog {
 	closeButton.setContentAreaFilled(false);
 	closeButton.setFocusPainted(false);
 	closeButton.setBorder(null);
-        closeButton.setSize(30, 30);
+        closeButton.setSize(31, 30);
         closeButton.setLocation(2, 2);
         closeButton.addMouseListener(new MouseAdapter() {
             @Override
