@@ -111,6 +111,7 @@ public class BingoGUI extends JFrame {
 	this.setSize(1000, 576);
 	
 	// Set some default properties
+	this.setTitle("Java Bingo!");
 	this.setLocationRelativeTo(null);
 	this.setResizable(false);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
