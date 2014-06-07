@@ -28,10 +28,8 @@ public class PlayerCard extends Card {
     public PlayerCard(Bingo b, BingoGUI g) {
 	this.bingo = b;
 	this.gui = g;
-	
-	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
-	Image scaledImg = headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH);  
-	headerImg = new ImageIcon(scaledImg);
+  
+	headerImg = new ImageIcon(headerImg.getImage().getScaledInstance(205, 39, java.awt.Image.SCALE_SMOOTH));
 	
 	headerLabel.setIcon(headerImg);
 	cellLayout.setRows(NUMBER_OF_ROWS);

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 // Abstract class defines common elements of MasterCard and PlayerCard.
 public abstract class Card extends JPanel {
     // Top "BINGO" headerLabel
-    ImageIcon headerImg;
+    ImageIcon headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg"));
     final JLabel headerLabel = new JLabel();
     
     // JPanel with GridLayout to hold undefined number of Cells

@@ -4,16 +4,13 @@
  * Elinor Huntington, Linus Carlsson, Armand Flores
  */
 
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class MasterCard extends Card {
     private final int NUMBER_OF_ROWS = 15;
 	    
     public MasterCard() {
-	headerImg = new ImageIcon(getClass().getResource("/img/Card/CardHeader.jpg")); 
-	Image scaledImg = headerImg.getImage().getScaledInstance(161, 30, java.awt.Image.SCALE_SMOOTH);  
-	headerImg = new ImageIcon(scaledImg);  
+	headerImg = new ImageIcon(headerImg.getImage().getScaledInstance(161, 30, java.awt.Image.SCALE_SMOOTH));  
 	
 	headerLabel.setIcon(headerImg);
 	cellLayout.setRows(NUMBER_OF_ROWS);
