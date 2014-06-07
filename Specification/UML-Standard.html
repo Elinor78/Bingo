@@ -4,6 +4,118 @@
 <meta charset="UTF-8">
 <title>Untitled Document</title>
 
+<script>
+
+var htmlLine
+
+
+function connect(divOne, divTwo, color, thickness) {
+	
+	var div1 = document.getElementById(divOne);
+    var div2 = document.getElementById(divTwo);
+	
+	var currentID = "" + divOne + divTwo;
+	
+	//prompt(currentID);
+	
+	if (document.getElementById(currentID) != null)
+		document.getElementById(currentID).remove();
+	
+    var off1 = getOffset(div1);
+    var off2 = getOffset(div2);
+	
+	var x1;
+	var y1;
+	var x2;
+	var y2;
+	
+	y1 = off1.top + off1.height/2;
+	
+	
+	// off2 below off1
+	if (off2.top > off1.top) {
+		x2 = off2.left + off2.width/2;
+		y2 = off2.top;
+		if (off2.left + off2.width/2 < off1.left + off1.width/2)
+			x1 = off1.left - 9;
+		else
+			x1 = off1.left + off1.width + 9;
+	}
+	else {
+		y2 = off2.top + off2.height/2;
+		if (off2.left + off2.width < off1.left - 9) {
+			x1 = off1.left - 9;
+			x2 = off2.left + off2.width;
+		}
+		else if (off2.left > off1.left + off2.width + 9) {
+			x1 = off1.left + off1.width + 9;
+			x2 = off2.left;
+		}
+		else if (off2.left + off2.width/2 < off1.left + off1.width/2) {
+			x1 = off1.left - 9;
+			x2 = off2.left;
+		}
+		else {
+			x1 = off1.left + off1.width + 9;
+			x2 = off2.left + off2.width;
+		}
+	}
+    
+    // distance
+    var length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+    // center
+    var cx = ((x1 + x2) / 2) - (length / 2);
+    var cy = ((y1 + y2) / 2) - (thickness / 2);
+    // angle
+    var angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+    // make hr
+    htmlLine = "<div id=" + currentID + " style='padding:0px; margin:0px; height:" + thickness + "px; background-color:" + color + "; line-height:1px; position:absolute; left:" + cx + "px; top:" + cy + "px; width:" + length + "px; -moz-transform:rotate(" + angle + "deg); -webkit-transform:rotate(" + angle + "deg); -o-transform:rotate(" + angle + "deg); -ms-transform:rotate(" + angle + "deg); transform:rotate(" + angle + "deg);' />";
+    //
+    //alert(htmlLine);
+    document.body.innerHTML += htmlLine; 
+	//document.body.innerHTML += htmlLine;
+}
+
+function getOffset( el ) {
+    var _x = 0;
+    var _y = 0;
+    var _w = el.offsetWidth|0;
+    var _h = el.offsetHeight|0;
+    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return { top: _y, left: _x, width: _w, height: _h };
+}
+
+window.testIt = function() {
+	
+	connect('computerPlayers', 'Computer', "#000", 1);
+	connect('bGUI', 'BingoGUI', "#000", 1);
+	
+	connect('mc', 'MasterCard', "#000", 1);
+	connect('bt', 'BallTicker', "#000", 1);
+	connect('sw', 'StatusWindow', "#000", 1);
+	connect('newNotification', 'NewBingoNotification', "#000", 1);
+	
+	connect('cardLayout', 'Cellb', "#000", 1);
+	
+	connect('b', 'Bingo', "#000", 1);
+	
+	connect('bingob', 'Bingo', "#000", 1);
+	connect('gui', 'BingoGUI', "#000", 1);
+	// Shop
+	connect('playerb', 'Human', "#000", 1);
+	connect('newGame', 'Bingo', "#000", 1);
+	// Shop
+	connect('bb', 'Bingo', "#000", 1);
+}
+
+
+</script>
+
+
 <style>
 
 body {
@@ -28,7 +140,7 @@ h4 {
 }
 
 .table {
-	margin:5px 0 5px 5px;
+	margin:5px 0 5px 35px;
 	display:table;
 	border-spacing:1px;
 	background-color:#6CCEF6;
@@ -56,11 +168,11 @@ h4 {
 
 </head>
 
-<body>
+<body onload="testIt();"  onresize="testIt();">
 
 <div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="AudioPlayer">
 		<h4>AudioPlayer</h4>
     </div>
     <div class="row">
@@ -81,7 +193,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="BallTicker">
 		<h4>BallTicker</h4>
     </div>
     <div class="row">
@@ -100,16 +212,16 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Bingo">
 		<h4>Bingo</h4>
     </div>
     <div class="row">
         <div class="cell">
-            <p>-computerPlayers: ArrayList&lt;Computer&gt;</p>
+            <p id='computerPlayers'>-computerPlayers: ArrayList&lt;Computer&gt;</p>
             <p>-numberOfBonusTickets: int</p>
             <p>-numberOfBingos: int</p>
             <p>-availableNumbers: ArrayList&lt;Integer&gt;</p>
-            <p>-bGUI: BingoGUI</p>
+            <p id='bGUI'>-bGUI: BingoGUI</p>
             <p>-lock: Lock</p>
             <p>-noBingosLeft: Condition</p>
             <p>-randomGen: Random</p>
@@ -138,15 +250,15 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="BingoGUI">
 		<h4>BingoGUI</h4>
     </div>
     <div class="row">
         <div class="cell">
-            <p>-mc: MasterCard</p>
-            <p>-bt: BallTicker</p>
-            <p>-sw: StatusWindow</p>
-            <p>-newNotification: NewBingoNotification</p>
+            <p id='mc'>-mc: MasterCard</p>
+            <p id='bt'>-bt: BallTicker</p>
+            <p id='sw'>-sw: StatusWindow</p>
+            <p id='newNotification'>-newNotification: NewBingoNotification</p>
             <p>-totalPlayerCards: int</p>
         </div>
     </div>
@@ -163,7 +275,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Card">
 		<h4>Card</h4>
     </div>
     <div class="row">
@@ -173,7 +285,7 @@ h4 {
             <p>-cellLayout: GridLayout</p>
             <p>-cellPanel: JPanel</p>
             <p>-NUMBER_OF_COLUMNS: int</p>
-            <p>-cardLayout[][]: Cell</p>
+            <p id='cardLayout'>-cardLayout[][]: Cell</p>
             <p>-cellFont: Font</p>
         </div>
     </div>
@@ -187,7 +299,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Cellb">
 		<h4>Cell</h4>
     </div>
     <div class="row">
@@ -213,17 +325,17 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="ChoosePlayer">
 		<h4>ChoosePlayer</h4>
     </div>
     <div class="row">
         <div class="cell">
             <p>-backgroundJL: JLabel</p>
-            <p>-playersList: JList&lt;String&lt;</p>
-            <p>-playersListModel: DefaultListModel&lt;String&lt;</p>
-            <p>-newPlayers: ArrayList&lt;String&lt;</p>
-            <p>-deletedPlayers: ArrayList&lt;String&lt;</p>
-            <p>-player: Human</p>
+            <p>-playersList: JList&lt;String&gt;</p>
+            <p>-playersListModel: DefaultListModel&lt;String&gt;</p>
+            <p>-newPlayers: ArrayList&lt;String&gt;</p>
+            <p>-deletedPlayers: ArrayList&lt;String&gt;</p>
+            <p id='player'>-player: Human</p>
         </div>
     </div>
     <div class="row">
@@ -242,7 +354,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Computer">
 		<h4>Computer</h4>
     </div>
     <div class="row">
@@ -251,7 +363,7 @@ h4 {
             <p>-totalComputerCards: int</p>
             <p>-responseTime: int</p>
             <p>-cards: ComputerCard[]</p>
-            <p>-b: Bingo</p>
+            <p id='b'>-b: Bingo</p>
             <p>-numberQueue: LimitedQueue&lt;Integer&gt;</p>
             <p>-callNumberTimer: Timer</p>
             <p>-readNumber: numberReader</p>
@@ -270,7 +382,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Credits">
 		<h4>Credits</h4>
     </div>
     <div class="row">
@@ -286,7 +398,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Human">
 		<h4>Human</h4>
     </div>
     <div class="row">
@@ -319,7 +431,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="MasterCard">
 		<h4>MasterCard</h4>
     </div>
     <div class="row">
@@ -338,7 +450,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="MessageDialog">
 		<h4>MessageDialog</h4>
     </div>
     <div class="row">
@@ -360,7 +472,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="NewBingoNotification">
 		<h4>NewBingoNotification</h4>
     </div>
     <div class="row">
@@ -381,7 +493,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="NewPlayer">
 		<h4>NewPlayer</h4>
     </div>
     <div class="row">
@@ -404,13 +516,13 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="PlayerCard">
 		<h4>PlayerCard</h4>
     </div>
     <div class="row">
         <div class="cell">
-            <p>-bingo: Bingo</p>
-            <p>-gui: BingoGUI</p>
+            <p id='bingob'>-bingo: Bingo</p>
+            <p id='gui'>-gui: BingoGUI</p>
             <p>-NUMBER_OF_ROWS: int</p>
             <p>-callButton: JButton</p>
             <p>-buttonListener: CallButtonMouseListener</p>
@@ -435,7 +547,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Rules">
 		<h4>Rules</h4>
     </div>
     <div class="row">
@@ -451,7 +563,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="Shop">
 		<h4>Shop</h4>
     </div>
     <div class="row">
@@ -463,8 +575,8 @@ h4 {
             <p>-shopFont: Font</p>
             <p>-cardsToPurchase: int</p>
             <p>-CARD_COST: int</p>
-            <p>-player: Human</p>
-            <p>-newGame: Bingo</p>
+            <p id='playerb'>-player: Human</p>
+            <p id='newGame'>-newGame: Bingo</p>
         </div>
     </div>
     <div class="row">
@@ -490,7 +602,7 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="ShutDownTask">
 		<h4>ShutDownTask</h4>
     </div>
     <div class="row">
@@ -506,12 +618,12 @@ h4 {
 </div><!--
 --><div class="container">
 <div class="table">
-	<div class="caption">
+	<div class="caption" id="StatusWindow">
 		<h4>StatusWindow</h4>
     </div>
     <div class="row">
         <div class="cell">
-            <p>-b: Bingo</p>
+            <p id='bb'>-b: Bingo</p>
             <p>-bingosLeft: JLabel</p>
             <p>-cardsInPlay: JLabel</p>
         </div>
