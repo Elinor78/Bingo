@@ -185,13 +185,25 @@ public class PlayerCard extends Card {
 	}
 
 	if (!isValid) {
-	    if (cardLayout[0][0].isMarked() && cardLayout[1][1].isMarked() && cardLayout[3][3].isMarked() && cardLayout[4][4].isMarked() && bingo.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[1][1].getNumber(), cardLayout[3][3].getNumber(), cardLayout[4][4].getNumber()})) { //CHECKS DIAGONAL LEFT -> RIGHT
+	    if (cardLayout[0][0].isMarked() && cardLayout[1][1].isMarked() && 
+		    cardLayout[3][3].isMarked() && cardLayout[4][4].isMarked() && 
+		    bingo.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), 
+			cardLayout[1][1].getNumber(), cardLayout[3][3].getNumber(), 
+			cardLayout[4][4].getNumber()})) { //CHECKS DIAGONAL LEFT -> RIGHT
 		isValid = true;
 	    }
-	    else if (cardLayout[4][0].isMarked() && cardLayout[3][1].isMarked() && cardLayout[1][3].isMarked() && cardLayout[0][4].isMarked() && bingo.isNumberCalled(new int[] {cardLayout[4][0].getNumber(), cardLayout[3][1].getNumber(), cardLayout[1][3].getNumber(), cardLayout[0][4].getNumber()})) { //CHECKS DIAGONAL LEFT <- RIGHT
+	    else if (cardLayout[4][0].isMarked() && cardLayout[3][1].isMarked() && 
+		    cardLayout[1][3].isMarked() && cardLayout[0][4].isMarked() && 
+		    bingo.isNumberCalled(new int[] {cardLayout[4][0].getNumber(), 
+			cardLayout[3][1].getNumber(), cardLayout[1][3].getNumber(), 
+			cardLayout[0][4].getNumber()})) { //CHECKS DIAGONAL LEFT <- RIGHT
 		isValid = true;
 	    }
-	    else if (cardLayout[0][0].isMarked() && cardLayout[0][4].isMarked() && cardLayout[4][0].isMarked() && cardLayout[4][4].isMarked() && bingo.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), cardLayout[0][4].getNumber(), cardLayout[4][0].getNumber(), cardLayout[4][4].getNumber()})) { //CHECKS CORNERS
+	    else if (cardLayout[0][0].isMarked() && cardLayout[0][4].isMarked() && 
+		    cardLayout[4][0].isMarked() && cardLayout[4][4].isMarked() && 
+		    bingo.isNumberCalled(new int[] {cardLayout[0][0].getNumber(), 
+			cardLayout[0][4].getNumber(), cardLayout[4][0].getNumber(), 
+			cardLayout[4][4].getNumber()})) { //CHECKS CORNERS
 		isValid = true;
 	    }
 	}
