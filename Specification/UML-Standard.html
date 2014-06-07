@@ -1,0 +1,529 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+
+<style>
+
+body {
+	margin:0;
+	padding:0;
+}
+
+p {
+	margin:1px ;
+	padding:0;
+}
+
+h4 {
+	margin:0;
+	padding:5px 0 0 0;
+	text-align:center
+}
+
+.container {
+	display:inline-block;
+	vertical-align: top;
+}
+
+.table {
+	margin:5px 0 5px 5px;
+	display:table;
+	border-spacing:1px;
+	background-color:#6CCEF6;
+}
+
+.row {
+	display:table-row;
+}
+
+.cell {
+	padding: 5px 7px;
+	display:table-cell;
+	white-space: nowrap;
+	background-color:#D4EFFC;
+}
+
+.caption {
+	caption-side: top;
+	display: table-caption;
+	text-align: center;
+	background-color:#6CCEF6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>AudioPlayer</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-Clip: clip</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+AudioPlayer()</p>
+            <p>+play(): void</p>
+            <p>+loop(): void</p>
+            <p>+stop(): void</p>
+            <p>+close(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>BallTicker</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-Clip: clip</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+BallTicker()</p>
+            <p>+addBall(int n): void</p>
+            <p>+slideBalls1px(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Bingo</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-computerPlayers: ArrayList&lt;Computer&gt;</p>
+            <p>-numberOfBonusTickets: int</p>
+            <p>-numberOfBingos: int</p>
+            <p>-availableNumbers: ArrayList&lt;Integer&gt;</p>
+            <p>-bGUI: BingoGUI</p>
+            <p>-lock: Lock</p>
+            <p>-noBingosLeft: Condition</p>
+            <p>-randomGen: Random</p>
+            <p>-callNewNumber: ActionListener</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Bingo()</p>
+        	<p>+populateNumberArray(): ArrayList&lt;Integer&gt;</p>
+            <p>+generateComputerPlayers(): void</p>
+            <p>+setInitialBingos(): void</p>
+            <p>+getNumberOfBingos(): int</p>
+            <p>+getBonusTicketsLeft(): int</p>
+            <p>+decrementBingos(): void</p>
+            <p>+signalNoBingosLeft(): void</p>
+            <p>+awaitNoBingosLeft(): void</p>
+            <p>+closeBingo(): void</p>
+            <p>+setNumberCalled(int numberCalled): void</p>
+            <p>+isNumberCalled(int numberCalled): boolean</p>
+            <p>+isNumberCalled(int[] array): boolean</p>
+            <p>+speakNumber(int numberToSpeak): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>BingoGUI</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-mc: MasterCard</p>
+            <p>-bt: BallTicker</p>
+            <p>-sw: StatusWindow</p>
+            <p>-newNotification: NewBingoNotification</p>
+            <p>-totalPlayerCards: int</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+BingoGUI(Bingo bingo)</p>
+            <p>+showNewNumber(int n): void</p>
+            <p>+decrementNumberOfCards(): void</p>
+            <p>+getNumberOfPlayerCards(): int</p>
+            <p>+getGameFont(): Font</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Card</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-headerImg: ImageIcon</p>
+            <p>-headerLabel: JLabel</p>
+            <p>-cellLayout: GridLayout</p>
+            <p>-cellPanel: JPanel</p>
+            <p>-NUMBER_OF_COLUMNS: int</p>
+            <p>-cardLayout[][]: Cell</p>
+            <p>-cellFont: Font</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Card()</p>
+            <p>+generateCardLayout(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Cell</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-marker: ImageIcon</p>
+            <p>-cellNumber: int</p>
+            <p>-isMarked: boolean</p>
+            <p>-FONT_SIZE: float</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Cell(int number)</p>
+            <p>+genericInitializations(): void</p>
+            <p>+convertToLargeCell(): void</p>
+            <p>+toggleToken(): void</p>
+            <p>+getNumber(): int</p>
+            <p>+setNumber(int n): void</p>
+            <p>+isMarked(): boolean</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>ChoosePlayer</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-backgroundJL: JLabel</p>
+            <p>-playersList: JList&lt;String&lt;</p>
+            <p>-playersListModel: DefaultListModel&lt;String&lt;</p>
+            <p>-newPlayers: ArrayList&lt;String&lt;</p>
+            <p>-deletedPlayers: ArrayList&lt;String&lt;</p>
+            <p>-player: Human</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+ChoosePlayer(Human p)</p>
+            <p>+configureBackground(): void</p>
+            <p>+configureStartButton(): void</p>
+            <p>+configurePlayersList(): void</p>
+            <p>+configureNewPlayerButton(): void</p>
+            <p>+configureDeletePlayerButton(): void</p>
+            <p>+updatePlayersList(): void</p>
+            <p>+configureQuitButton(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Computer</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+        	<p>-totalComputerPlayers: int</p>
+            <p>-totalComputerCards: int</p>
+            <p>-responseTime: int</p>
+            <p>-cards: ComputerCard[]</p>
+            <p>-b: Bingo</p>
+            <p>-numberQueue: LimitedQueue&lt;Integer&gt;</p>
+            <p>-callNumberTimer: Timer</p>
+            <p>-readNumber: numberReader</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Computer(Bingo b)</p>
+            <p>+generateComputerCards(): ComputerCard[]</p>
+            <p>+generateResponseTime(): void</p>
+            <p>+receiveNewNumber(): void</p>
+            <p>+calculateChanceOfPatternMiss(): int</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Credits</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Credits()</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Human</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-numberOfCards: int</p>
+            <p>-bankHistory: ArrayList&lt;Integer&gt;</p>
+            <p>-ticketsWonInLatestRound: int</p>
+            <p>-playerNames: Set&lt;String&gt;</p>
+            <p>-name: String</p>
+            <p>-Exception: Exception</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Human()</p>
+            <p>+setTicketBank(int amountOfTickets): void</p>
+            <p>+getCurrentBalance(): int</p>
+            <p>+getBankHistorySize(): int</p>
+            <p>+getLatestWinnings(): int</p>
+            <p>+purchaseCards(int cards, int cardCost): void</p>
+            <p>+getNumberOfCards(): int</p>
+            <p>+addTicketsWonInLatestRound(int t): void</p>
+            <p>+resetTicketsWonInLatestRound(): void</p>
+            <p>+getTicketsWonInLatestRound(): int</p>
+            <p>+getPlayerNames(): Set&lt;String&gt;</p>
+            <p>+initiatePlayer(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>MasterCard</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-NUMBER_OF_ROWS: int</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+MasterCard()</p>
+            <p>+generateCardLayout(): void</p>
+            <p>+toggleToken(int number): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>MessageDialog</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-backgroundJL: JLabel</p>
+            <p>-dialogButton: JButton</p>
+            <p>-dialogMessage: String</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+MessageDialog(String message, ImageIcon buttonImage)</p>
+            <p>+configureBackground(): void</p>
+            <p>+configureButton(): void</p>
+            <p>+configureTextArea(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>NewBingoNotification</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-alphaValue: int</p>
+            <p>-textColor: Color</p>
+            <p>-currentBingoNumber: int</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+NewBingoNotification()</p>
+            <p>+showClaimedBingo(): void</p>
+            <p>+setBingoText(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>NewPlayer</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-backgroundJL: JLabel</p>
+            <p>-textField: JTextField</p>
+            <p>-newPlayer: String</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+NewPlayer(Boolean isFirstWindow)></p>
+            <p>+configureAddPlayerButton(): void</p>
+            <p>+configureTextField(): void</p>
+            <p>+getNewPlayer(): String</p>
+            <p>+configureCloseButton(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>PlayerCard</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-bingo: Bingo</p>
+            <p>-gui: BingoGUI</p>
+            <p>-NUMBER_OF_ROWS: int</p>
+            <p>-callButton: JButton</p>
+            <p>-buttonListener: CallButtonMouseListener</p>
+            <p>-bingoFeedbackPanel: JPanel</p>
+            <p>-freezeLabel: JLabel</p>
+            <p>-freezeFont: Font</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+PlayerCard(Bingo b, BingoGUI g)</p>
+            <p>+generateCardLayout(): void</p>
+            <p>+addCallButton(): void</p>
+            <p>+convertToLargeCard(): void</p>
+            <p>+isValidBingo(): boolean</p>
+            <p>+cardFreeze(): void</p>
+            <p>+getFreezeFont(): Font</p>
+            <p>+cardWin(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Rules</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Rules()</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>Shop</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-backgroundJL: JLabel</p>
+            <p>-ticketBankLabel: JLabel</p>
+            <p>-cardsToPurchaseLabel: JLabel</p>
+            <p>-resetTicketBankButton: JButton</p>
+            <p>-shopFont: Font</p>
+            <p>-cardsToPurchase: int</p>
+            <p>-CARD_COST: int</p>
+            <p>-player: Human</p>
+            <p>-newGame: Bingo</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+Shop()</p>
+            <p>+Shop(int salePrice)</p>
+            <p>+configureBackground(): void</p>
+            <p>+configureStartButton(): void</p>
+            <p>+configureQuitButton(): void</p>
+            <p>+configureCreditsButton(): void</p>
+            <p>+configureRulesButton(): void</p>
+            <p>+configureArrowUpButton(): void</p>
+            <p>+configureArrowDownButton(): void</p>
+            <p>+configureTicketBank(): void</p>
+            <p>+configureCardsToPurchase(): void</p>
+            <p>+configureName(): void</p>
+            <p>+configureResetTicketBankButton(): void</p>
+            <p>+resetTicketLabels(): void</p>
+            <p>+startBingo(): void</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>ShutDownTask</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+ShutDownTask()</p>
+        </div>
+    </div>
+</div>
+</div><!--
+--><div class="container">
+<div class="table">
+	<div class="caption">
+		<h4>StatusWindow</h4>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>-b: Bingo</p>
+            <p>-bingosLeft: JLabel</p>
+            <p>-cardsInPlay: JLabel</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">
+            <p>+StatusWindow(Bingo b)</p>
+            <p>+updateAvailableBingos(): void</p>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
